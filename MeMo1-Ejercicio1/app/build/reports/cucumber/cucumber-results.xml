@@ -1,35 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="6" time="0.438">
-    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.022">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="9" time="0.489">
+    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.027">
         <system-out><![CDATA[Given I create an account with CBU 123456789................................passed
 Then The account balance should be 0.0......................................passed
 ]]></system-out>
     </testcase>
-    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.032">
+    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.019">
         <system-out><![CDATA[Given I create an account with CBU 987654321 and a balance of 500.0.........passed
 Then The account balance should be 500.0....................................passed
 ]]></system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.025">
+    <testcase classname="Depositing money into another account" name="Successfully deposit money into another account" time="0.009">
+        <system-out><![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.passed
+When I deposit 200.0 into the second account................................passed
+Then The first account balance should be 800.0 and the second account balance should be 1200.0.passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Depositing money into another account" name="Cannot deposit a negative amount into another account" time="0.015">
+        <system-out><![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.passed
+When I try to deposit -100.0 into the second account........................passed
+Then The operation should be denied.........................................passed
+And The first account balance should remain 1000.0 and the second account balance should remain 1000.0.passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Depositing money into another account" name="Cannot deposit more money than available balance into another account" time="0.01">
+        <system-out><![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.passed
+When I try to deposit 1100.0 into the second account........................passed
+Then The operation should be denied due to insufficient funds...............passed
+And The first account balance should remain 1000.0 and the second account balance should remain 1000.0.passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.01">
         <system-out><![CDATA[Given An account with CBU 123456789 and a balance of 1000.0.................passed
 When I deposit 200.0 into the account.......................................passed
 Then The account balance should be 1200.0...................................passed
 ]]></system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.005">
+    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.009">
         <system-out><![CDATA[Given An account with CBU 123456789 and a balance of 1000.0.................passed
 When I try to deposit -100.0 into the account...............................passed
 Then The operation should be denied.........................................passed
 And The account balance should remain 1000.0................................passed
 ]]></system-out>
     </testcase>
-    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.02">
+    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.013">
         <system-out><![CDATA[Given An account with CBU 123456789 and a balance of 1000.0.................passed
 When I withdraw 300.0 from the account......................................passed
 Then The account balance should be 700.0....................................passed
 ]]></system-out>
     </testcase>
-    <testcase classname="Withdrawing money" name="Cannot withdraw more money than available balance" time="0.02">
+    <testcase classname="Withdrawing money" name="Cannot withdraw more money than available balance" time="0.017">
         <system-out><![CDATA[Given An account with CBU 123456789 and a balance of 1000.0.................passed
 When I try to withdraw 1100.0 from the account..............................passed
 Then The operation should be denied due to insufficient funds...............passed

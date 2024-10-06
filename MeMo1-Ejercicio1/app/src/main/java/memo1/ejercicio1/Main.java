@@ -29,5 +29,14 @@ public class Main {
         // Verificar si las operaciones fueron exitosas
         System.out.println("Retiro en cuenta 1 fue " + (successWithdraw ? "exitoso" : "fallido"));
         System.out.println("Retiro en cuenta 2 fue " + (successWithdraw2 ? "exitoso" : "fallido"));
+
+        //Ejercicio2
+        Account cuenta1 = new Account(1234L, 1000.0);
+        Account cuenta2 = new Account(5678L, 1000.0);
+
+        cuenta1.deposit_another_account(200, 5678, cuenta2);
+
+        System.out.println("El saldo de la cuenta1 es: " + cuenta1.getBalance());
+        System.out.println("El saldo de la cuenta2 es: " + cuenta2.getBalance());
     }
 }
