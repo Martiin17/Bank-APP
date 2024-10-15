@@ -80,7 +80,10 @@ class AccountTest {
     void depositCorrectAmountDecreseBalanceOfDepositAccount(){
         Account account1 = new Account(1234L, 1000.0);
         Account account2 = new Account(5678L, 1000.0);
-        account1.deposit_another_account(200, 5678, account2);
+        Verificator verificator = new Verificator();
+        verificator.addAccount(account1);
+        verificator.addAccount(account2);
+        account1.deposit_another_account(200, 5678, verificator);
         assertEquals(800.0, account1.getBalance());
     }
 
@@ -88,7 +91,10 @@ class AccountTest {
     void depositCorrectAmountIncreaseBalanceOfRecieverAccount(){
         Account account1 = new Account(1234L, 1000.0);
         Account account2 = new Account(5678L, 1000.0);
-        account1.deposit_another_account(200, 5678, account2);
+        Verificator verificator = new Verificator();
+        verificator.addAccount(account1);
+        verificator.addAccount(account2);
+        account1.deposit_another_account(200, 5678, verificator);
         assertEquals(1200.0, account2.getBalance());
     }
 
@@ -96,13 +102,31 @@ class AccountTest {
     void depositNegativeAmountShouldReturnFalse() {
         Account account1 = new Account(1234L, 1000.0);
         Account account2 = new Account(5678L, 1000.0);
-        assertFalse(account1.deposit_another_account(-100, 5678, account2));
+        Verificator verificator = new Verificator();
+        verificator.addAccount(account1);
+        verificator.addAccount(account2);
+        assertFalse(account1.deposit_another_account(-100, 5678, verificator));
     }
 
     @Test
     void depositShouldReturnFalseIfAmountExceedsBalance() {
         Account account1 = new Account(1234L, 1000.0);
         Account account2 = new Account(5678L, 1000.0);
-        assertFalse(account1.deposit_another_account(1001, 5678, account2));
+        Verificator verificator = new Verificator();
+        verificator.addAccount(account1);
+        verificator.addAccount(account2);
+        assertFalse(account1.deposit_another_account(1001, 5678, verificator));
     }
+
+    @Test
+    void transferShouldReturnFalseIfAccountDontExist() {
+        Account account1 = new Account(1234L, 1000.0);
+        Account account2 = new Account(5678L, 1000.0);
+        Verificator verificator = new Verificator();
+        verificator.addAccount(account1);
+        verificator.addAccount(account2);
+        assertFalse(account1.deposit_another_account(200, 9999, verificator));
+    }
+
+
 }

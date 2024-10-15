@@ -8,6 +8,7 @@ import io.cucumber.java.en.*;
 public class AccountSteps {
     private Account account;
     private Account account2;
+    private Verificator verificator;
     private boolean operationResult;
 
     @Given("I create an account with CBU {long}")
@@ -30,6 +31,9 @@ public class AccountSteps {
     public void createAccountsWithCBUAndBalance(long cbu, Double balance, long cbu2, Double balance2) {
         account = new Account(cbu, balance);
         account2 = new Account(cbu2, balance2);
+        verificator = new Verificator();
+        verificator.addAccount(account);
+        verificator.addAccount(account2);
     }
 
     @When("I deposit {double} into the account")
@@ -52,14 +56,14 @@ public class AccountSteps {
         operationResult = account.withdraw(amount);
     }
 
-    @When("I deposit {double} into the second account")
-    public void depositToSecondAccount(Double amount) {
-        account.deposit_another_account(amount, account2.getCbu(), account2);
+    @When("I transfer {double} into the second account")
+    public void transferToSecondAccount(Double amount) {
+        account.deposit_another_account(amount, account2.getCbu(), verificator);
     }
 
-    @When("I try to deposit {double} into the second account")
-    public void tryToDepositIntoSecondAccount(Double amount) {
-        account.deposit_another_account(amount, account2.getCbu(), account2);
+    @When("I try to transfer {double} into the second account")
+    public void tryToTransferIntoSecondAccount(Double amount) {
+        account.deposit_another_account(amount, account2.getCbu(), verificator);
     }
 
     @Then("The account balance should be {double}")
@@ -67,8 +71,11 @@ public class AccountSteps {
         assertEquals(expectedBalance, account.getBalance(), 0.01);
     }
 
-    @Then("The operation should be denied")
+    @Then("The operation should be denied due to negative amount")
     public void verifyOperationDenied() {
+        if(!operationResult) {
+            System.out.println("negative amount");
+        }
         assertFalse(operationResult);
     }
 
@@ -77,8 +84,11 @@ public class AccountSteps {
         assertEquals(expectedBalance, account.getBalance(), 0.01);
     }
 
-    @Then("The operation should be denied due to insufficient funds")
+    @Then("The operation should be denied due to insufficient founds")
     public void verifyInsufficientFunds() {
+        if(!operationResult) {
+            System.out.println("insufficient founds");
+        }
         assertFalse(operationResult);
     }
 

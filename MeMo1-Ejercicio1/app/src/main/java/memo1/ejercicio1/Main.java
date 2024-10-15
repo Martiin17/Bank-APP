@@ -33,8 +33,11 @@ public class Main {
         //Ejercicio2
         Account cuenta1 = new Account(1234L, 1000.0);
         Account cuenta2 = new Account(5678L, 1000.0);
+        Verificator verificador = new Verificator();
+        verificador.addAccount(cuenta1);
+        verificador.addAccount(cuenta2);
 
-        cuenta1.deposit_another_account(200, 5678, cuenta2);
+        cuenta1.deposit_another_account(200, 5678, verificador);
 
         System.out.println("El saldo de la cuenta1 es: " + cuenta1.getBalance());
         System.out.println("El saldo de la cuenta2 es: " + cuenta2.getBalance());
