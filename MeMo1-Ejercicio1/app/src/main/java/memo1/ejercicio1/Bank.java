@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
-    private List<Account> accounts;
     private List<Sucursal> sucursales;
 
     public Bank(){
-        this.accounts = new ArrayList<Account>();
         this.sucursales = new ArrayList<Sucursal>();
     }
 
-    public Bank(List<Account> accounts, List<Sucursal> sucursales){
-        this.accounts = accounts;
+    public Bank(List<Sucursal> sucursales){
         this.sucursales = sucursales;
     }
 

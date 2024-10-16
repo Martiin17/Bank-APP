@@ -116,4 +116,9 @@ class AccountTest {
     void depositShouldReturnFalseIfAmountExceedsBalance() {
         assertFalse(account1.transferWithCBU(1001, account2.getCbu()));
     }
+
+    @Test
+    void transferShouldReturnFalseIfAccountDontExist() {
+        assertFalse(account1.transferWithCBU(200, 9999));
+    }
 }
