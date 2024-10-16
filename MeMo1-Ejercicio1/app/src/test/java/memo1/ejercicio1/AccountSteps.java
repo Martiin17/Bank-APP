@@ -52,12 +52,12 @@ public class AccountSteps {
         operationResult = account.withdraw(amount);
     }
 
-    @When("I deposit {double} into the second account")
+    @When("I transfer {double} into the second account")
     public void depositToSecondAccount(Double amount) {
         account.deposit_another_account(amount, account2.getCbu(), account2);
     }
 
-    @When("I try to deposit {double} into the second account")
+    @When("I try to transfer {double} into the second account")
     public void tryToDepositIntoSecondAccount(Double amount) {
         account.deposit_another_account(amount, account2.getCbu(), account2);
     }
@@ -67,8 +67,11 @@ public class AccountSteps {
         assertEquals(expectedBalance, account.getBalance(), 0.01);
     }
 
-    @Then("The operation should be denied")
+    @Then("The operation should be denied due to negative amount")
     public void verifyOperationDenied() {
+        if(!operationResult) {
+            System.out.println("negative amount");
+        }
         assertFalse(operationResult);
     }
 
@@ -77,8 +80,11 @@ public class AccountSteps {
         assertEquals(expectedBalance, account.getBalance(), 0.01);
     }
 
-    @Then("The operation should be denied due to insufficient funds")
+    @Then("The operation should be denied due to insufficient founds")
     public void verifyInsufficientFunds() {
+         if(!operationResult) {
+            System.out.println("insufficient founds");
+        }
         assertFalse(operationResult);
     }
 
