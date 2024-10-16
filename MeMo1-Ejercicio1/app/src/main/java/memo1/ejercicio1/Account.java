@@ -76,17 +76,6 @@ public class Account {
         return true;
     }
 
-    public boolean deposit_another_account(double amount, long cbu, Account destinatario){
-        if (amount <= 0 || amount > balance) {
-            return false;
-        }
-        if (destinatario.cbu == cbu){
-            this.balance -= amount;
-            destinatario.balance += amount;
-        }
-        return true;
-    }
-
     public boolean transferWithCBU(double amount, long cbu){
         if (amount <= 0 || amount > balance) {
             return false;

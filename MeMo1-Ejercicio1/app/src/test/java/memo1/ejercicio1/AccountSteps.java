@@ -9,6 +9,8 @@ public class AccountSteps {
     private Account account;
     private Account account2;
     private boolean operationResult;
+    private Sucursal sucursal1;
+    private Bank bank;
 
     @Given("I create an account with CBU {long}")
     public void createAccountWithDefaultBalance(long cbu) {
@@ -30,6 +32,13 @@ public class AccountSteps {
     public void createAccountsWithCBUAndBalance(long cbu, Double balance, long cbu2, Double balance2) {
         account = new Account(cbu, balance);
         account2 = new Account(cbu2, balance2);
+        sucursal1 = new Sucursal(1, "PrimeraJunta  829");
+        bank = new Bank();
+        bank.addSucursal(sucursal1);
+        sucursal1.addAccount(account);
+        sucursal1.addAccount(account2);
+        account.setBank(bank);
+        account2.setBank(bank);
     }
 
     @When("I deposit {double} into the account")
@@ -54,12 +63,12 @@ public class AccountSteps {
 
     @When("I transfer {double} into the second account")
     public void depositToSecondAccount(Double amount) {
-        account.deposit_another_account(amount, account2.getCbu(), account2);
+        account.transferWithCBU(amount, account2.getCbu());
     }
 
     @When("I try to transfer {double} into the second account")
     public void tryToDepositIntoSecondAccount(Double amount) {
-        account.deposit_another_account(amount, account2.getCbu(), account2);
+        account.transferWithCBU(amount, account2.getCbu());
     }
 
     @Then("The account balance should be {double}")

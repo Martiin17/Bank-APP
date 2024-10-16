@@ -3,9 +3,28 @@ package memo1.ejercicio1;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
+
 // Pruebas unitarias
 
 class AccountTest {
+    private Account account1;
+    private Account account2;
+    private Sucursal sucursal1;
+    private Bank bank;
+
+    @BeforeEach
+    void setUp() {
+        account1 = new Account(1234L, 1000.0);
+        account2 = new Account(5678L, 1000.0);
+        sucursal1 = new Sucursal(1, "PrimeraJunta 829");
+        bank = new Bank();
+        bank.addSucursal(sucursal1);
+        sucursal1.addAccount(account1);
+        sucursal1.addAccount(account2);
+        account1.setBank(bank);
+        account2.setBank(bank);
+    }
 
     @Test
     void defaultConstructorShouldInitializeBalanceToZero() {
@@ -78,31 +97,23 @@ class AccountTest {
 
     @Test
     void depositCorrectAmountDecreseBalanceOfDepositAccount(){
-        Account account1 = new Account(1234L, 1000.0);
-        Account account2 = new Account(5678L, 1000.0);
-        account1.deposit_another_account(200, 5678, account2);
+        account1.transferWithCBU(200, account2.getCbu());
         assertEquals(800.0, account1.getBalance());
     }
 
     @Test
     void depositCorrectAmountIncreaseBalanceOfRecieverAccount(){
-        Account account1 = new Account(1234L, 1000.0);
-        Account account2 = new Account(5678L, 1000.0);
-        account1.deposit_another_account(200, 5678, account2);
+        account1.transferWithCBU(200, account2.getCbu());
         assertEquals(1200.0, account2.getBalance());
     }
 
     @Test
     void depositNegativeAmountShouldReturnFalse() {
-        Account account1 = new Account(1234L, 1000.0);
-        Account account2 = new Account(5678L, 1000.0);
-        assertFalse(account1.deposit_another_account(-100, 5678, account2));
+        assertFalse(account1.transferWithCBU(-100, account2.getCbu()));
     }
 
     @Test
     void depositShouldReturnFalseIfAmountExceedsBalance() {
-        Account account1 = new Account(1234L, 1000.0);
-        Account account2 = new Account(5678L, 1000.0);
-        assertFalse(account1.deposit_another_account(1001, 5678, account2));
+        assertFalse(account1.transferWithCBU(1001, account2.getCbu()));
     }
 }
