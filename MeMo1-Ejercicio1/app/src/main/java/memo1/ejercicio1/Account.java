@@ -3,6 +3,7 @@ package memo1.ejercicio1;
 public class Account {
     private Long cbu;
     private double balance;
+    private String alias;
 
     public Account() {
         this.balance = 0.0;
@@ -29,6 +30,13 @@ public class Account {
 
     public void setCbu(Long cbu) {
         this.cbu = cbu;
+    }
+
+    public String getAlias() {
+        return this.alias;
+    }
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public double getBalance() {
