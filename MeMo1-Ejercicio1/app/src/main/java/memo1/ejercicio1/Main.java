@@ -33,8 +33,15 @@ public class Main {
         //Ejercicio2
         Account cuenta1 = new Account(1234L, 1000.0);
         Account cuenta2 = new Account(5678L, 1000.0);
+        Sucursal sucursal1 = new Sucursal(1, "PrimeraJunta  829");
+        Bank bank = new Bank();
+        bank.addSucursal(sucursal1);
+        sucursal1.addAccount(cuenta1);
+        sucursal1.addAccount(cuenta2);
+        cuenta1.setBank(bank);
+        cuenta2.setBank(bank);
 
-        cuenta1.deposit_another_account(200, 5678, cuenta2);
+        cuenta1.transferWithCBU(200, 5678);
 
         System.out.println("El saldo de la cuenta1 es: " + cuenta1.getBalance());
         System.out.println("El saldo de la cuenta2 es: " + cuenta2.getBalance());

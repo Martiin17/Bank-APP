@@ -5,6 +5,7 @@ public class Account {
     private Long cbu;
     private double balance;
     private String alias;
+    private Bank bank;
 
     public Account() {
         this.balance = 0.0;
@@ -31,6 +32,14 @@ public class Account {
 
     public void setCbu(Long cbu) {
         this.cbu = cbu;
+    }
+
+    public void setBank(Bank bank){
+        this.bank = bank;
+    }
+
+    public Bank getBank(){
+        return this.bank;
     }
 
     public String getAlias() {
@@ -76,6 +85,28 @@ public class Account {
             destinatario.balance += amount;
         }
         return true;
+    }
+
+    public boolean transferWithCBU(double amount, long cbu){
+        if (amount <= 0 || amount > balance) {
+            return false;
+        }
+        if (this.bank.transferWithCBU(this, amount, cbu)){
+            this.balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean transferWithAlias(double amount, String alias){
+        if (amount <= 0 || amount > balance) {
+            return false;
+        }
+        if (this.bank.transferWithAlias(this, amount, alias)){
+            this.balance -= amount;
+            return true;
+        }
+        return false;
     }
 
 }
