@@ -1,5 +1,6 @@
 package memo1.ejercicio1;
 
+//Agregar excepciones
 public class Account {
     private Long cbu;
     private double balance;

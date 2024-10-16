@@ -17,12 +17,18 @@ public class Bank {
         this.sucursales = sucursales;
     }
 
-    public boolean addAccount(Account account){
-        return this.accounts.add(account);
+    public List<Sucursal> getSucursales(){
+        return this.sucursales;
     }
 
-    public boolean removeAccount(Account account){
-        return this.accounts.remove(account);
+    public List<Account> getAccounts(){
+        List<Account> lista = new ArrayList<Account>();
+        for(Sucursal sucursal : this.sucursales) {
+            for(Account account : sucursal.getAccounts()){
+                lista.add(account);
+            }
+        }
+        return lista;
     }
 
     public boolean addSucursal(Sucursal sucursal){
@@ -33,8 +39,8 @@ public class Bank {
         return this.sucursales.remove(sucursal);
     }
 
-    public boolean transferWithCBU(Account accountSend, double amount, long cbu){
-        for(Account account : accounts) {
+    public boolean transferWithCBU(Account accountSender, double amount, long cbu){
+        for(Account account : this.getAccounts()) {
            if(cbu == account.getCbu()){
             account.setBalance(account.getBalance() + amount);
             return true;
@@ -43,8 +49,8 @@ public class Bank {
         return false;
     }
 
-    public boolean transferWithAlias(Account accountSend, double amount, String alias){
-        for(Account account : accounts) {
+    public boolean transferWithAlias(Account accountSender, double amount, String alias){
+        for(Account account : this.getAccounts()) {
            if(alias == account.getAlias()){
             account.setBalance(account.getBalance() + amount);
             return true;
