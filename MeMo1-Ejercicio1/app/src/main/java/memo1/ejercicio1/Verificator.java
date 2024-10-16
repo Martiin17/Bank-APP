@@ -3,6 +3,7 @@ package memo1.ejercicio1;
 import java.util.ArrayList;
 import java.util.List;
 
+//Borrar
 public class Verificator {
     private List<Account> accounts;
 
