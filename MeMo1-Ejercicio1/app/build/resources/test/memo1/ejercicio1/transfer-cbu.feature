@@ -1,4 +1,4 @@
-Feature: Transfer money
+Feature: Transfer money with CBU
  
   Scenario: Successfully transfer money
     Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0
@@ -16,3 +16,9 @@ Feature: Transfer money
     When I try to transfer 1100.0 into the second account
     Then The operation should be denied due to insufficient founds
     And The first account balance should remain 1000.0 and the second account balance should remain 1000.0
+
+  Scenario: Cannot transfer to inexistent cbu
+    Given An account with CBU 1234 and a balance of 1000.0 and a inexistent cbu 9999
+    When I try to transfer 200.0 to the cbu 9999
+    Then The operation should be denied due to inexistent cbu
+    And The account balance should remain 1000.0

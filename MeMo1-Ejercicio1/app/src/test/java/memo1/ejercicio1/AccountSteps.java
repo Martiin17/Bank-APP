@@ -41,6 +41,16 @@ public class AccountSteps {
         account2.setBank(bank);
     }
 
+    @Given("An account with CBU {int} and a balance of {double} and a inexistent cbu {long}")
+    public void createAccountsWithCBUAndBalance(long cbu, Double balance, long inexistentCbu){
+        account = new Account(cbu, balance);
+        sucursal1 = new Sucursal(1, "PrimeraJunta  829");
+        bank = new Bank();
+        bank.addSucursal(sucursal1);
+        sucursal1.addAccount(account);
+        account.setBank(bank);
+    }
+
     @When("I deposit {double} into the account")
     public void depositIntoAccount(double amount) {
         operationResult = account.deposit(amount);
@@ -71,6 +81,11 @@ public class AccountSteps {
         account.transferWithCBU(amount, account2.getCbu());
     }
 
+    @When("I try to transfer {double} to the cbu {long}")
+    public void tryToTransferToInexistentCBU(Double amount, long inexistentCbu) {
+        operationResult = account.transferWithCBU(amount, inexistentCbu);;
+    }
+
     @Then("The account balance should be {double}")
     public void verifyAccountBalance(double expectedBalance) {
         assertEquals(expectedBalance, account.getBalance(), 0.01);
@@ -90,12 +105,13 @@ public class AccountSteps {
     }
 
     @Then("The operation should be denied due to insufficient founds")
-    public void verifyInsufficientFunds() {
+    public void verifyInsufficientFounds() {
          if(!operationResult) {
             System.out.println("insufficient founds");
         }
         assertFalse(operationResult);
     }
+
 
     @Then("The first account balance should be {double} and the second account balance should be {double}")
     public void verifyAccountsBalance(Double expectedBalance, Double expectedBalance2) {
@@ -104,9 +120,22 @@ public class AccountSteps {
     }
 
     @Then("The first account balance should remain {double} and the second account balance should remain {double}")
-    public void VerifyAccountBalance(Double expectedBalance, Double expectedBalance2) {
+    public void VerifyAccountsBalance(Double expectedBalance, Double expectedBalance2) {
         assertEquals(expectedBalance, account.getBalance(), 0.01);
         assertEquals(expectedBalance2, account2.getBalance(), 0.01);
+    }
+
+   @Then("The operation should be denied due to inexistent cbu")
+    public void verifyInexistentCBU() {
+        if(!operationResult) {
+            System.out.println(" inexistent cbu");
+        }
+        assertFalse(operationResult);
+    }
+
+    @Then("The first account balance should remain {double}")
+    public void VerifyAccountBalance(Double expectedBalance) {
+        assertEquals(expectedBalance, account.getBalance(), 0.01);
     }
 
 }
