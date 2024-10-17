@@ -11,6 +11,7 @@ public class Account {
         this.balance = 0.0;
     }
 
+    //Patron builder?
     public Account(double balance) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
@@ -22,6 +23,35 @@ public class Account {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
+        if(bank.checkRepeatCBU(cbu)){
+            throw new IllegalArgumentException("The cbu is repeat");
+        }
+        this.cbu = cbu;
+        this.balance = balance;
+    }
+
+    public Account(String alias, double balance) {
+        if (balance < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative.");
+        }
+        if(bank.checkRepeatAlias(alias)){
+            throw new IllegalArgumentException("The alias is repeat");
+        }
+        this.alias = alias;
+        this.balance = balance;
+    }
+
+    public Account(Long cbu, double balance, String alias) {
+        if (balance < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative.");
+        }
+        if(bank.checkRepeatCBU(cbu)){
+            throw new IllegalArgumentException("The cbu is repeat");
+        }
+        if(bank.checkRepeatAlias(alias)){
+            throw new IllegalArgumentException("The alias is repeat");
+        }
+        this.alias = alias;
         this.cbu = cbu;
         this.balance = balance;
     }

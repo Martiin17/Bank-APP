@@ -55,4 +55,22 @@ public class Bank {
         }
         return false;
     }
+
+    public boolean checkRepeatCBU(long newCBU){
+        for(Account account : this.getAccounts()) {
+            if(newCBU == account.getCbu()){
+             return true;
+            }
+         }
+         return false;
+    }
+
+    public boolean checkRepeatAlias(String alias){
+        for(Account account : this.getAccounts()) {
+            if(alias == account.getAlias()){
+             return true;
+            }
+         }
+         return false;
+    }
 }
