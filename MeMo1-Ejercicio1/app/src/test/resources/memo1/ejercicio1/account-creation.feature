@@ -7,15 +7,15 @@ Feature: Account creation
     Given I create an account with CBU 987654321 and a balance of 500.0
     Then The account balance should be 500.0
 
-  Scenario: I cant create an account with a repeat cbu
+  Scenario: Cant create an account with a repeat cbu
     Given I create an account with CBU 987654321 and a balance of 500.0 
     When I try to create another account with CBU 987654321 and a balance of 500.0
     Then The first account should be create with a balance of 500.0
-    And the second account throw IllegalArgumentException
+    And The operation should be denied due to repeat CBU
 
-  Scenario: I cant create an account with a repeat alias
+  Scenario: Cant create an account with a repeat alias
     Given I create an account with alias hellow12 and a balance of 500.0
     When I try to create another account with alias hellow12 and a balance of 500.0
     Then The first account should be create with a balance of 500.0
-    And the second account throw IllegalArgumentException
+    And The operation should be denied due to repeat alias
 
