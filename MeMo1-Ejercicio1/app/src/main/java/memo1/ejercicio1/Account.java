@@ -11,14 +11,14 @@ public class Account {
         this.balance = 0.0;
     }
 
-    public Account(double balance) {
+    /*public Account(double balance) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
         this.balance = balance;
-    }
+    }*/
 
-    public Account(Long cbu, double balance) {
+    /*public Account(Long cbu, double balance) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
@@ -38,9 +38,9 @@ public class Account {
         }
         this.alias = alias;
         this.balance = balance;
-    }
+    }*/
 
-    public Account(Long cbu, double balance, String alias) {
+    public Account(Client titular, Long cbu, double balance, String alias) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
@@ -49,6 +49,9 @@ public class Account {
         }
         if(bank.checkRepeatAlias(alias)){
             throw new IllegalArgumentException("The alias is repeat");
+        }
+        if(titular == null){
+            throw new IllegalArgumentException("titular can not be null");
         }
         this.alias = alias;
         this.cbu = cbu;
@@ -106,25 +109,11 @@ public class Account {
     }
 
     public boolean transferWithCBU(double amount, long cbu){
-        if (amount <= 0 || amount > balance) {
-            return false;
-        }
-        if (this.bank.transferWithCBU(this, amount, cbu)){
-            this.balance -= amount;
-            return true;
-        }
-        return false;
+        return this.bank.transferWithCBU(this, amount, cbu);
     }
 
     public boolean transferWithAlias(double amount, String alias){
-        if (amount <= 0 || amount > balance) {
-            return false;
-        }
-        if (this.bank.transferWithAlias(this, amount, alias)){
-            this.balance -= amount;
-            return true;
-        }
-        return false;
+        return bank.transferWithAlias(this, amount, alias);
     }
 
 }

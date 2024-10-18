@@ -32,11 +32,18 @@ public class Client {
     }
 
     public boolean createAccountAsTitular(Sucursal sucursal, Long cbu, double balance, String alias){
-        Account newAccount = new Account(cbu, balance, alias);
+        Account newAccount = new Account(this, cbu, balance, alias);
         return sucursal.addAccount(newAccount);
     }
 
     public boolean joinAsCoTitular(Account account){
         return this.coTitularAccounts.add(account);
+    }
+
+    public long getMarrigeDate(){
+        if(this.marrige != null){
+            return this.marrigeDate;
+        }
+        return 0;
     }
 }
