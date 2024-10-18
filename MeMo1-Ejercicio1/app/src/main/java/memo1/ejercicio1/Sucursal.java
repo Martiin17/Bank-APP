@@ -9,13 +9,8 @@ public class Sucursal {
     private String direction;
     private List<Account> accounts;
 
-    public Sucursal(int sucursalNumber,  String direction){
-        this.sucursalNumber = sucursalNumber;
-        this.direction = direction;
-        this.accounts = new ArrayList<Account>(); //Poner patron de diseño builder para esto
-    }
-
     public Sucursal(int sucursalNumber,  String direction, String name){
+        this.accounts = new ArrayList<Account>();
         this.sucursalNumber = sucursalNumber;
         this.direction = direction;
         this.name = name;
@@ -35,10 +30,6 @@ public class Sucursal {
 
     private int getSucursalNumber(){
         return this.sucursalNumber;
-    }
-
-    private void setSucursalNumber(int sucursalNumber){
-        this.sucursalNumber = sucursalNumber;
     }
 
     private String getname(){

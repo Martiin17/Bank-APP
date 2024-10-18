@@ -73,4 +73,26 @@ public class Bank {
          }
          return false;
     }
+
+    public Sucursal searchAccountSucursalWithAlias(String alias){
+        for(Sucursal sucursal : this.sucursales){
+            for(Account account : this.getAccounts()) {
+                if(alias == account.getAlias()){
+                    return sucursal;
+                }
+             }
+        }
+        return null;
+    }
+
+    public Sucursal searchAccountSucursalWithCbu(long cbu){
+        for(Sucursal sucursal : this.sucursales){
+            for(Account account : this.getAccounts()) {
+                if(cbu == account.getCbu()){
+                    return sucursal;
+                }
+             }
+        }
+        return null;
+    }
 }

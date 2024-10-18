@@ -17,7 +17,7 @@ class AccountTest {
     void setUp() {
         account1 = new Account(1234L, 1000.0);
         account2 = new Account(5678L, 1000.0);
-        sucursal1 = new Sucursal(1, "PrimeraJunta 829");
+        sucursal1 = new Sucursal(1, "PrimeraJunta 829", "sucursal1");
         bank = new Bank();
         bank.addSucursal(sucursal1);
         sucursal1.addAccount(account1);

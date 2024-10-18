@@ -18,4 +18,3 @@ Feature: Account creation
     When I try to create another account with alias hellow12 and a balance of 500.0
     Then The first account should be create with a balance of 500.0
     And The operation should be denied due to repeat alias
-

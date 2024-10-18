@@ -11,7 +11,6 @@ public class Account {
         this.balance = 0.0;
     }
 
-    //Patron builder?
     public Account(double balance) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");

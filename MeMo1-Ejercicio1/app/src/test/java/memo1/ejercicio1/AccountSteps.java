@@ -32,7 +32,7 @@ public class AccountSteps {
     public void createAccountsWithCBUAndBalance(long cbu, Double balance, long cbu2, Double balance2) {
         account = new Account(cbu, balance);
         account2 = new Account(cbu2, balance2);
-        sucursal1 = new Sucursal(1, "PrimeraJunta  829");
+        sucursal1 = new Sucursal(1, "PrimeraJunta  829", "sucursal1");
         bank = new Bank();
         bank.addSucursal(sucursal1);
         sucursal1.addAccount(account);
@@ -44,7 +44,7 @@ public class AccountSteps {
     @Given("An account with CBU {int} and a balance of {double} and a inexistent cbu {long}")
     public void createAccountsWithCBUAndBalance(long cbu, Double balance, long inexistentCbu){
         account = new Account(cbu, balance);
-        sucursal1 = new Sucursal(1, "PrimeraJunta  829");
+        sucursal1 = new Sucursal(1, "PrimeraJunta  829", "sucursal1");
         bank = new Bank();
         bank.addSucursal(sucursal1);
         sucursal1.addAccount(account);
