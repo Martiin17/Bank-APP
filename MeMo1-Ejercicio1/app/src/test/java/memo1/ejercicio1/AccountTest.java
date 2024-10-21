@@ -8,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 // Pruebas unitarias
 
 class AccountTest {
-    //private Account account1;
-    //private Account account2;
     private Client client1;
     private Client client2;
     private Branch branch1;
@@ -76,7 +74,7 @@ class AccountTest {
 
     @Test
     void setBalanceShouldThrowExceptionIfBalanceIsNegative() {
-        assertThrows(IllegalArgumentException.class, () -> account1.setBalance(-1.0));
+        assertThrows(IllegalArgumentException.class, () -> account1.setBalance(-100.0));
     }
 
     @Test

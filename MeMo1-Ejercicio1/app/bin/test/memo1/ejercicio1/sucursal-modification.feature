@@ -14,7 +14,7 @@ Feature: Sucursal dates modification
         Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16"
         When I try to modificate sucursalNumber to 2
         Then The sucursalNumber should be 1
-        and The operation should be denied due to cant modificate this date
+        And The operation should be denied due to cant modificate this date
     
     
   

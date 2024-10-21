@@ -19,11 +19,11 @@ Feature: Client dates modification
         Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413"
         When I try to modificate born date to "20241018"
         Then The born date should be "19900413"
-        and The operation should be denied due to cant modificate this date
+        And The operation should be denied due to cant modificate this date
 
     Scenario: Cant modificate DNI
         Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413"
         When I try to modificate DNI to 12346
         Then The DNI should be 12345
-        and The operation should be denied due to cant modificate this date
+        And The operation should be denied due to cant modificate this date
     
