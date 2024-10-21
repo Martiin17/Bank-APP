@@ -31,8 +31,13 @@ public class Client {
         this.marrigeDate = marrigeDate;
     }
 
-    public boolean createAccountAsTitular(Sucursal sucursal, Long cbu, double balance, String alias){
-        Account newAccount = new Account(this, cbu, balance, alias);
+    public boolean createAccountAsTitular(Bank bank, Sucursal sucursal, Long cbu, double balance, String alias){
+        Account newAccount = new Account(bank, this, cbu, balance, alias);
+        return sucursal.addAccount(newAccount);
+    }
+
+    public boolean createAccountAsTitular(Bank bank, Sucursal sucursal, Long cbu, String alias){
+        Account newAccount = new Account(bank, this, cbu, alias);
         return sucursal.addAccount(newAccount);
     }
 
@@ -45,5 +50,41 @@ public class Client {
             return this.marrigeDate;
         }
         return 0;
+    }
+
+    public Account getOwnerAccountWithCBU(long cbu){
+        for(Account account : this.titularAccounts){
+            if(account.getCbu() == cbu){
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public Account getOwnerAccountWithAlias(String alias){
+        for(Account account : this.titularAccounts){
+            if(account.getAlias() == alias){
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public Account getCoOwnerAccountWithCBU(long cbu){
+        for(Account account : this.coTitularAccounts){
+            if(account.getCbu() == cbu){
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public Account getCoOwnerAccountWithAlias(String alias){
+        for(Account account : this.coTitularAccounts){
+            if(account.getAlias() == alias){
+                return account;
+            }
+        }
+        return null;
     }
 }

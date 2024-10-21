@@ -10,7 +10,7 @@ Feature: Search where an account is located in a sucursal
     When I look for the account branch
     Then The operation should be denied due to inexistent cbu
 
-     Scenario: Cant find the branch with alias
+  Scenario: Cant find the branch with alias
     Given A dont exist alias hellow12
     When I look for the account branch
     Then The operation should be denied due to inexistent alias

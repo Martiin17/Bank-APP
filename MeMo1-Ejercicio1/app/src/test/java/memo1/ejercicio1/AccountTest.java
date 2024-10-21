@@ -10,115 +10,198 @@ import org.junit.jupiter.api.BeforeEach;
 class AccountTest {
     private Account account1;
     private Account account2;
+    private Client client1;
+    private Client client2;
     private Sucursal sucursal1;
     private Bank bank;
 
     @BeforeEach
     void setUp() {
-        account1 = new Account(1234L, 1000.0);
-        account2 = new Account(5678L, 1000.0);
-        sucursal1 = new Sucursal(1, "PrimeraJunta 829", "sucursal1");
+        client1 = new Client(12345, "Math", "Johnson", "Street 14", 19900413);
+        client2 = new Client(56789, "Kamala", "Harrison", "Street 14", 19911013);
         bank = new Bank();
+        sucursal1 = new Sucursal(1, "PrimeraJunta 829", "sucursal1");
         bank.addSucursal(sucursal1);
-        sucursal1.addAccount(account1);
-        sucursal1.addAccount(account2);
-        account1.setBank(bank);
-        account2.setBank(bank);
+        client1.createAccountAsTitular(bank, sucursal1, 123456789L, 1000.0, "hellow12");
+        client2.createAccountAsTitular(bank, sucursal1, 987654321L, 1000.0, "bye14");
     }
 
     @Test
     void defaultConstructorShouldInitializeBalanceToZero() {
-        Account account = new Account();
+        client1.createAccountAsTitular(bank, sucursal1, 123456789l, "hellow12");
+        Account account = bank.getAccountByCBU(123456789);
         assertEquals(0.0, account.getBalance());
     }
 
     @Test
     void constructorShouldSetBalanceCorrectly() {
-        Account account = new Account(100.0);
-        assertEquals(100.0, account.getBalance());
+        client1.createAccountAsTitular(bank, sucursal1, 123456789l, 1000.0, "hellow12");
+        Account account = bank.getAccountByCBU(123456789);
+        assertEquals(1000.0, account.getBalance());
     }
 
     @Test
     void constructorShouldThrowExceptionIfBalanceIsNegative() {
-        assertThrows(IllegalArgumentException.class, () -> new Account(-50.0));
+        assertThrows(IllegalArgumentException.class, () -> new Account(bank, client1, 123456789l, -100.0, "hellow12"));
     }
 
     @Test
-    void constructorWithCbuShouldInitializeCorrectly() {
-        Account account = new Account(123456789L, 100.0);
+    void constructorShouldThrowExceptionIfDontHaveOwner() {
+        assertThrows(IllegalArgumentException.class, () -> new Account(bank, null, 123456789l, 1000.0, "hellow12"));
+    }
+
+    @Test
+    void constructorShouldThrowExceptionIfDontHaveBank() {
+        assertThrows(IllegalArgumentException.class, () -> new Account(null, client1, 123456789l, 1000.0, "hellow12"));
+    }
+
+    @Test
+    void constructorWithCBUAndAliasShouldInitializeCorrectly() {
+        client1.createAccountAsTitular(bank, sucursal1, 123456789l, 1000.0, "hellow12");
+        Account account = bank.getAccountByCBU(123456789);
         assertEquals(123456789L, account.getCbu());
-        assertEquals(100.0, account.getBalance());
+        assertEquals(1000.0, account.getBalance());
+        assertEquals("hellow12", account.getAlias());
+        assertEquals(bank, account.getBank());
     }
 
     @Test
     void setBalanceShouldThrowExceptionIfBalanceIsNegative() {
-        Account account = new Account();
+        Account account = bank.getAccountByCBU(123456789);
+        assertThrows(IllegalArgumentException.class, () -> account.setBalance(-1.0));
+    }
+
+    @Test
+    void createAccountWithRepeatCBUShouldReturnFalse() {
+        Account account = bank.getAccountByCBU(123456789);
+        assertThrows(IllegalArgumentException.class, () -> account.setBalance(-1.0));
+    }
+
+    @Test
+    void createAccountWithRepeatAliasShouldReturnFalse() {
+        Account account = bank.getAccountByCBU(123456789);
         assertThrows(IllegalArgumentException.class, () -> account.setBalance(-1.0));
     }
 
     @Test
     void depositShouldIncreaseBalance() {
-        Account account = new Account();
-        account.deposit(50.0);
-        assertEquals(50.0, account.getBalance());
+        Account account = bank.getAccountByCBU(123456789);
+        account.deposit(500.0);
+        assertEquals(1500.0, account.getBalance());
     }
 
     @Test
     void depositShouldReturnFalseForNegativeAmount() {
-        Account account = new Account();
-        assertFalse(account.deposit(-10.0));
+        Account account = bank.getAccountByCBU(123456789);
+        assertFalse(account.deposit(-100.0));
     }
 
     @Test
     void withdrawShouldDecreaseBalance() {
-        Account account = new Account(100.0);
-        assertTrue(account.withdraw(50.0));
-        assertEquals(50.0, account.getBalance());
+        Account account = bank.getAccountByCBU(123456789);
+        assertTrue(account.withdraw(500.0));
+        assertEquals(500.0, account.getBalance());
     }
 
     @Test
     void withdrawShouldReturnFalseIfAmountExceedsBalance() {
-        Account account = new Account(100.0);
-        assertFalse(account.withdraw(150.0));
+        Account account = bank.getAccountByCBU(123456789);
+        assertFalse(account.withdraw(1500.0));
     }
 
     @Test
     void withdrawShouldReturnFalseForNegativeAmount() {
-        Account account = new Account(100.0);
-        assertFalse(account.withdraw(-10.0));
+        Account account = bank.getAccountByCBU(123456789);
+        assertFalse(account.withdraw(-100.0));
     }
 
     @Test
     void withdrawShouldAllowExactAmount() {
-        Account account = new Account(100.0);
-        assertTrue(account.withdraw(100.0));
+        Account account = bank.getAccountByCBU(123456789);
+        assertTrue(account.withdraw(1000.0));
         assertEquals(0.0, account.getBalance());
     }
 
     @Test
-    void depositCorrectAmountDecreseBalanceOfDepositAccount(){
+    void transferWithCBUCorrectAmountDecreseBalanceOfDepositAccount(){ //Hasta aca llegue
+        Account account = bank.getAccountByCBU(123456789);
         account1.transferWithCBU(200, account2.getCbu());
         assertEquals(800.0, account1.getBalance());
     }
 
     @Test
-    void depositCorrectAmountIncreaseBalanceOfRecieverAccount(){
+    void transferWithCBUtCorrectAmountIncreaseBalanceOfRecieverAccount(){
         account1.transferWithCBU(200, account2.getCbu());
         assertEquals(1200.0, account2.getBalance());
     }
 
     @Test
-    void depositNegativeAmountShouldReturnFalse() {
+    void transferWithAliasCorrectAmountDecreseBalanceOfDepositAccount(){ //Hasta aca llegue
+        Account account = bank.getAccountByCBU(123456789);
+        account1.transferWithCBU(200, account2.getCbu());
+        assertEquals(800.0, account1.getBalance());
+    }
+
+    @Test
+    void transferWithAliastCorrectAmountIncreaseBalanceOfRecieverAccount(){
+        account1.transferWithCBU(200, account2.getCbu());
+        assertEquals(1200.0, account2.getBalance());
+    }
+
+    @Test
+    void transferWithCBUNegativeAmountShouldReturnFalse() {
         assertFalse(account1.transferWithCBU(-100, account2.getCbu()));
     }
 
     @Test
-    void depositShouldReturnFalseIfAmountExceedsBalance() {
+    void transferWithCBUShouldReturnFalseIfAmountExceedsBalance() {
         assertFalse(account1.transferWithCBU(1001, account2.getCbu()));
     }
 
     @Test
-    void transferShouldReturnFalseIfAccountDontExist() {
+    void transferWithAliasNegativeAmountShouldReturnFalse() {
+        assertFalse(account1.transferWithCBU(-100, account2.getCbu()));
+    }
+
+    @Test
+    void transferWithAliasShouldReturnFalseIfAmountExceedsBalance() {
+        assertFalse(account1.transferWithCBU(1001, account2.getCbu()));
+    }
+
+    @Test
+    void transferWithCBUShouldReturnFalseIfAccountDontExist() {
         assertFalse(account1.transferWithCBU(200, 9999));
     }
+
+    @Test
+    void transferWithAliasShouldReturnFalseIfAccountDontExist() {
+        assertFalse(account1.transferWithCBU(200, 9999));
+    }
+
+    @Test
+    void searchForMarriageInexistentAccountReturnFalseIfAccounDontExist() {
+        assertFalse(account1.transferWithCBU(200, 9999));
+    }
+
+    @Test
+    void searchForBranchWithCBUInexistentAccountReturnFalseIfAccounDontExist() {
+        assertFalse(account1.transferWithCBU(200, 9999));
+    }
+
+    @Test
+    void searchForBranchWithAliasInexistentAccountReturnFalseIfAccounDontExist() {
+        assertFalse(account1.transferWithCBU(200, 9999));
+    }
+
+    @Test
+    void createBranchWithRepeatBranchNumberShouldReturnFalse() {
+        assertFalse(account1.transferWithCBU(200, 9999));
+    }
+
+    @Test
+    void RemoveBranchWithClientsShouldReturnFalse() {
+        assertFalse(account1.transferWithCBU(200, 9999));
+    }
+
+
 }

@@ -20,6 +20,24 @@ public class Bank {
         this.nowHour = 1301;
     }
 
+    public Account getAccountByCBU(long cbu){
+        for(Account account : this.getAccounts()){
+            if(cbu == account.getCbu()){
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public Account getAccountByAlias(String alias){
+        for(Account account : this.getAccounts()){
+            if(alias == account.getAlias()){
+                return account;
+            }
+        }
+        return null;
+    }
+
     public void incrementateLastCorrelativeNumber(){
         this.lastCorrelativeNumber += 1;
     }

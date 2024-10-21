@@ -7,9 +7,9 @@ public class Account {
     private String alias;
     private Bank bank;
 
-    public Account() {
+    /*public Account() {
         this.balance = 0.0;
-    }
+    }*/
 
     /*public Account(double balance) {
         if (balance < 0) {
@@ -40,7 +40,7 @@ public class Account {
         this.balance = balance;
     }*/
 
-    public Account(Client titular, Long cbu, double balance, String alias) {
+    public Account(Bank bank, Client titular, Long cbu, String alias) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
@@ -53,9 +53,35 @@ public class Account {
         if(titular == null){
             throw new IllegalArgumentException("titular can not be null");
         }
+        if(bank == null){
+            throw new IllegalArgumentException("bank can not be null");
+        }
+        this.alias = alias;
+        this.cbu = cbu;
+        this.balance = 0;
+        this.bank = bank;
+    }
+
+    public Account(Bank bank, Client titular, Long cbu, double balance, String alias) {
+        if (balance < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative.");
+        }
+        if(bank.checkRepeatCBU(cbu)){
+            throw new IllegalArgumentException("The cbu is repeat");
+        }
+        if(bank.checkRepeatAlias(alias)){
+            throw new IllegalArgumentException("The alias is repeat");
+        }
+        if(titular == null){
+            throw new IllegalArgumentException("titular can not be null");
+        }
+        if(bank == null){
+            throw new IllegalArgumentException("bank can not be null");
+        }
         this.alias = alias;
         this.cbu = cbu;
         this.balance = balance;
+        this.bank = bank;
     }
 
     public Long getCbu() {

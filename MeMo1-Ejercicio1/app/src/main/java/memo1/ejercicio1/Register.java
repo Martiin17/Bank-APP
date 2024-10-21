@@ -8,7 +8,7 @@ public class Register {
     private long date; 
     private int hour;
     private String typeOfTransaction;
-    private int amount;
+    private double amount;
     private List<Account> accounts;
 
     public Register(long correlativeNumber, long date, int hour, String typeOfTransaction, double amount, List<Account> accounts){
