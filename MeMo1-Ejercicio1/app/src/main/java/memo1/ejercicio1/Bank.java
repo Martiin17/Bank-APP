@@ -71,10 +71,28 @@ public class Bank {
         return this.branches;
     }
 
+    public Branch getBranch(int branchNumber){
+        for(Branch branch : this.branches) {
+            if(branch.getBranchNumber() == branchNumber){
+                return branch;
+            }
+        }
+        return null;
+    }
+
+    public Client getClient(long DNI){
+        for(Client client : this.clients) {
+            if(client.getDNI() == DNI){
+                return client;
+            }
+        }
+        return null;
+    }
+
     public List<Account> getAccounts(){
         List<Account> lista = new ArrayList<Account>();
-        for(Branch sucursal : this.branches) {
-            for(Account account : sucursal.getAccounts()){
+        for(Branch branch : this.branches) {
+            for(Account account : branch.getAccounts()){
                 lista.add(account);
             }
         }
@@ -91,7 +109,10 @@ public class Bank {
     }
 
     public boolean removeBranch(Branch branch){
-        return this.branches.remove(branch);
+        if(branch.getAccounts().size() == 0){
+            return this.branches.remove(branch);
+        }
+       throw new IllegalArgumentException("No se puede eliminar branch con cuentas vigentes");
     }
 
     public boolean transferWithCBU(Account accountSender, double amount, long cbu){
@@ -180,7 +201,7 @@ public class Bank {
                 }
              }
         }
-        return null;
+        throw new IllegalArgumentException("Dont exist this alias");
     }
     public Branch searchAccountSucursalWithCbu(long cbu){
         for(Branch sucursal : this.branches){
@@ -190,10 +211,14 @@ public class Bank {
                 }
              }
         }
-        return null;
+        throw new IllegalArgumentException("Dont exist this cbu");
     }
 
-    public long searchMarrigeDate(Client client){ //Devuelve 0 si no se caso
+    public long searchMarrigeDate(long DNI){ //Devuelve 0 si no se caso
+        Client client  = this.getClient(DNI);
+        if(client == null){
+            throw new IllegalArgumentException("Dont exist this DNI");
+        }
         return client.getMarrigeDate();
     }
 }

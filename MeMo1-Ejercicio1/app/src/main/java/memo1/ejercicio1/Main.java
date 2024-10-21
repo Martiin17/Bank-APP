@@ -2,6 +2,7 @@ package memo1.ejercicio1;
 
 public class Main {
     public static void main(String[] args) {
+        /* 
         // Crear una instancia de Account usando el constructor sin argumentos
         Account account1 = new Account();
         account1.setCbu(123456789L); // Asignar un CBU
@@ -45,5 +46,7 @@ public class Main {
 
         System.out.println("El saldo de la cuenta1 es: " + cuenta1.getBalance());
         System.out.println("El saldo de la cuenta2 es: " + cuenta2.getBalance());
+    */
     }
+    
 }
