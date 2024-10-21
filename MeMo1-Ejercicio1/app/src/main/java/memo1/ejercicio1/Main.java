@@ -2,6 +2,21 @@ package memo1.ejercicio1;
 
 public class Main {
     public static void main(String[] args) {
+
+        Bank bank = new Bank();
+        bank.createBranch(1, "Street 15", "branch1");
+        bank.CreateClient(12345, "Math", "Johnson",  "Street 14", 19900413);
+        bank.CreateClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
+        Branch branch1 = bank.getBranch(1);
+        Client client1 = bank.getClient(12345);
+        Client client2 = bank.getClient(56789);
+        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
+        client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
+        Account account1 = bank.getAccountByCBU(123456789);
+        Account account2 = bank.getAccountByCBU(987654321L);
+
+        client1.deposit(account1, 500.0);
+        System.out.println(account1.getBalance());
         /* 
         // Crear una instancia de Account usando el constructor sin argumentos
         Account account1 = new Account();

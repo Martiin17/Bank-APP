@@ -43,10 +43,14 @@ public class Client {
             throw new IllegalArgumentException("No se puede repetir CBU");
         }
         Account newAccount = new Account(bank, this, cbu, balance, alias);
+        this.ownerAccounts.add(newAccount);
         return sucursal.addAccount(newAccount);
     }
 
-    public boolean createAccountAsTitular(Bank bank, Branch sucursal, Long cbu, String alias){
+    public boolean createAccountAsTitular(Bank bank, Branch branch, Long cbu, String alias){
+        if(branch == null){
+            throw new NullPointerException("branch cannot be null");
+        }
         if(bank.checkRepeatAlias(alias)){
             throw new IllegalArgumentException("No se puede repetir alias");
         }
@@ -54,7 +58,8 @@ public class Client {
             throw new IllegalArgumentException("No se puede repetir CBU");
         }
         Account newAccount = new Account(bank, this, cbu, alias);
-        return sucursal.addAccount(newAccount);
+        this.ownerAccounts.add(newAccount);
+        return branch.addAccount(newAccount);
     }
 
     public boolean joinAsCoTitular(Account account){

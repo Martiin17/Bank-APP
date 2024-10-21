@@ -20,7 +20,7 @@ class AccountTest {
     @BeforeEach
     void setUp() {
         bank = new Bank();
-        bank.createBranch(1, "Street 15", "branch1")
+        bank.createBranch(1, "Street 15", "branch1");
         bank.CreateClient(12345, "Math", "Johnson",  "Street 14", 19900413);
         bank.CreateClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
         branch1 = bank.getBranch(1);
@@ -34,36 +34,39 @@ class AccountTest {
 
     @Test
     void defaultConstructorShouldInitializeBalanceToZero() {
-        client1.createAccountAsTitular(bank, branch1, 123456789l, "hellow12");
-        Account account = bank.getAccountByCBU(123456789);
+        client1.createAccountAsTitular(bank, branch1, 12345l, "test1");
+        Account account = bank.getAccountByCBU(12345);
         assertEquals(0.0, account.getBalance());
     }
 
     @Test
     void constructorShouldSetBalanceCorrectly() {
-        client1.createAccountAsTitular(bank, branch1, 123456789l, 1000.0, "hellow12");
         Account account = bank.getAccountByCBU(123456789);
         assertEquals(1000.0, account.getBalance());
     }
 
     @Test
     void constructorShouldThrowExceptionIfBalanceIsNegative() {
-        assertThrows(IllegalArgumentException.class, () -> new Account(bank, client1, 123456789l, -100.0, "hellow12"));
+        assertThrows(IllegalArgumentException.class, () -> client1.createAccountAsTitular(bank, branch1, 12345l, -100.0, "test2"));
     }
 
     @Test
-    void constructorShouldThrowExceptionIfDontHaveOwner() {
-        assertThrows(IllegalArgumentException.class, () -> new Account(bank, null, 123456789l, 1000.0, "hellow12"));
+    void constructorShouldThrowExceptionIfDontHaveBranch() {
+        assertThrows(NullPointerException.class, () ->  client1.createAccountAsTitular(bank, null, 12345l, 1000.0, "test2"));
     }
 
     @Test
     void constructorShouldThrowExceptionIfDontHaveBank() {
-        assertThrows(IllegalArgumentException.class, () -> new Account(null, client1, 123456789l, 1000.0, "hellow12"));
+        assertThrows(NullPointerException.class, () -> client1.createAccountAsTitular(null, branch1, 12345l, 1000.0, "test2"));
+    }
+
+    @Test
+    void constructorShouldThrowExceptionIfDontHaveOwner() {
+        assertThrows(IllegalArgumentException.class, () -> new Account(bank, null, 12345l, "test12"));
     }
 
     @Test
     void constructorWithCBUAndAliasShouldInitializeCorrectly() {
-        client1.createAccountAsTitular(bank, branch1, 123456789l, 1000.0, "hellow12");
         assertEquals(123456789L, account1.getCbu());
         assertEquals(1000.0, account1.getBalance());
         assertEquals("hellow12", account1.getAlias());
@@ -115,7 +118,7 @@ class AccountTest {
 
     @Test
     void withdrawShouldAllowExactAmount() {
-        assertTrue((client1.withdraw(account1, 1000.0)));
+        assertTrue(client1.withdraw(account1, 1000.0));
         assertEquals(0.0, account1.getBalance());
     }
 

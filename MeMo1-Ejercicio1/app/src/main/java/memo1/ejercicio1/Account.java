@@ -40,10 +40,10 @@ public class Account {
             throw new IllegalArgumentException("The alias is repeat");
         }
         if(titular == null){
-            throw new IllegalArgumentException("titular can not be null");
+            throw new NullPointerException("titular can not be null");
         }
         if(bank == null){
-            throw new IllegalArgumentException("bank can not be null");
+            throw new NullPointerException("bank can not be null");
         }
         this.alias = alias;
         this.cbu = cbu;

@@ -116,7 +116,9 @@ public class Bank {
     }
 
     public boolean transferWithCBU(Account accountSender, double amount, long cbu){
-        this.checkValidAmount(amount, accountSender.getBalance());
+        if(!this.checkValidAmount(amount, accountSender.getBalance())){
+            return false;
+        }
         for(Account account : this.getAccounts()) {
            if(cbu == account.getCbu()){
             accountSender.setBalance(accountSender.getBalance() - amount);
@@ -134,7 +136,9 @@ public class Bank {
     }
 
     public boolean transferWithAlias(Account accountSender, double amount, String alias){
-        this.checkValidAmount(amount, accountSender.getBalance());
+        if(!this.checkValidAmount(amount, accountSender.getBalance())){
+            return false;
+        }
         for(Account account : this.getAccounts()) {
            if(alias == account.getAlias()){
             accountSender.setBalance(accountSender.getBalance() - amount);
