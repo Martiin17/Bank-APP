@@ -1,44 +1,11 @@
 package memo1.ejercicio1;
 
-//Agregar excepciones
+
 public class Account {
     private Long cbu;
     private double balance;
     private String alias;
     private Bank bank;
-
-    /*public Account() {
-        this.balance = 0.0;
-    }*/
-
-    /*public Account(double balance) {
-        if (balance < 0) {
-            throw new IllegalArgumentException("Balance cannot be negative.");
-        }
-        this.balance = balance;
-    }*/
-
-    /*public Account(Long cbu, double balance) {
-        if (balance < 0) {
-            throw new IllegalArgumentException("Balance cannot be negative.");
-        }
-        if(bank.checkRepeatCBU(cbu)){
-            throw new IllegalArgumentException("The cbu is repeat");
-        }
-        this.cbu = cbu;
-        this.balance = balance;
-    }
-
-    public Account(String alias, double balance) {
-        if (balance < 0) {
-            throw new IllegalArgumentException("Balance cannot be negative.");
-        }
-        if(bank.checkRepeatAlias(alias)){
-            throw new IllegalArgumentException("The alias is repeat");
-        }
-        this.alias = alias;
-        this.balance = balance;
-    }*/
 
     public Account(Bank bank, Client titular, Long cbu, String alias) {
         if (balance < 0) {

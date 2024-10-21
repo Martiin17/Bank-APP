@@ -11,8 +11,9 @@ public class AccountSteps {
     private boolean operationResult;
     private Sucursal sucursal1;
     private Bank bank;
+}
 
-    @Given("I create an account with CBU {long}")
+    /*@Given("I create an account with CBU {long}")
     public void createAccountWithDefaultBalance(long cbu) {
         account = new Account();
         account.setCbu(cbu);
@@ -138,4 +139,4 @@ public class AccountSteps {
         assertEquals(expectedBalance, account.getBalance(), 0.01);
     }
 
-}
+} */

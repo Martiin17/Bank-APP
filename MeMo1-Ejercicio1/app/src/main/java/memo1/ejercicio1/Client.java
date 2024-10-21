@@ -9,8 +9,8 @@ public class Client {
     private String surname;
     private String direction;
     private long bornDate;
-    private List<Account> titularAccounts;
-    private List<Account> coTitularAccounts;
+    private List<Account> ownerAccounts;
+    private List<Account> coOwnerAccounts;
     private Account marrige;
     private long marrigeDate;
 
@@ -20,8 +20,8 @@ public class Client {
         this.surname = surname;
         this.direction = direction;
         this.bornDate = bornDate;
-        this.titularAccounts = new ArrayList<Account>();
-        this.coTitularAccounts = new ArrayList<Account>();
+        this.ownerAccounts = new ArrayList<Account>();
+        this.coOwnerAccounts = new ArrayList<Account>();
         this.marrige = null;
         this.marrigeDate = 0;
     }
@@ -42,7 +42,7 @@ public class Client {
     }
 
     public boolean joinAsCoTitular(Account account){
-        return this.coTitularAccounts.add(account);
+        return this.coOwnerAccounts.add(account);
     }
 
     public long getMarrigeDate(){
@@ -53,7 +53,7 @@ public class Client {
     }
 
     public Account getOwnerAccountWithCBU(long cbu){
-        for(Account account : this.titularAccounts){
+        for(Account account : this.ownerAccounts){
             if(account.getCbu() == cbu){
                 return account;
             }
@@ -62,7 +62,7 @@ public class Client {
     }
 
     public Account getOwnerAccountWithAlias(String alias){
-        for(Account account : this.titularAccounts){
+        for(Account account : this.ownerAccounts){
             if(account.getAlias() == alias){
                 return account;
             }
@@ -71,7 +71,7 @@ public class Client {
     }
 
     public Account getCoOwnerAccountWithCBU(long cbu){
-        for(Account account : this.coTitularAccounts){
+        for(Account account : this.coOwnerAccounts){
             if(account.getCbu() == cbu){
                 return account;
             }
@@ -80,11 +80,55 @@ public class Client {
     }
 
     public Account getCoOwnerAccountWithAlias(String alias){
-        for(Account account : this.coTitularAccounts){
+        for(Account account : this.coOwnerAccounts){
             if(account.getAlias() == alias){
                 return account;
             }
         }
         return null;
     }
+
+    public boolean checkAccountOwner(Account account){
+        for(Account account1 : this.ownerAccounts){
+            if(account1 == account){
+                return true;
+            }
+        }
+        for(Account account1 : this.coOwnerAccounts){
+            if(account1 == account){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean trasnferWithCBU(Account accountSender, double amount, long cbu){
+        if(this.checkAccountOwner(accountSender) == false){
+            return false;
+        }
+        return accountSender.transferWithCBU(amount, cbu);
+    }
+
+    public boolean trasnferWithAlias(Account accountSender, double amount, String alias){
+        if(this.checkAccountOwner(accountSender) == false){
+            return false;
+        }
+        return accountSender.transferWithAlias(amount, alias);
+    }
+
+    public boolean deposit(Account accountSender, double amount){
+        if(this.checkAccountOwner(accountSender) == false){
+            return false;
+        }
+        return accountSender.deposit(amount);
+    }
+
+    public boolean withdraw(Account accountSender, double amount){
+        if(this.checkAccountOwner(accountSender) == false){
+            return false;
+        }
+        return accountSender.withdraw(amount);
+    }
 }
+
