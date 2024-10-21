@@ -9,7 +9,7 @@ public class AccountSteps {
     private Account account;
     private Account account2;
     private boolean operationResult;
-    private Sucursal sucursal1;
+    private Branch sucursal1;
     private Bank bank;
 }
 

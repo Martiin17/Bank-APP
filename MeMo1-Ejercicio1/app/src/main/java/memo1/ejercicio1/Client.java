@@ -26,17 +26,33 @@ public class Client {
         this.marrigeDate = 0;
     }
 
+    public long getDNI(){
+        return this.DNI;
+    }
+
     public void addMarrige(Account marrige, long marrigeDate){
         this.marrige = marrige;
         this.marrigeDate = marrigeDate;
     }
 
-    public boolean createAccountAsTitular(Bank bank, Sucursal sucursal, Long cbu, double balance, String alias){
+    public boolean createAccountAsTitular(Bank bank, Branch sucursal, Long cbu, double balance, String alias){
+        if(bank.checkRepeatAlias(alias)){
+            throw new IllegalArgumentException("No se puede repetir alias");
+        }
+        if(bank.checkRepeatCBU(cbu)){
+            throw new IllegalArgumentException("No se puede repetir CBU");
+        }
         Account newAccount = new Account(bank, this, cbu, balance, alias);
         return sucursal.addAccount(newAccount);
     }
 
-    public boolean createAccountAsTitular(Bank bank, Sucursal sucursal, Long cbu, String alias){
+    public boolean createAccountAsTitular(Bank bank, Branch sucursal, Long cbu, String alias){
+        if(bank.checkRepeatAlias(alias)){
+            throw new IllegalArgumentException("No se puede repetir alias");
+        }
+        if(bank.checkRepeatCBU(cbu)){
+            throw new IllegalArgumentException("No se puede repetir CBU");
+        }
         Account newAccount = new Account(bank, this, cbu, alias);
         return sucursal.addAccount(newAccount);
     }

@@ -3,15 +3,15 @@ package memo1.ejercicio1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sucursal {
-    private int sucursalNumber;
+public class Branch{
+    private int branchNumber;
     private String name;
     private String direction;
     private List<Account> accounts;
 
-    public Sucursal(int sucursalNumber,  String direction, String name){
+    public Branch(int branchNumber,  String direction, String name){
         this.accounts = new ArrayList<Account>();
-        this.sucursalNumber = sucursalNumber;
+        this.branchNumber = branchNumber;
         this.direction = direction;
         this.name = name;
     }
@@ -28,23 +28,23 @@ public class Sucursal {
         return this.accounts;
     }
 
-    private int getSucursalNumber(){
-        return this.sucursalNumber;
+    public int getBranchNumber(){
+        return this.branchNumber;
     }
 
-    private String getname(){
+    public String getname(){
         return this.name;
     }
 
-    private void setName(String name){
+    public void setName(String name){
         this.name = name;
     }
 
-    private String getdirection(){
+    public String getdirection(){
         return this.direction;
     }
 
-    private void setdirection(String direction){
+    public void setdirection(String direction){
         this.direction = direction;
     }
 }

@@ -12,7 +12,7 @@ class AccountTest {
     private Account account2;
     private Client client1;
     private Client client2;
-    private Sucursal sucursal1;
+    private Branch sucursal1;
     private Bank bank;
 
     @BeforeEach
@@ -20,7 +20,7 @@ class AccountTest {
         client1 = new Client(12345, "Math", "Johnson", "Street 14", 19900413);
         client2 = new Client(56789, "Kamala", "Harrison", "Street 14", 19911013);
         bank = new Bank();
-        sucursal1 = new Sucursal(1, "PrimeraJunta 829", "sucursal1");
+        sucursal1 = new Branch(1, "PrimeraJunta 829", "sucursal1");
         bank.addSucursal(sucursal1);
         client1.createAccountAsTitular(bank, sucursal1, 123456789L, 1000.0, "hellow12");
         client2.createAccountAsTitular(bank, sucursal1, 987654321L, 1000.0, "bye14");

@@ -33,7 +33,7 @@ public class Main {
         //Ejercicio2
         Account cuenta1 = new Account(1234L, 1000.0);
         Account cuenta2 = new Account(5678L, 1000.0);
-        Sucursal sucursal1 = new Sucursal(1, "PrimeraJunta  829", "sucursal1");
+        Branch sucursal1 = new Branch(1, "PrimeraJunta  829", "sucursal1");
         Bank bank = new Bank();
         bank.addSucursal(sucursal1);
         sucursal1.addAccount(cuenta1);
