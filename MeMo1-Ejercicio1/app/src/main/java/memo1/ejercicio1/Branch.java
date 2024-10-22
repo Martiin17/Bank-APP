@@ -16,11 +16,25 @@ public class Branch{
         this.name = name;
     }
 
+    public Account getAccountByCBU(long CBU){
+        for(Account account : this.accounts){
+            if(account.getCbu() == CBU){
+                return account;
+            }
+        }
+        return null;
+    }
+
     public boolean addAccount(Account account){
         return this.accounts.add(account);
     }
 
-    public boolean removeAccount(Account account){
+    public boolean removeAccountByCBU(Client client, long CBU){
+        Account account = this.getAccountByCBU(CBU);
+        if(account == null){
+            throw new IllegalArgumentException("cant remove inexistent account"); 
+        }
+        client.removeAccount(account);
         return this.accounts.remove(account);
     }
 

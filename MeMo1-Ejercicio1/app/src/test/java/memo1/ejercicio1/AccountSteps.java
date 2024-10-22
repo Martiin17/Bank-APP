@@ -39,8 +39,7 @@ public class AccountSteps {
     @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void createClient(long DNI,String name, String surname, String direction, long bornDate) {
         bank.createClient(DNI, name, surname,  direction, bornDate);
-        client1 = bank.getClient(DNI);
-        System.out.println(bank.getClient(DNI));
+        //client1 = bank.getClient(DNI);
     }
 
     @Given("An account with CBU {long} and alias {string}")
@@ -76,8 +75,6 @@ public class AccountSteps {
     @When("I try to create another account with the same alias {string}, diferent CBU {long} and a balance of {double}")
     public void iTryToCreateAnotherAccountWithTheSameAlias(String repeatAlias, long CBU, double balance) {
         try{
-            System.out.println(bank.getAccountByAlias("hellow12"));
-            System.out.println(bank.checkRepeatAlias("hellow12"));
             client1.createAccountAsTitular(bank, branch1, CBU, balance, repeatAlias);
         }catch(IllegalArgumentException iae){
             this.iae = iae;
@@ -87,6 +84,20 @@ public class AccountSteps {
     @When("I change alias to {string}")
     public void changeAlias(String newAlias) {
         account1.setAlias(newAlias);
+    }
+
+    @When("I remove the account with CBU {long}")
+    public void removeExistentAccount(long CBU) {
+        branch1.removeAccountByCBU(client1, CBU);
+    }
+
+    @When("I try to remove inexistent account with CBU {long}")
+    public void tryToRemoveInexistentAccount(long CBU) {
+        try{
+            branch1.removeAccountByCBU(client1, CBU);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
@@ -113,6 +124,11 @@ public class AccountSteps {
         assertNotNull(this.iae);
     }
 
+    @Then("The operation should be denied due to inexistent account")
+    public void verifyInexistentAccount() {
+        assertNotNull(this.iae);
+    }
+
     @Then("The account with CBU {long} should be have a balance of {double}")
     public void verifyAccountBalance(long CBU, Double expectedBalance) {
         assertEquals(expectedBalance, account1.getBalance(), 0.01);
@@ -121,6 +137,11 @@ public class AccountSteps {
     @Then("The alias account should be {string}")
     public void verifyNewAlias(String newAlias) {
         assertEquals(newAlias, account1.getAlias());
+    }
+
+    @Then("The account with CBU {long} should be dont exist")
+    public void verifyRemoveAccount(long CBU) {
+        assertEquals(null, bank.getAccountByCBU(CBU));
     }
 
 

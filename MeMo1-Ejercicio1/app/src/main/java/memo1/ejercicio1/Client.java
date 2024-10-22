@@ -82,6 +82,11 @@ public class Client {
         return this.coOwnerAccounts.add(account);
     }
 
+    public void removeAccount(Account account){
+        this.ownerAccounts.remove(account);
+        this.coOwnerAccounts.remove(account);
+    }
+
     public long getMarrigeDate(){
         if(this.marrige != null){
             return this.marrigeDate;
