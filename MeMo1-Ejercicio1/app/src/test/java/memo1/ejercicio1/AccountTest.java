@@ -19,8 +19,8 @@ class AccountTest {
     void setUp() {
         bank = new Bank();
         bank.createBranch(1, "Street 15", "branch1");
-        bank.CreateClient(12345, "Math", "Johnson",  "Street 14", 19900413);
-        bank.CreateClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
+        bank.createClient(12345, "Math", "Johnson",  "Street 14", 19900413);
+        bank.createClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
         branch1 = bank.getBranch(1);
         client1 = bank.getClient(12345);
         client2 = bank.getClient(56789);

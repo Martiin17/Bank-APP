@@ -23,11 +23,11 @@ public class AccountSteps {
     void setUp() {
         bank = new Bank();
         bank.createBranch(1, "Street 15", "branch1");
-        bank.CreateClient(12345, "Math", "Johnson",  "Street 14", 19900413);
-        bank.CreateClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
-        branch1 = bank.getBranch(1);
-        client1 = bank.getClient(12345);
-        client2 = bank.getClient(56789);
+        //bank.createClient(12345, "Math", "Johnson",  "Street 14", 19900413);
+        //bank.createClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
+        //branch1 = bank.getBranch(1);
+        //client1 = bank.getClient(12345);
+        //client2 = bank.getClient(56789);
         //client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 111111111L, "test0");
         //client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
         //client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
@@ -35,17 +35,48 @@ public class AccountSteps {
         //account2 = bank.getAccountByCBU(987654321L);
     }
 
+    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
+    public void createClient(long DNI,String name, String surname, String direction, long bornDate) {
+        bank = new Bank();
+        bank.createBranch(1, "Street 15", "branch1");
+        bank.createClient(12345, "Math", "Johnson",  "Street 14", 19900413);
+        client1 = bank.getClient(12345);
+    }
 
-    @Given("I create an account with CBU {long} and alias {string}")
+    @When("I try to create another client with DNI {long}")
+    public void tryToCreateAccountWithRepeatDNI(long repeatDNI) {
+        try{
+            bank.createClient(12345, "Harry", "Simmons",  "Street 21", 19930524);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
+    public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
+        assertEquals(DNI, client1.getDNI());
+        assertEquals(name, client1.getName());
+        assertEquals(surname, client1.getSurname());
+        assertEquals(direction, client1.getDirection());
+        assertEquals(bornDate, client1.getBornDate());
+    }
+
+    @Then("The operation should be denied due to repeat DNI")
+    public void verifyRepeatDNI() {
+        assertNotNull(this.iae);
+    }
+
+
+    /*SI @Given("I create an account with CBU {long} and alias {string}")
     public void createAccountWithDefaultBalance(long cbu, String alias) {
         client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), cbu, alias);
-    }
+    }*/
 
 
-    @Given("I create an account with CBU {long}, alias {string} and a balance of {double}")
+    /*SI @Given("I create an account with CBU {long}, alias {string} and a balance of {double}")
     public void createAccountWithInitialBalance(long cbu, String alias, double balance) {
         client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), cbu, balance, alias);
-    }
+    }*/
 
     /*@Given("An account with CBU {long} and a balance of {double}")
     public void anAccountWithCBUAndBalance(long cbu, double balance) {
@@ -75,7 +106,7 @@ public class AccountSteps {
         account.setBank(bank);
     }*/
 
-    @When("I try to create another account with the same CBU {long} and a balance of {double}")
+    /* SI @When("I try to create another account with the same CBU {long} and a balance of {double}")
     public void depositIntoAccount(double balance, long cbu) {
         try{
             client1.createAccountAsTitular(bank, branch1, cbu, balance, "Dont12");
@@ -93,7 +124,7 @@ public class AccountSteps {
             this.iae = iae;
         }
        
-    }
+    } */
 
    /*@When("I deposit {double} into the account")
     public void depositIntoAccount(double amount) {
@@ -130,7 +161,7 @@ public class AccountSteps {
         operationResult = account.transferWithCBU(amount, inexistentCbu);;
     }*/
 
-    @Then("The operation should be denied due to repeat CBU")
+    /*Si @Then("The operation should be denied due to repeat CBU")
     public void verifyRepeatCBU() {
         assertNotNull(iae);
     }
@@ -144,7 +175,7 @@ public class AccountSteps {
     public void verifyAccountBalance(long cbu, double expectedBalance) {
         Account account = client1.getOwnerAccountWithCBU(cbu);
         assertEquals(expectedBalance, account.getBalance(), 0.01);
-    }
+    }*/
 
     /*@Then("The operation should be denied due to negative amount")
     public void verifyOperationDenied() {

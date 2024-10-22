@@ -38,7 +38,7 @@ public class Bank {
         return null;
     }
 
-    public Client CreateClient(long DNI,String name,String surname,String direction, long bornDate){
+    public Client createClient(long DNI,String name,String surname,String direction, long bornDate){
         if(this.checkRepeatDNI(DNI)){
             throw new IllegalArgumentException("No se puede repetir DNI");
         }

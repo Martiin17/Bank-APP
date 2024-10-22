@@ -30,6 +30,22 @@ public class Client {
         return this.DNI;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
+    public String getSurname(){
+        return this.surname;
+    }
+
+    public String getDirection(){
+        return this.direction;
+    }
+
+    public long getBornDate(){
+        return this.bornDate;
+    }
+
     public void addMarrige(Account marrige, long marrigeDate){
         this.marrige = marrige;
         this.marrigeDate = marrigeDate;
