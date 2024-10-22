@@ -43,13 +43,13 @@ public class AccountSteps {
         System.out.println(bank.getClient(DNI));
     }
 
-    @Given("I create an account with CBU {long} and alias {string}")
+    @Given("An account with CBU {long} and alias {string}")
     public void createAccountWithDefaultBalance(long CBU, String alias) {
         client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, alias);
         account1 = bank.getAccountByCBU(CBU);
     }
 
-    @Given("I create an account with CBU {long}, alias {string} and a balance of {double}")
+    @Given("An account with CBU {long}, alias {string} and a balance of {double}")
     public void createAccountWithtBalance(long CBU, String alias, double balance) {
         client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, balance, alias);
         account1 = bank.getAccountByCBU(CBU);
@@ -84,6 +84,11 @@ public class AccountSteps {
         }
     }
 
+    @When("I change alias to {string}")
+    public void changeAlias(String newAlias) {
+        account1.setAlias(newAlias);
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, client1.getDNI());
@@ -109,8 +114,13 @@ public class AccountSteps {
     }
 
     @Then("The account with CBU {long} should be have a balance of {double}")
-    public void the_account_with_cbu_should_be_have_a_balance_of(long CBU, Double expectedBalance) {
+    public void verifyAccountBalance(long CBU, Double expectedBalance) {
         assertEquals(expectedBalance, account1.getBalance(), 0.01);
+    }
+
+    @Then("The alias account should be {string}")
+    public void verifyNewAlias(String newAlias) {
+        assertEquals(newAlias, account1.getAlias());
     }
 
 

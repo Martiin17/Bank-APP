@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="34" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="40" time="1.235">
-    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.075">
+<testsuite errors="0" failures="33" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="40" time="1.256">
+    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.059">
         <system-out>
-            <![CDATA[Given I create an account with CBU 123456789 and alias "hellow12"...........passed
+            <![CDATA[Given An account with CBU 123456789 and alias "hellow12"....................passed
 Then The account with CBU 123456789 should be have a balance of 0.0.........passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.005">
+    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.003">
         <system-out>
-            <![CDATA[Given I create an account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
+            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 Then The account with CBU 123456789 should be have a balance of 1000.0......passed
 ]]>
         </system-out>
     </testcase>
     <testcase classname="Account creation" name="Cant create an account with a repeat CBU" time="0.006">
         <system-out>
-            <![CDATA[Given I create an account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
+            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to create another account with the same CBU 123456789, diferent alias "goodevening15" and a balance of 1000.0.passed
 Then The operation should be denied due to repeat CBU.......................passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Cant create an account with a repeat alias" time="0.005">
+    <testcase classname="Account creation" name="Cant create an account with a repeat alias" time="0.013">
         <system-out>
-            <![CDATA[Given I create an account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
+            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to create another account with the same alias "hellow12", diferent CBU 55555555 and a balance of 1000.0.passed
 Then The operation should be denied due to repeat alias.....................passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account dates modification" name="Successfully dates modification" time="0.011">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given An account with alias "hellow12" and a balance of 1000.0..............undefined
-When I change alias to "bye14"..............................................skipped
-Then The alias account should be "bye14"....................................skipped
+    <testcase classname="Account dates modification" name="Successfully dates modification" time="0.008">
+        <system-out>
+            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
+When I change alias to "bye14"..............................................passed
+Then The alias account should be "bye14"....................................passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="Remove account" name="Successfully remove account" time="0.011">
+    <testcase classname="Remove account" name="Successfully remove account" time="0.01">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.undefined
-When I remove the account...................................................skipped
+            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
+When I remove the account...................................................undefined
 Then The account should be dont exist.......................................skipped
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Remove account" name="I cant remove a inexistent account" time="0.006">
+    <testcase classname="Remove account" name="I cant remove a inexistent account" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A inexistent account with CBU 111111..................................undefined
 When I try to remove the account............................................skipped
@@ -54,7 +54,7 @@ Then The operation should be denied due to inexistent account...............skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully direction modification" time="0.007">
+    <testcase classname="Client dates modification" name="Successfully direction modification" time="0.008">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413".undefined
 When I modificate direction to Street 15....................................skipped
@@ -62,7 +62,7 @@ Then The direction should be Street 15......................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully name modification" time="0.006">
+    <testcase classname="Client dates modification" name="Successfully name modification" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413".undefined
 When I modificate name to Josh..............................................skipped
@@ -70,7 +70,7 @@ Then The name should be Josh................................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully surname modification" time="0.006">
+    <testcase classname="Client dates modification" name="Successfully surname modification" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413".undefined
 When I modificate surname to Garcia.........................................skipped
@@ -87,7 +87,7 @@ And The operation should be denied due to cant modificate this date.........skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Client dates modification" name="Cant modificate DNI" time="0.009">
+    <testcase classname="Client dates modification" name="Cant modificate DNI" time="0.007">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413".undefined
 When I try to modificate DNI to 12346.......................................skipped
@@ -96,7 +96,7 @@ And The operation should be denied due to cant modificate this date.........skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Remove client" name="Successfully remove client" time="0.006">
+    <testcase classname="Remove client" name="Successfully remove client" time="0.009">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: 19900413.undefined
 When I remove the client....................................................skipped
@@ -104,7 +104,7 @@ Then The client should be dont exist........................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Remove client" name="I cant remove a inexistent client" time="0.011">
+    <testcase classname="Remove client" name="I cant remove a inexistent client" time="0.01">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A inexistent client with DNI: 55555...................................undefined
 When I try to remove the client.............................................skipped
@@ -112,14 +112,14 @@ Then The operation should be denied due to inexistent client................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Client creation" name="Successfully create a client" time="0.01">
+    <testcase classname="Client creation" name="Successfully create a client" time="0.011">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 Then The client should be create with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client creation" name="Cant create a client with repeat DNI" time="0.006">
+    <testcase classname="Client creation" name="Cant create a client with repeat DNI" time="0.016">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I try to create another client with DNI 12345..........................passed
@@ -127,24 +127,24 @@ Then The operation should be denied due to repeat DNI.......................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.006">
+    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.014">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.undefined
-When I deposit 200.0 into the account.......................................skipped
+            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
+When I deposit 200.0 into the account.......................................undefined
 Then The account balance should be 1200.0...................................skipped
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.007">
+    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.008">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.undefined
-When I try to deposit -100.0 into the account...............................skipped
+            <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
+When I try to deposit -100.0 into the account...............................undefined
 Then The operation should be denied due to negative amount..................skipped
 And The account balance should remain 1000.0................................skipped
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Search if the cliente is married" name="Successfully found the client is married" time="0.006">
+    <testcase classname="Search if the cliente is married" name="Successfully found the client is married" time="0.015">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413" and his wife who is client too with DNI: 56789, name: Kamala, surname: Harrison, direction: "Street 14" and born date: "19911013".undefined
 When I look for the fist account marriage...................................skipped
@@ -152,7 +152,7 @@ Then I get the wedding date.................................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Search if the cliente is married" name="Cant found the client is married" time="0.005">
+    <testcase classname="Search if the cliente is married" name="Cant found the client is married" time="0.011">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413".undefined
 When I look if the client is marrige........................................skipped
@@ -160,7 +160,7 @@ Then The operation should be denied due to the client is not marriage.......skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Search where an account is located in a sucursal" name="Successfully find the branch" time="0.007">
+    <testcase classname="Search where an account is located in a sucursal" name="Successfully find the branch" time="0.012">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 123456789 and radicate on the sucursal1...........undefined
 When I look for the account branch..........................................skipped
@@ -176,7 +176,7 @@ Then The operation should be denied due to inexistent cbu...................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Search where an account is located in a sucursal" name="Cant find the branch with alias" time="0.006">
+    <testcase classname="Search where an account is located in a sucursal" name="Cant find the branch with alias" time="0.005">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A dont exist alias hellow12...........................................undefined
 When I look for the account branch..........................................skipped
@@ -184,14 +184,14 @@ Then The operation should be denied due to inexistent alias.................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Sucursal creation" name="Successfully create a sucursal" time="0.011">
+    <testcase classname="Sucursal creation" name="Successfully create a sucursal" time="0.009">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
 Then The sucursalNumber should be 1, the name should be sucursal1 and the direction should de "Street 16".skipped
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Sucursal creation" name="Cant create a sucursal with repeat sucursalNumber" time="0.004">
+    <testcase classname="Sucursal creation" name="Cant create a sucursal with repeat sucursalNumber" time="0.007">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
 When I try to create another sucursal with sucursalNumber: 1, name: sucursal2, direction: "Street 21".skipped
@@ -200,7 +200,7 @@ And The operation should be denied due to repeat sucursalNumber.............skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Sucursal dates modification" name="Successfully name modification" time="0.007">
+    <testcase classname="Sucursal dates modification" name="Successfully name modification" time="0.008">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
 When I modificate name to sucursal2.........................................skipped
@@ -208,7 +208,7 @@ Then The name should be sucursal2...........................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Sucursal dates modification" name="Successfully direction modification" time="0.014">
+    <testcase classname="Sucursal dates modification" name="Successfully direction modification" time="0.006">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
 When I modificate direction to "Street 21"..................................skipped
@@ -216,7 +216,7 @@ Then The direction should be "Street 21"....................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Sucursal dates modification" name="Cant modifcate sucursalNumber" time="0.01">
+    <testcase classname="Sucursal dates modification" name="Cant modifcate sucursalNumber" time="0.005">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
 When I try to modificate sucursalNumber to 2................................skipped
@@ -225,7 +225,7 @@ And The operation should be denied due to cant modificate this date.........skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Remove sucursal" name="Successfully remove sucursal" time="0.006">
+    <testcase classname="Remove sucursal" name="Successfully remove sucursal" time="0.017">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16" with out accounts.undefined
 When I remove the sucursal..................................................skipped
@@ -233,7 +233,7 @@ Then The sucursal should be dont exist......................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Remove sucursal" name="I cant remove a sucursal with accounts" time="0.032">
+    <testcase classname="Remove sucursal" name="I cant remove a sucursal with accounts" time="0.009">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16" with accounts.undefined
 When I try to remove the sucursal...........................................skipped
@@ -241,7 +241,7 @@ Then The operation should be denied due to this sucursal have accounts......skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Successfully transfer money" time="0.022">
+    <testcase classname="Transfer money with alias" name="Successfully transfer money" time="0.012">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a second account with alias bye45 and balance of 1000.0.undefined
 When I transfer 200.0 into the second account...............................skipped
@@ -249,7 +249,7 @@ Then The first account balance should be 800.0 and the second account balance sh
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer a negative amount" time="0.008">
+    <testcase classname="Transfer money with alias" name="Cannot transfer a negative amount" time="0.006">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a second account with alias bye45 and balance of 1000.0.undefined
 When I try to transfer -100.0 into the second account.......................skipped
@@ -258,7 +258,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer more money than available balance" time="0.012">
+    <testcase classname="Transfer money with alias" name="Cannot transfer more money than available balance" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a second account with alias bye45 and balance of 1000.0.undefined
 When I try to transfer 1100.0 into the second account.......................skipped
@@ -267,7 +267,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer to inexistent alias" time="0.01">
+    <testcase classname="Transfer money with alias" name="Cannot transfer to inexistent alias" time="0.007">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a inexistent alias fail15.undefined
 When I try to transfer 200.0 to the alias fail15............................skipped
@@ -276,7 +276,7 @@ And The account balance should remain 1000.0................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Successfully transfer money" time="0.004">
+    <testcase classname="Transfer money with CBU" name="Successfully transfer money" time="0.005">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.undefined
 When I transfer 200.0 into the second account...............................skipped
@@ -284,7 +284,7 @@ Then The first account balance should be 800.0 and the second account balance sh
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer a negative amount" time="0.005">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer a negative amount" time="0.007">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.undefined
 When I try to transfer -100.0 into the second account.......................skipped
@@ -293,7 +293,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer more money than available balance" time="0.007">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer more money than available balance" time="0.003">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.undefined
 When I try to transfer 1100.0 into the second account.......................skipped
@@ -302,7 +302,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer to inexistent cbu" time="0.005">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer to inexistent cbu" time="0.012">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a inexistent cbu 9999.undefined
 When I try to transfer 200.0 to the cbu 9999................................skipped
@@ -311,7 +311,7 @@ And The account balance should remain 1000.0................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.006">
+    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 123456789 and a balance of 1000.0.................undefined
 When I withdraw 300.0 from the account......................................skipped
@@ -319,7 +319,7 @@ Then The account balance should be 700.0....................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Withdrawing money" name="Cannot withdraw more money than available balance" time="0.008">
+    <testcase classname="Withdrawing money" name="Cannot withdraw more money than available balance" time="0.005">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 123456789 and a balance of 1000.0.................undefined
 When I try to withdraw 1100.0 from the account..............................skipped
