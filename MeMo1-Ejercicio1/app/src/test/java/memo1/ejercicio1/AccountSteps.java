@@ -65,18 +65,20 @@ public class AccountSteps {
     }
 
     @When("I try to create another account with the same CBU {long}, diferent alias {string} and a balance of {double}")
-    public void iTryToCreateAnotherAccountWithTheSameCBU(long repeatCBU, String alias, Double balance) {
+    public void iTryToCreateAnotherAccountWithTheSameCBU(long repeatCBU, String alias, double balance) {
         try{
-           client1.createAccountAsTitular(bank, branch1, repeatCBU, alias);
+            client1.createAccountAsTitular(bank, branch1, repeatCBU, balance, alias);
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
     }
 
-    @When("I try to create another account with the same alias {string}, diferent CBU {long} and a balance of {balance}")
-    public void iTryToCreateAnotherAccountWithTheSameAlias(long CBU, String repeatAlias, Double balance) {
+    @When("I try to create another account with the same alias {string}, diferent CBU {long} and a balance of {double}")
+    public void iTryToCreateAnotherAccountWithTheSameAlias(String repeatAlias, long CBU, double balance) {
         try{
-           client1.createAccountAsTitular(bank, branch1, CBU, repeatAlias);
+            System.out.println(bank.getAccountByAlias("hellow12"));
+            System.out.println(bank.checkRepeatAlias("hellow12"));
+            client1.createAccountAsTitular(bank, branch1, CBU, balance, repeatAlias);
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }

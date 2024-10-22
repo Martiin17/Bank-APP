@@ -31,7 +31,7 @@ public class Bank {
 
     public Account getAccountByAlias(String alias){
         for(Account account : this.getAccounts()){
-            if(alias == account.getAlias()){
+            if(alias.equals(account.getAlias())){
                 return account;
             }
         }
@@ -140,7 +140,7 @@ public class Bank {
             return false;
         }
         for(Account account : this.getAccounts()) {
-           if(alias == account.getAlias()){
+           if(alias.equals(account.getAlias())){
             accountSender.setBalance(accountSender.getBalance() - amount);
             account.setBalance(account.getBalance() + amount);
             List<Account> registerAccounts = new ArrayList<Account>();
@@ -166,7 +166,7 @@ public class Bank {
 
     public boolean checkRepeatAlias(String alias){
         for(Account account : this.getAccounts()) {
-            if(alias == account.getAlias()){
+            if(alias.equals(account.getAlias())){
              return true;
             }
          }

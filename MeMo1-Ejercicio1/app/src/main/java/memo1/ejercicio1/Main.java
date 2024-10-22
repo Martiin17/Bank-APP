@@ -16,7 +16,6 @@ public class Main {
         Account account2 = bank.getAccountByCBU(987654321L);
 
         client1.deposit(account1, 500.0);
-        System.out.println(account1.getBalance());
         /* 
         // Crear una instancia de Account usando el constructor sin argumentos
         Account account1 = new Account();
