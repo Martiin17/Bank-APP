@@ -43,6 +43,14 @@ public class AccountSteps {
         testClient = bank.getClient(DNI);
     }
 
+    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} and his wife who is client too with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}. They have marrige on {long}")
+    public void searchMarrigeDate(long DNI1, String name1, String surname1, String direction1, long bornDate1, long DNI2, String name2, String surname2, String direction2, long bornDate2, long marrigeDate){
+        client1 = bank.createClient(DNI1, name1, surname1, direction1, bornDate1);
+        client2 = bank.createClient(DNI2, name2, surname2, direction2, bornDate2);
+        client1.addMarrige(client2, marrigeDate);
+        client2.addMarrige(client1, marrigeDate);
+    }
+
     @Given("An account with CBU {long} and alias {string}")
     public void createAccountWithDefaultBalance(long CBU, String alias) {
         client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, alias);
@@ -54,6 +62,8 @@ public class AccountSteps {
         client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, balance, alias);
         account1 = bank.getAccountByCBU(CBU);
     }
+
+
 
     @When("I try to create another client with DNI {long}")
     public void tryToCreateAccountWithRepeatDNI(long repeatDNI) {
@@ -130,6 +140,45 @@ public class AccountSteps {
         }
     }
 
+    @When("I deposit {double} into the account")
+    public void depositIntoAccount(double amount) {
+        client1.deposit(account1, amount);
+    }
+
+    @When("I try to deposit {double} into the account")
+    public void tryTodepositNegativeAmountIntoAccount(double amount) {
+        client1.deposit(account1, amount);
+    }
+
+    @When("I try to deposit {double} into no owner or co-owner account")
+    public void tryTodepositInNotOwnerOrCoOwnerAccount(double amount) {
+        client2.createAccountAsTitular(bank, branch1, 50685046045L, "noOwnerAccount15");
+        Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
+        operationResult = client1.deposit(noOWnerAccount, amount);
+    }
+
+    @When("I withdraw {double} from the account")
+    public void withdrawMoneyFromAnAccount(double amount) {
+        client1.withdraw(account1, amount);
+    }
+
+    @When("I try to withdraw {double} from the account")
+    public void TryToWithdrawMoreMoneyThanAvaibableFromAnAccount(double amount) {
+        operationResult = client1.withdraw(account1, amount);
+    }
+
+    @When("I try to withdraw {double} from not owner or co-owner account")
+    public void TryToWithdrawMoneyFromNotOwnerOrCoOwnerAccount(double amount) {
+        client2.createAccountAsTitular(bank, branch1, 50685046045L, "noOwnerAccount15");
+        Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
+        operationResult = client1.withdraw(noOWnerAccount, amount);
+    }
+
+    @When("I look for the fist account marriage")
+    public void SearchForTheMarrigeDate() {
+        client1.getMarrigeDate();
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, testClient.getDNI());
@@ -197,6 +246,45 @@ public class AccountSteps {
     @Then("The surname should be {string}")
     public void verifyNewSurname(String newSurname) {
         assertEquals(newSurname, client1.getSurname());
+    }
+
+    @Then("The account balance should be {double}")
+    public void verifyAccountBalance(double expectedBalance) {
+        assertEquals(expectedBalance, account1.getBalance(), 0.01);
+    }
+
+    @Then("The operation should be denied due to negative amount")
+    public void verifyOperationDenied() {
+        if(!operationResult) {
+            System.out.println("negative amount");
+        }
+        assertFalse(operationResult);
+    }
+
+    @Then("The operation should be denied due to not owner or co-owner account")
+    public void verifyOperationDeniedBecauseNotOwnerOrCoOwnerAccount() {
+        if(!operationResult) {
+            System.out.println("no owner or co-owner account");
+        }
+        assertFalse(operationResult);
+    }
+
+    @Then("The account balance should remain {double}")
+    public void verifyBalanceRemains(double expectedBalance) {
+        assertEquals(expectedBalance, account1.getBalance(), 0.01);
+    }
+
+    @Then("The operation should be denied due to insufficient founds")
+    public void verifyInsufficientFounds() {
+         if(!operationResult) {
+            System.out.println("insufficient founds");
+        }
+        assertFalse(operationResult);
+    }
+
+    @Then("I get the wedding date {long}")
+    public void veifyMarrigeDateIsANumber(long marrigeDate) {
+        assertEquals(marrigeDate, client1.getMarrigeDate());
     }
 
 

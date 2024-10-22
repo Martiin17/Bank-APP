@@ -11,7 +11,7 @@ public class Client {
     private long bornDate;
     private List<Account> ownerAccounts;
     private List<Account> coOwnerAccounts;
-    private Account marrige;
+    private Client marrige;
     private long marrigeDate;
 
     public Client(long DNI,String name,String surname,String direction, long bornDate){
@@ -58,7 +58,7 @@ public class Client {
         return this.bornDate;
     }
 
-    public void addMarrige(Account marrige, long marrigeDate){
+    public void addMarrige(Client marrige, long marrigeDate){
         this.marrige = marrige;
         this.marrigeDate = marrigeDate;
     }

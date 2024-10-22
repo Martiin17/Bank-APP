@@ -185,6 +185,16 @@ class AccountTest {
     }
 
     @Test
+    void cannotDepositIntoNoOwnerOrCoOwnerAccount() {
+        assertFalse(client1.deposit(account2, 200.0));
+    }
+
+    @Test
+    void cannoWithdrawIntoNoOwnerOrCoOwnerAccount() {
+        assertFalse(client1.withdraw(account2, 200.0));
+    }
+
+    @Test
     void searchForMarriageDateWithInexistentDNIShouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> bank.searchMarrigeDate(9999));
     }
