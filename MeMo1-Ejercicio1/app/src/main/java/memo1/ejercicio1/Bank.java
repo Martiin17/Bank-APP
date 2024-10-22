@@ -107,7 +107,7 @@ public class Bank {
 
     public Branch createBranch(int branchNumber,  String direction, String name){
         if(this.checkRepeatBranchNumber(branchNumber)){
-            throw new IllegalArgumentException("No se puede repetir nro de branch");
+            throw new IllegalArgumentException("Can not repeat branch number");
         }
         Branch newBranch = new Branch(branchNumber, direction, name);
         this.branches.add(newBranch);
@@ -118,7 +118,7 @@ public class Bank {
         if(branch.getAccounts().size() == 0){
             return this.branches.remove(branch);
         }
-       throw new IllegalArgumentException("No se puede eliminar branch con cuentas vigentes");
+       throw new IllegalArgumentException("Cannot remove branch with accounts");
     }
 
     public boolean transferWithCBU(Account accountSender, double amount, long cbu){

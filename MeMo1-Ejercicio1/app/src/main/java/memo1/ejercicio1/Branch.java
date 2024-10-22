@@ -46,7 +46,7 @@ public class Branch{
         return this.branchNumber;
     }
 
-    public String getname(){
+    public String getName(){
         return this.name;
     }
 
@@ -54,11 +54,11 @@ public class Branch{
         this.name = name;
     }
 
-    public String getdirection(){
+    public String getDirection(){
         return this.direction;
     }
 
-    public void setdirection(String direction){
+    public void setDirection(String direction){
         this.direction = direction;
     }
 }

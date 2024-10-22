@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="18" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="39" time="1.443">
-    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.055">
+<testsuite errors="0" failures="11" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="38" time="1.187">
+    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.058">
         <system-out>
             <![CDATA[Given An account with CBU 123456789 and alias "hellow12"....................passed
 Then The account with CBU 123456789 should be have a balance of 0.0.........passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.003">
+    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.007">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 Then The account with CBU 123456789 should be have a balance of 1000.0......passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Cant create an account with a repeat CBU" time="0.006">
+    <testcase classname="Account creation" name="Cant create an account with a repeat CBU" time="0.002">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to create another account with the same CBU 123456789, diferent alias "goodevening15" and a balance of 1000.0.passed
@@ -22,7 +22,7 @@ Then The operation should be denied due to repeat CBU.......................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Cant create an account with a repeat alias" time="0.003">
+    <testcase classname="Account creation" name="Cant create an account with a repeat alias" time="0.002">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to create another account with the same alias "hellow12", diferent CBU 55555555 and a balance of 1000.0.passed
@@ -30,7 +30,7 @@ Then The operation should be denied due to repeat alias.....................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account dates modification" name="Successfully dates modification" time="0.007">
+    <testcase classname="Account dates modification" name="Successfully dates modification" time="0.01">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I change alias to "bye14"..............................................passed
@@ -46,7 +46,7 @@ Then The account with CBU 123456789 should be dont exist....................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove account" name="I cant remove a inexistent account" time="0.004">
+    <testcase classname="Remove account" name="I cant remove a inexistent account" time="0.005">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to remove inexistent account with CBU 111111.....................passed
@@ -54,7 +54,54 @@ Then The operation should be denied due to inexistent account...............pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully direction modification" time="0.013">
+    <testcase classname="Branch creation" name="Successfully create a branch" time="0.003">
+        <system-out>
+            <![CDATA[Given I create a branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
+Then The branchNumber should be 120, the name should be "branch120" and the direction should de "Street 16".passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="Branch creation" name="Cant create a branch with repeat branchNumber" time="0.003">
+        <system-out>
+            <![CDATA[Given I create a branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
+When I try to create another branch with branchNumber: 120, name: "branch222", direction: "Street 21".passed
+Then The operation should be denied due to repeat branchNumber..............passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="Sucursal dates modification" name="Successfully branch name modification" time="0.004">
+        <system-out>
+            <![CDATA[Given I create a branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
+When I modificate branch name to "branch2"..................................passed
+Then The branch name should be "branch2"....................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="Sucursal dates modification" name="Successfully branch direction modification" time="0.003">
+        <system-out>
+            <![CDATA[Given I create a branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
+When I modificate branch direction to "Street 21"...........................passed
+Then The branch direction should be "Street 21".............................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="Remove branch" name="Successfully remove branch" time="0.004">
+        <system-out>
+            <![CDATA[Given I create a branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
+When I remove the branch with out accounts..................................passed
+Then The branch should be dont exist........................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="Remove branch" name="I cant remove a branch with accounts" time="0.003">
+        <system-out>
+            <![CDATA[Given I create a branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
+When I try to remove the branch with accounts...............................passed
+Then The operation should be denied due to this branch have accounts........passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="Client dates modification" name="Successfully client direction modification" time="0.013">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I modificate direction to "Street 15"..................................passed
@@ -62,7 +109,7 @@ Then The direction should be "Street 15"....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully name modification" time="0.004">
+    <testcase classname="Client dates modification" name="Successfully client name modification" time="0.004">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I modificate name to "Josh"............................................passed
@@ -70,7 +117,7 @@ Then The name should be "Josh"..............................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully surname modification" time="0.004">
+    <testcase classname="Client dates modification" name="Successfully client surname modification" time="0.007">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I modificate surname to "Garcia".......................................passed
@@ -78,7 +125,7 @@ Then The surname should be "Garcia".........................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove client" name="Successfully remove client" time="0.011">
+    <testcase classname="Remove client" name="Successfully remove client" time="0.005">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I remove the client with DNI 12345.....................................passed
@@ -86,7 +133,7 @@ Then The client with DNI 12345 should be dont exist.........................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove client" name="I cant remove a inexistent client" time="0.004">
+    <testcase classname="Remove client" name="I cant remove a inexistent client" time="0.003">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I try to remove inexistent client with DNI 99999.......................passed
@@ -94,7 +141,7 @@ Then The operation should be denied due to inexistent client................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client creation" name="Successfully create a client" time="0.005">
+    <testcase classname="Client creation" name="Successfully create a client" time="0.003">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 Then The client should be create with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
@@ -109,7 +156,7 @@ Then The operation should be denied due to repeat DNI.......................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.007">
+    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.005">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I deposit 200.0 into the account.......................................passed
@@ -117,7 +164,7 @@ Then The account balance should be 1200.0...................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.005">
+    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.011">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to deposit -100.0 into the account...............................passed
@@ -126,7 +173,7 @@ And The account balance should remain 1000.0................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Cannot deposit into a not owner or co-owner account" time="0.01">
+    <testcase classname="Depositing money" name="Cannot deposit into a not owner or co-owner account" time="0.002">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to deposit 100.0 into no owner or co-owner account...............passed
@@ -134,7 +181,7 @@ Then The operation should be denied due to not owner or co-owner account....pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search if the cliente is married" name="Successfully found the client is married" time="0.009">
+    <testcase classname="Search if the cliente is married" name="Successfully found the client is married" time="0.012">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413 and his wife who is client too with DNI: 56789, name: "Kamala", surname: "Harrison", direction: "Street 14" and born date: 19911013. They have marrige on 20241022.passed
 When I look for the fist account marriage...................................passed
@@ -142,7 +189,7 @@ Then I get the wedding date 20241022........................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search where an account is located in a sucursal" name="Successfully find the branch" time="0.01">
+    <testcase classname="Search where an account is located in a sucursal" name="Successfully find the branch" time="0.015">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 123456789 and radicate on the sucursal1...........undefined
 When I look for the account branch..........................................skipped
@@ -150,7 +197,7 @@ Then I find the sucursal1...................................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Search where an account is located in a sucursal" name="Cant find the branch with cbu" time="0.008">
+    <testcase classname="Search where an account is located in a sucursal" name="Cant find the branch with cbu" time="0.002">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A dont exist CBU 123456789............................................undefined
 When I look for the account branch..........................................skipped
@@ -158,7 +205,7 @@ Then The operation should be denied due to inexistent cbu...................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Search where an account is located in a sucursal" name="Cant find the branch with alias" time="0.007">
+    <testcase classname="Search where an account is located in a sucursal" name="Cant find the branch with alias" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given A dont exist alias hellow12...........................................undefined
 When I look for the account branch..........................................skipped
@@ -166,64 +213,7 @@ Then The operation should be denied due to inexistent alias.................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Sucursal creation" name="Successfully create a sucursal" time="0.016">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
-Then The sucursalNumber should be 1, the name should be sucursal1 and the direction should de "Street 16".skipped
-]]>
-        </failure>
-    </testcase>
-    <testcase classname="Sucursal creation" name="Cant create a sucursal with repeat sucursalNumber" time="0.009">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
-When I try to create another sucursal with sucursalNumber: 1, name: sucursal2, direction: "Street 21".skipped
-Then The first sucursal should be create with sucursalNumber 1, name sucursal1 and direction "Street 16".skipped
-And The operation should be denied due to repeat sucursalNumber.............skipped
-]]>
-        </failure>
-    </testcase>
-    <testcase classname="Sucursal dates modification" name="Successfully name modification" time="0.003">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
-When I modificate name to sucursal2.........................................skipped
-Then The name should be sucursal2...........................................skipped
-]]>
-        </failure>
-    </testcase>
-    <testcase classname="Sucursal dates modification" name="Successfully direction modification" time="0.008">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
-When I modificate direction to "Street 21"..................................skipped
-Then The direction should be "Street 21"....................................skipped
-]]>
-        </failure>
-    </testcase>
-    <testcase classname="Sucursal dates modification" name="Cant modifcate sucursalNumber" time="0.006">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given I create a sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16".undefined
-When I try to modificate sucursalNumber to 2................................skipped
-Then The sucursalNumber should be 1.........................................skipped
-And The operation should be denied due to cant modificate this date.........skipped
-]]>
-        </failure>
-    </testcase>
-    <testcase classname="Remove sucursal" name="Successfully remove sucursal" time="0.006">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given A sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16" with out accounts.undefined
-When I remove the sucursal..................................................skipped
-Then The sucursal should be dont exist......................................skipped
-]]>
-        </failure>
-    </testcase>
-    <testcase classname="Remove sucursal" name="I cant remove a sucursal with accounts" time="0.007">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
-            <![CDATA[Given A sucursal with sucursalNumber: 1, name: sucursal1, direction: "Street 16" with accounts.undefined
-When I try to remove the sucursal...........................................skipped
-Then The operation should be denied due to this sucursal have accounts......skipped
-]]>
-        </failure>
-    </testcase>
-    <testcase classname="Transfer money with alias" name="Successfully transfer money" time="0.006">
+    <testcase classname="Transfer money with alias" name="Successfully transfer money" time="0.008">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a second account with alias bye45 and balance of 1000.0.undefined
 When I transfer 200.0 into the second account...............................skipped
@@ -231,7 +221,7 @@ Then The first account balance should be 800.0 and the second account balance sh
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer a negative amount" time="0.023">
+    <testcase classname="Transfer money with alias" name="Cannot transfer a negative amount" time="0.005">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a second account with alias bye45 and balance of 1000.0.undefined
 When I try to transfer -100.0 into the second account.......................skipped
@@ -240,7 +230,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer more money than available balance" time="0.001">
+    <testcase classname="Transfer money with alias" name="Cannot transfer more money than available balance" time="0.015">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a second account with alias bye45 and balance of 1000.0.undefined
 When I try to transfer 1100.0 into the second account.......................skipped
@@ -249,7 +239,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer to inexistent alias" time="0.005">
+    <testcase classname="Transfer money with alias" name="Cannot transfer to inexistent alias" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with alias hellow12 and a balance of 1000.0 and a inexistent alias fail15.undefined
 When I try to transfer 200.0 to the alias fail15............................skipped
@@ -258,7 +248,7 @@ And The account balance should remain 1000.0................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Successfully transfer money" time="0.019">
+    <testcase classname="Transfer money with CBU" name="Successfully transfer money" time="0.008">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.undefined
 When I transfer 200.0 into the second account...............................skipped
@@ -266,7 +256,7 @@ Then The first account balance should be 800.0 and the second account balance sh
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer a negative amount" time="0.016">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer a negative amount" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.undefined
 When I try to transfer -100.0 into the second account.......................skipped
@@ -275,7 +265,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer more money than available balance" time="0.003">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer more money than available balance" time="0.004">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a second account with CBU 5678 and balance of 1000.0.undefined
 When I try to transfer 1100.0 into the second account.......................skipped
@@ -284,7 +274,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer to inexistent cbu" time="0.005">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer to inexistent cbu" time="0.002">
         <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
             <![CDATA[Given An account with CBU 1234 and a balance of 1000.0 and a inexistent cbu 9999.undefined
 When I try to transfer 200.0 to the cbu 9999................................skipped
@@ -293,7 +283,7 @@ And The account balance should remain 1000.0................................skip
 ]]>
         </failure>
     </testcase>
-    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.005">
+    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.008">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I withdraw 300.0 from the account......................................passed
@@ -301,7 +291,7 @@ Then The account balance should be 700.0....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Withdrawing money" name="Cannot withdraw more money than available balance" time="0.005">
+    <testcase classname="Withdrawing money" name="Cannot withdraw more money than available balance" time="0.01">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to withdraw 1100.0 from the account..............................passed
@@ -310,7 +300,7 @@ And The account balance should remain 1000.0................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Withdrawing money" name="Cannot withdraw money to a not owner or co-owner account" time="0.01">
+    <testcase classname="Withdrawing money" name="Cannot withdraw money to a not owner or co-owner account" time="0.002">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to withdraw 100.0 from not owner or co-owner account.............passed

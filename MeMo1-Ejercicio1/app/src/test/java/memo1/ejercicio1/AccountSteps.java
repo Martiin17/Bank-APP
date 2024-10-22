@@ -19,6 +19,7 @@ public class AccountSteps {
     private Client client1;
     private Client client2;
     private Client testClient;
+    private Branch branchTest;
     private IllegalArgumentException iae;
 
     @Before
@@ -63,7 +64,10 @@ public class AccountSteps {
         account1 = bank.getAccountByCBU(CBU);
     }
 
-
+    @Given("I create a branch with branchNumber: {int}, name: {string}, direction: {string}")
+    public void createBranch(int branchNumber, String name, String direction) {
+        branchTest = bank.createBranch(branchNumber, direction, name);
+    }
 
     @When("I try to create another client with DNI {long}")
     public void tryToCreateAccountWithRepeatDNI(long repeatDNI) {
@@ -179,6 +183,41 @@ public class AccountSteps {
         client1.getMarrigeDate();
     }
 
+    @When("I try to create another branch with branchNumber: {int}, name: {string}, direction: {string}")
+    public void tryToCreateRepeatBranchNumber(int repeatBranchNumber, String name, String direction) {
+        try{
+            bank.createBranch(repeatBranchNumber, name, direction);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I modificate branch name to {string}")
+    public void modifcateBranchName(String newBranchName) {
+        branchTest.setName(newBranchName);
+    }
+
+    @When("I modificate branch direction to {string}")
+    public void modifcateBranchDirection(String newBranchDirection) {
+        branchTest.setDirection(newBranchDirection);
+        System.out.println(branchTest.getDirection());
+    }
+
+    @When("I remove the branch with out accounts")
+    public void removeBranchWithOutAccounts() {
+        bank.removeBranch(branchTest);
+    }
+
+    @When("I try to remove the branch with accounts")
+    public void tryToRemoveBranchWithAccounts() {
+        client1.createAccountAsTitular(bank, branchTest, 6464646848328L, "extraAccount129");
+        try{
+            bank.removeBranch(branchTest);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, testClient.getDNI());
@@ -233,6 +272,11 @@ public class AccountSteps {
         assertEquals(null, bank.getClient(DNI));
     }
 
+    @Then("The operation should be denied due to repeat branchNumber")
+    public void verifyCantCreateTwoBranchesWithTheSameBranchNumber() {
+        assertNotNull(this.iae);
+    }
+
     @Then("The direction should be {string}")
     public void verifyNewDirection(String newDirection) {
         assertEquals(newDirection, client1.getDirection());
@@ -285,6 +329,33 @@ public class AccountSteps {
     @Then("I get the wedding date {long}")
     public void veifyMarrigeDateIsANumber(long marrigeDate) {
         assertEquals(marrigeDate, client1.getMarrigeDate());
+    }
+
+    @Then("The branchNumber should be {int}, the name should be {string} and the direction should de {string}")
+    public void verifyBranchCreation(int branchNumber, String name, String direction) {
+        assertEquals(branchNumber, branchTest.getBranchNumber());
+        assertEquals(name, branchTest.getName());
+        assertEquals(direction, branchTest.getDirection());
+    }
+
+    @Then("The branch name should be {string}")
+    public void verifyNewBranchName(String newBranchName) {
+        assertEquals(newBranchName, branchTest.getName());
+    }
+
+    @Then("The branch direction should be {string}")
+    public void verifyNewBranchDirection(String newBranchDirection) {
+        assertEquals(newBranchDirection, branchTest.getDirection());
+    }
+
+    @Then("The branch should be dont exist")
+    public void verifyBranchDontExist() {
+        assertEquals(null, bank.getBranch(branchTest.getBranchNumber()));
+    }
+
+    @Then("The operation should be denied due to this branch have accounts")
+    public void verifyCantRemoveBranchWithAccounts() {
+        assertNotNull(this.iae);
     }
 
 
