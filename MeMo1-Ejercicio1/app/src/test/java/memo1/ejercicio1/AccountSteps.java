@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.BeforeEach;
 
+import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 
 // Pruebas funcionales basadas en los escenarios Gherkin
@@ -19,15 +20,15 @@ public class AccountSteps {
     private Client client2;
     private IllegalArgumentException iae;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         bank = new Bank();
         bank.createBranch(1, "Street 15", "branch1");
-        //bank.createClient(12345, "Math", "Johnson",  "Street 14", 19900413);
-        //bank.createClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
-        //branch1 = bank.getBranch(1);
-        //client1 = bank.getClient(12345);
-        //client2 = bank.getClient(56789);
+        bank.createClient(19999, "Math", "Johnson",  "Street 14", 19900413);
+        bank.createClient(20000, "Kamala", "Harrison", "Street 14", 19911013);
+        branch1 = bank.getBranch(1);
+        client1 = bank.getClient(19999);
+        client2 = bank.getClient(20000);
         //client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 111111111L, "test0");
         //client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
         //client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
@@ -37,16 +38,45 @@ public class AccountSteps {
 
     @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void createClient(long DNI,String name, String surname, String direction, long bornDate) {
-        bank = new Bank();
-        bank.createBranch(1, "Street 15", "branch1");
-        bank.createClient(12345, "Math", "Johnson",  "Street 14", 19900413);
-        client1 = bank.getClient(12345);
+        bank.createClient(DNI, name, surname,  direction, bornDate);
+        client1 = bank.getClient(DNI);
+        System.out.println(bank.getClient(DNI));
+    }
+
+    @Given("I create an account with CBU {long} and alias {string}")
+    public void createAccountWithDefaultBalance(long CBU, String alias) {
+        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, alias);
+        account1 = bank.getAccountByCBU(CBU);
+    }
+
+    @Given("I create an account with CBU {long}, alias {string} and a balance of {double}")
+    public void createAccountWithtBalance(long CBU, String alias, double balance) {
+        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, balance, alias);
+        account1 = bank.getAccountByCBU(CBU);
     }
 
     @When("I try to create another client with DNI {long}")
     public void tryToCreateAccountWithRepeatDNI(long repeatDNI) {
         try{
-            bank.createClient(12345, "Harry", "Simmons",  "Street 21", 19930524);
+            bank.createClient(repeatDNI, "Harry", "Simmons",  "Street 21", 19930524);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I try to create another account with the same CBU {long}, diferent alias {string} and a balance of {double}")
+    public void iTryToCreateAnotherAccountWithTheSameCBU(long repeatCBU, String alias, Double balance) {
+        try{
+           client1.createAccountAsTitular(bank, branch1, repeatCBU, alias);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I try to create another account with the same alias {string}, diferent CBU {long} and a balance of {balance}")
+    public void iTryToCreateAnotherAccountWithTheSameAlias(long CBU, String repeatAlias, Double balance) {
+        try{
+           client1.createAccountAsTitular(bank, branch1, CBU, repeatAlias);
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
@@ -64,6 +94,21 @@ public class AccountSteps {
     @Then("The operation should be denied due to repeat DNI")
     public void verifyRepeatDNI() {
         assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to repeat CBU")
+    public void verifyRepeatCBU() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to repeat alias")
+    public void verifyRepeatAlias() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The account with CBU {long} should be have a balance of {double}")
+    public void the_account_with_cbu_should_be_have_a_balance_of(long CBU, Double expectedBalance) {
+        assertEquals(expectedBalance, account1.getBalance(), 0.01);
     }
 
 
