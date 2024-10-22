@@ -40,15 +40,21 @@ public class Bank {
 
     public Client createClient(long DNI,String name,String surname,String direction, long bornDate){
         if(this.checkRepeatDNI(DNI)){
-            throw new IllegalArgumentException("No se puede repetir DNI");
+            throw new IllegalArgumentException("Cannot repeat DNI");
         }
         Client newClient = new Client(DNI, name, surname, direction, bornDate);
         this.clients.add(newClient);
         return newClient;
     }
 
-    public boolean removeClient(Client client){
-        return clients.remove(client);
+    public boolean removeClient(long DNI){
+        for(Client client : this.clients){
+            if(client.getDNI() == DNI){
+                this.clients.remove(client);
+                return true;
+            }
+        }
+        throw new IllegalArgumentException("Cannot found this Client");
     }
 
     public void incrementateLastCorrelativeNumber(){

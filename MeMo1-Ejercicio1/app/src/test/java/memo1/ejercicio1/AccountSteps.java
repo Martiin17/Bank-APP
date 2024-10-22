@@ -18,6 +18,7 @@ public class AccountSteps {
     private Bank bank;
     private Client client1;
     private Client client2;
+    private Client testClient;
     private IllegalArgumentException iae;
 
     @Before
@@ -39,7 +40,7 @@ public class AccountSteps {
     @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void createClient(long DNI,String name, String surname, String direction, long bornDate) {
         bank.createClient(DNI, name, surname,  direction, bornDate);
-        //client1 = bank.getClient(DNI);
+        testClient = bank.getClient(DNI);
     }
 
     @Given("An account with CBU {long} and alias {string}")
@@ -100,13 +101,42 @@ public class AccountSteps {
         }
     }
 
+    @When("I modificate direction to {string}")
+    public void modificateDirection(String newDirection) {
+        client1.setDirection(newDirection);
+    }
+
+    @When("I modificate name to {string}")
+    public void modificateName(String newName) {
+        client1.setName(newName);
+    }
+
+    @When("I modificate surname to {string}")
+    public void modificateSurname(String surname) {
+        client1.setSurname(surname);
+    }
+
+    @When("I remove the client with DNI {long}")
+    public void removeClientFromBankClientsList(long DNI) {
+        bank.removeClient(DNI);
+    }
+
+    @When("I try to remove inexistent client with DNI {long}")
+    public void tryRemoveInexistentClientFromBankClientsList(long DNI) {
+        try{
+            bank.removeClient(DNI);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
-        assertEquals(DNI, client1.getDNI());
-        assertEquals(name, client1.getName());
-        assertEquals(surname, client1.getSurname());
-        assertEquals(direction, client1.getDirection());
-        assertEquals(bornDate, client1.getBornDate());
+        assertEquals(DNI, testClient.getDNI());
+        assertEquals(name, testClient.getName());
+        assertEquals(surname, testClient.getSurname());
+        assertEquals(direction, testClient.getDirection());
+        assertEquals(bornDate, testClient.getBornDate());
     }
 
     @Then("The operation should be denied due to repeat DNI")
@@ -129,6 +159,11 @@ public class AccountSteps {
         assertNotNull(this.iae);
     }
 
+    @Then("The operation should be denied due to inexistent client")
+    public void verifyInexistentClient() {
+        assertNotNull(this.iae);
+    }
+
     @Then("The account with CBU {long} should be have a balance of {double}")
     public void verifyAccountBalance(long CBU, Double expectedBalance) {
         assertEquals(expectedBalance, account1.getBalance(), 0.01);
@@ -142,6 +177,26 @@ public class AccountSteps {
     @Then("The account with CBU {long} should be dont exist")
     public void verifyRemoveAccount(long CBU) {
         assertEquals(null, bank.getAccountByCBU(CBU));
+    }
+
+    @Then("The client with DNI {long} should be dont exist")
+    public void verifyRemoveClient(long DNI) {
+        assertEquals(null, bank.getClient(DNI));
+    }
+
+    @Then("The direction should be {string}")
+    public void verifyNewDirection(String newDirection) {
+        assertEquals(newDirection, client1.getDirection());
+    }
+
+    @Then("The name should be {string}")
+    public void verifyNewName(String newName) {
+        assertEquals(newName, client1.getName());
+    }
+
+    @Then("The surname should be {string}")
+    public void verifyNewSurname(String newSurname) {
+        assertEquals(newSurname, client1.getSurname());
     }
 
 
