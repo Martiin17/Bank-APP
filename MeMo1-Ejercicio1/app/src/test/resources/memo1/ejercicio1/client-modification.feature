@@ -15,7 +15,7 @@ Feature: Client dates modification
         When I modificate surname to Garcia
         Then The surname should be Garcia
 
-     Scenario: Cant modificate born date
+    Scenario: Cant modificate born date
         Given A client with DNI: 12345, name: Math, surname: Johnson, direction: "Street 14" and born date: "19900413"
         When I try to modificate born date to "20241018"
         Then The born date should be "19900413"
