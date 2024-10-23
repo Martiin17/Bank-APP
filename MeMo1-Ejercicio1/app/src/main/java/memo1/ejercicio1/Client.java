@@ -58,6 +58,14 @@ public class Client {
         return this.bornDate;
     }
 
+    public List<Account> getCoOwnerAccounts(){
+        return this.coOwnerAccounts;
+    }
+
+    public List<Account> getOwnerAccounts(){
+        return this.ownerAccounts;
+    }
+
     public void addMarrige(Client marrige, long marrigeDate){
         this.marrige = marrige;
         this.marrigeDate = marrigeDate;

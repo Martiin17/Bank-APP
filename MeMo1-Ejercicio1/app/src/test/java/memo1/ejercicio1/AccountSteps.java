@@ -20,6 +20,7 @@ public class AccountSteps {
     private Client client2;
     private Client testClient;
     private Branch branchTest;
+    private Branch branchFound;
     private IllegalArgumentException iae;
 
     @Before
@@ -75,6 +76,14 @@ public class AccountSteps {
     @Given("I create a branch with branchNumber: {int}, name: {string}, direction: {string}")
     public void createBranch(int branchNumber, String name, String direction) {
         branchTest = bank.createBranch(branchNumber, direction, name);
+    }
+
+    @Given("An account with CBU {long}, alias {string} radicated on the branch with name branchNumber: {int}, name: {string} and direction: {string}")
+    public void createBranchAndAccount(long CBU, String alias, int branchNumber, String name, String direction) {
+        branchTest = bank.createBranch(branchNumber, direction, name);
+        client1.createAccountAsTitular(bank,  bank.getBranch(branchTest.getBranchNumber()), CBU, alias);
+        System.out.println(branchTest.getBranchNumber()); //BORRAR
+        account1 = bank.getAccountByCBU(CBU);
     }
 
     @When("I try to create another client with DNI {long}")
@@ -246,6 +255,26 @@ public class AccountSteps {
         operationResult = client1.trasnferWithAlias(account1, balance, alias);
     }
 
+    @When("I look for the account branch with CBU {long}")
+    public void tryLookAccountBranchWithCBU(long CBU) {
+        try{
+            branchFound = bank.searchAccountBranchWithCbu(CBU);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+            operationResult = false;
+        }
+    }
+
+    @When("I look for the account branch with alias {string}")
+    public void tryLookAccountBranchWithAlias(String alias) {
+        try{
+            branchFound = bank.searchAccountBranchWithAlias(alias);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+            operationResult = false;
+        }
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, testClient.getDNI());
@@ -412,6 +441,13 @@ public class AccountSteps {
     public void VerifyAccountsBalance(double expectedBalance, double expectedBalance2) {
         assertEquals(expectedBalance, account1.getBalance(), 0.01);
         assertEquals(expectedBalance2, account2.getBalance(), 0.01);
+    }
+
+    @Then("I get the branchNumber: {int}, name: {string}, direction: {string}")
+    public void verifyFoundBranch(int branchNumber, String name, String direction) {
+        assertEquals(branchNumber, branchFound.getBranchNumber());
+        assertEquals(name, branchFound.getName());
+        assertEquals(direction, branchFound.getDirection());
     }
 
     /*@Then("The first account balance should remain {double} and the second account balance should remain {double}")

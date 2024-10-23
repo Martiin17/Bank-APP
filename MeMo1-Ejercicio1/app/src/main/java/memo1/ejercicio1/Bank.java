@@ -73,7 +73,7 @@ public class Bank {
         this.branches = branches;
     }
 
-    public List<Branch> getSucursales(){
+    public List<Branch> getBranches(){
         return this.branches;
     }
 
@@ -233,21 +233,21 @@ public class Bank {
         }
         return true;
     }
-    public Branch searchAccountSucursalWithAlias(String alias){
-        for(Branch sucursal : this.branches){
+    public Branch searchAccountBranchWithAlias(String alias){
+        for(Branch branch : this.branches){
             for(Account account : this.getAccounts()) {
                 if(alias == account.getAlias()){
-                    return sucursal;
+                    return branch;
                 }
              }
         }
         throw new IllegalArgumentException("Dont exist this alias");
     }
-    public Branch searchAccountSucursalWithCbu(long cbu){
-        for(Branch sucursal : this.branches){
+    public Branch searchAccountBranchWithCbu(long cbu){
+        for(Branch branch : this.branches){
             for(Account account : this.getAccounts()) {
                 if(cbu == account.getCbu()){
-                    return sucursal;
+                    return branch;
                 }
              }
         }

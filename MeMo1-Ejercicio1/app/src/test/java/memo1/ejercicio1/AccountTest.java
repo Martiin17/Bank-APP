@@ -206,12 +206,12 @@ class AccountTest {
 
     @Test
     void searchForBranchWithCBUInexistentAccountShouldThrowExceptionIfAccounDontExist() {
-        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountSucursalWithCbu(9999));
+        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountBranchWithCbu(9999));
     }
 
     @Test
     void searchForBranchWithAliasInexistentAccountThrowExceptionIfAccounDontExist() {
-        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountSucursalWithAlias("dontExist9999"));
+        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountBranchWithAlias("dontExist9999"));
     }
 
     @Test
@@ -229,5 +229,12 @@ class AccountTest {
        client1.deposit(account1, 100.0);
        assertEquals(1,bank.getRegisters().size());
     }
+
+    @Test
+    void correctlyAddAccountAsCoOwner() {
+       client2.joinAsCoTitular(account1);
+       assertEquals(1,client2.getCoOwnerAccounts().size());
+    }
+
 
 }
