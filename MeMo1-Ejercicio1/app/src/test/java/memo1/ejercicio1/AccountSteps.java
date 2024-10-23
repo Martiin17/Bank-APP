@@ -10,7 +10,6 @@ import io.cucumber.java.en.*;
 // Pruebas funcionales basadas en los escenarios Gherkin
 
 public class AccountSteps {
-    //private Account account0;
     private Account account1;
     private Account account2;
     private boolean operationResult;
@@ -41,7 +40,7 @@ public class AccountSteps {
     }
 
     @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} and his wife who is client too with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}. They have marrige on {long}")
-    public void searchMarrigeDate(long DNI1, String name1, String surname1, String direction1, long bornDate1, long DNI2, String name2, String surname2, String direction2, long bornDate2, long marrigeDate){
+    public void createClientsMarrige(long DNI1, String name1, String surname1, String direction1, long bornDate1, long DNI2, String name2, String surname2, String direction2, long bornDate2, long marrigeDate){
         client1 = bank.createClient(DNI1, name1, surname1, direction1, bornDate1);
         client2 = bank.createClient(DNI2, name2, surname2, direction2, bornDate2);
         client1.addMarrige(client2, marrigeDate);
@@ -90,7 +89,7 @@ public class AccountSteps {
     }
 
     @When("I try to create another account with the same CBU {long}, diferent alias {string} and a balance of {double}")
-    public void iTryToCreateAnotherAccountWithTheSameCBU(long repeatCBU, String alias, double balance) {
+    public void tryToCreateAnotherAccountWithTheSameCBU(long repeatCBU, String alias, double balance) {
         try{
             client1.createAccountAsOwner(bank, branch1, repeatCBU, balance, alias);
         }catch(IllegalArgumentException iae){
@@ -99,7 +98,7 @@ public class AccountSteps {
     }
 
     @When("I try to create another account with the same alias {string}, diferent CBU {long} and a balance of {double}")
-    public void iTryToCreateAnotherAccountWithTheSameAlias(String repeatAlias, long CBU, double balance) {
+    public void tryToCreateAnotherAccountWithTheSameAlias(String repeatAlias, long CBU, double balance) {
         try{
             client1.createAccountAsOwner(bank, branch1, CBU, balance, repeatAlias);
         }catch(IllegalArgumentException iae){
@@ -178,19 +177,19 @@ public class AccountSteps {
     }
 
     @When("I try to withdraw {double} from the account")
-    public void TryToWithdrawMoreMoneyThanAvaibableFromAnAccount(double amount) {
+    public void tryToWithdrawMoreMoneyThanAvaibableFromAnAccount(double amount) {
         operationResult = client1.withdraw(account1, amount);
     }
 
     @When("I try to withdraw {double} from not owner or co-owner account")
-    public void TryToWithdrawMoneyFromNotOwnerOrCoOwnerAccount(double amount) {
+    public void tryToWithdrawMoneyFromNotOwnerOrCoOwnerAccount(double amount) {
         client2.createAccountAsOwner(bank, branch1, 50685046045L, "noOwnerAccount15");
         Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
         operationResult = client1.withdraw(noOWnerAccount, amount);
     }
 
     @When("I look for the fist account marriage")
-    public void SearchForTheMarrigeDate() {
+    public void searchForTheMarrigeDate() {
         client1.getMarrigeDate();
     }
 
@@ -442,170 +441,4 @@ public class AccountSteps {
         assertEquals(name, branchFound.getName());
         assertEquals(direction, branchFound.getDirection());
     }
-
-    /*@Then("The first account balance should remain {double} and the second account balance should remain {double}")
-    public void VerifyAccountsBalanceRemain(double expectedBalance, double expectedBalance2) {
-        assertEquals(expectedBalance, account1.getBalance(), 0.01);
-        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
-    }*/
-
-
-
-    /*SI @Given("I create an account with CBU {long} and alias {string}")
-    public void createAccountWithDefaultBalance(long cbu, String alias) {
-        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), cbu, alias);
-    }*/
-
-
-    /*SI @Given("I create an account with CBU {long}, alias {string} and a balance of {double}")
-    public void createAccountWithInitialBalance(long cbu, String alias, double balance) {
-        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), cbu, balance, alias);
-    }*/
-
-    /*@Given("An account with CBU {long} and a balance of {double}")
-    public void anAccountWithCBUAndBalance(long cbu, double balance) {
-        account = new Account(cbu, balance);
-    }*/
-
-    /*@Given("An account with CBU {long} and a balance of {double} and a second account with CBU {long} and balance of {double}")
-    public void createAccountsWithCBUAndBalance(long cbu, Double balance, long cbu2, Double balance2) {
-        account = new Account(cbu, balance);
-        account2 = new Account(cbu2, balance2);
-        sucursal1 = new Sucursal(1, "PrimeraJunta  829", "sucursal1");
-        bank = new Bank();
-        bank.addSucursal(sucursal1);
-        sucursal1.addAccount(account);
-        sucursal1.addAccount(account2);
-        account.setBank(bank);
-        account2.setBank(bank);
-    }*/
-
-    /*@Given("An account with CBU {int} and a balance of {double} and a inexistent cbu {long}")
-    public void createAccountsWithCBUAndBalance(long cbu, Double balance, long inexistentCbu){
-        account = new Account(cbu, balance);
-        sucursal1 = new Sucursal(1, "PrimeraJunta  829", "sucursal1");
-        bank = new Bank();
-        bank.addSucursal(sucursal1);
-        sucursal1.addAccount(account);
-        account.setBank(bank);
-    }*/
-
-    /* SI @When("I try to create another account with the same CBU {long} and a balance of {double}")
-    public void depositIntoAccount(double balance, long cbu) {
-        try{
-            client1.createAccountAsTitular(bank, branch1, cbu, balance, "Dont12");
-        }catch(IllegalArgumentException iae){
-            this.iae = iae;
-        }
-       
-    }
-
-    @When("I try to create another account with the same alias {string} and a balance of {double}")
-    public void depositIntoAccount(double balance,String alias) {
-        try{
-            client1.createAccountAsTitular(bank, branch1, 231321314L, balance,alias);
-        }catch(IllegalArgumentException iae){
-            this.iae = iae;
-        }
-       
-    } */
-
-   /*@When("I deposit {double} into the account")
-    public void depositIntoAccount(double amount) {
-        operationResult = account.deposit(amount);
-    }*/
-
-    /*@When("I try to deposit {double} into the account")
-    public void tryToDepositIntoAccount(double amount) {
-        operationResult = account.deposit(amount);
-    }*/
-
-    /*@When("I withdraw {double} from the account")
-    public void withdrawFromAccount(double amount) {
-        operationResult = account.withdraw(amount);
-    }*/
-
-    /*@When("I try to withdraw {double} from the account")
-    public void tryToWithdrawFromAccount(double amount) {
-        operationResult = account.withdraw(amount);
-    }*/
-
-    /*@When("I transfer {double} into the second account")
-    public void depositToSecondAccount(Double amount) {
-        account.transferWithCBU(amount, account2.getCbu());
-    }*/
-
-   /*@When("I try to transfer {double} into the second account")
-    public void tryToDepositIntoSecondAccount(Double amount) {
-        account.transferWithCBU(amount, account2.getCbu());
-    }*/
-
-    /*@When("I try to transfer {double} to the cbu {long}")
-    public void tryToTransferToInexistentCBU(Double amount, long inexistentCbu) {
-        operationResult = account.transferWithCBU(amount, inexistentCbu);;
-    }*/
-
-    /*Si @Then("The operation should be denied due to repeat CBU")
-    public void verifyRepeatCBU() {
-        assertNotNull(iae);
-    }
-
-    @Then("The operation should be denied due to repeat alias")
-    public void verifyRepeatAlias() {
-        assertNotNull(iae);
-    }
-
-    @Then("The account with CBU {long} should be have a balance of {double}")
-    public void verifyAccountBalance(long cbu, double expectedBalance) {
-        Account account = client1.getOwnerAccountWithCBU(cbu);
-        assertEquals(expectedBalance, account.getBalance(), 0.01);
-    }*/
-
-    /*@Then("The operation should be denied due to negative amount")
-    public void verifyOperationDenied() {
-        if(!operationResult) {
-            System.out.println("negative amount");
-        }
-        assertFalse(operationResult);
-    }*/
-
-    /*@Then("The account balance should remain {double}")
-    public void verifyBalanceRemains(double expectedBalance) {
-        assertEquals(expectedBalance, account.getBalance(), 0.01);
-    }
-
-    @Then("The operation should be denied due to insufficient founds")
-    public void verifyInsufficientFounds() {
-         if(!operationResult) {
-            System.out.println("insufficient founds");
-        }
-        assertFalse(operationResult);
-    }
-
-
-    @Then("The first account balance should be {double} and the second account balance should be {double}")
-    public void verifyAccountsBalance(Double expectedBalance, Double expectedBalance2) {
-        assertEquals(expectedBalance, account.getBalance(), 0.01);
-        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
-    }
-
-    @Then("The first account balance should remain {double} and the second account balance should remain {double}")
-    public void VerifyAccountsBalance(Double expectedBalance, Double expectedBalance2) {
-        assertEquals(expectedBalance, account.getBalance(), 0.01);
-        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
-    }
-
-   @Then("The operation should be denied due to inexistent cbu")
-    public void verifyInexistentCBU() {
-        if(!operationResult) {
-            System.out.println(" inexistent cbu");
-        }
-        assertFalse(operationResult);
-    }
-
-    @Then("The first account balance should remain {double}")
-    public void VerifyAccountBalance(Double expectedBalance) {
-        assertEquals(expectedBalance, account.getBalance(), 0.01);
-    }*/
-
 } 
