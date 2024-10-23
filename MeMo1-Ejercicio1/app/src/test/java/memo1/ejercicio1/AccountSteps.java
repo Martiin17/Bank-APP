@@ -32,11 +32,6 @@ public class AccountSteps {
         branch1 = bank.getBranch(1);
         client1 = bank.getClient(19999);
         client2 = bank.getClient(20000);
-        //client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 111111111L, "test0");
-        //client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
-        //client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
-        //account1 = bank.getAccountByCBU(123456789);
-        //account2 = bank.getAccountByCBU(987654321L);
     }
 
     @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
@@ -82,7 +77,6 @@ public class AccountSteps {
     public void createBranchAndAccount(long CBU, String alias, int branchNumber, String name, String direction) {
         branchTest = bank.createBranch(branchNumber, direction, name);
         client1.createAccountAsTitular(bank,  bank.getBranch(branchTest.getBranchNumber()), CBU, alias);
-        System.out.println(branchTest.getBranchNumber()); //BORRAR
         account1 = bank.getAccountByCBU(CBU);
     }
 
@@ -217,7 +211,6 @@ public class AccountSteps {
     @When("I modificate branch direction to {string}")
     public void modifcateBranchDirection(String newBranchDirection) {
         branchTest.setDirection(newBranchDirection);
-        System.out.println(branchTest.getDirection());
     }
 
     @When("I remove the branch with out accounts")

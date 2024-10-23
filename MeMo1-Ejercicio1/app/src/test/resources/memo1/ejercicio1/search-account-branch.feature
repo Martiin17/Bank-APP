@@ -17,5 +17,5 @@ Feature: Search where an account is located in a branch
 
   Scenario: Cant find the branch for inexistent alias
     Given An account with CBU 123456789, alias "hellow12" radicated on the branch with name branchNumber: 120, name: "branchTest" and direction: "Street 15"
-    When I look for the account branch  with alias "dontExist199"
+    When I look for the account branch with alias "dontExist199"
     Then The operation should be denied due to inexistent alias

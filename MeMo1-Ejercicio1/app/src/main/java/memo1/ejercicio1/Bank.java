@@ -38,6 +38,24 @@ public class Bank {
         return null;
     }
 
+    /*public Account getAccountByBranchesAndCBU(Branch branch, long cbu){
+        for(Account account : branch.getAccounts()){
+            if(cbu == account.getCbu()){
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public Account getAccountByBranchesAndAlias(Branch branch, String alias){
+        for(Account account : branch.getAccounts()){
+            if(alias.equals(account.getAlias())){
+                return account;
+            }
+        }
+        return null;
+    }*/
+
     public Client createClient(long DNI,String name,String surname,String direction, long bornDate){
         if(this.checkRepeatDNI(DNI)){
             throw new IllegalArgumentException("Cannot repeat DNI");
@@ -235,8 +253,8 @@ public class Bank {
     }
     public Branch searchAccountBranchWithAlias(String alias){
         for(Branch branch : this.branches){
-            for(Account account : this.getAccounts()) {
-                if(alias == account.getAlias()){
+            for(Account account : branch.getAccounts()) {
+                if(alias.equals(account.getAlias())){
                     return branch;
                 }
              }
@@ -245,7 +263,7 @@ public class Bank {
     }
     public Branch searchAccountBranchWithCbu(long cbu){
         for(Branch branch : this.branches){
-            for(Account account : this.getAccounts()) {
+            for(Account account : branch.getAccounts()) {
                 if(cbu == account.getCbu()){
                     return branch;
                 }
