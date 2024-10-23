@@ -15,7 +15,10 @@ public class Main {
         Account account1 = bank.getAccountByCBU(123456789);
         Account account2 = bank.getAccountByCBU(987654321L);
 
-        client1.deposit(account1, 500.0);
+        boolean operationResult = client1.trasnferWithCBU(account1, 500.0, 987654321L);
+        System.out.println(operationResult);
+        System.out.println(account1.getBalance());
+        System.out.println(account2.getBalance());
         /* 
         // Crear una instancia de Account usando el constructor sin argumentos
         Account account1 = new Account();

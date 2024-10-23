@@ -58,6 +58,14 @@ public class AccountSteps {
         account1 = bank.getAccountByCBU(CBU);
     }
 
+    @Given("A client with an account with CBU {long}, alias {string} and a balance of {double} and a second client with an account CBU {long}, alias {string} and balance of {double}")
+    public void createTwoAccountsWithBalance(long CBU1, String alias1, double balance1, long CBU2, String alias2, double balance2) {
+        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU1, balance1, alias1);
+        account1 = bank.getAccountByCBU(CBU1);
+        client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU2, balance2, alias2);
+        account2 = bank.getAccountByCBU(CBU2);
+    }
+
     @Given("An account with CBU {long}, alias {string} and a balance of {double}")
     public void createAccountWithtBalance(long CBU, String alias, double balance) {
         client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, balance, alias);
@@ -218,6 +226,16 @@ public class AccountSteps {
         }
     }
 
+    @When("I transfer {double} to the CBU {long}")
+    public void transferWithCBU(double balance, long CBU) {
+        client1.trasnferWithCBU(account1, balance, CBU);
+    }
+
+    @When("I try to transfer {double} to the CBU {long}")
+    public void tryToTransferWithCBU(double balance, long CBU) {
+        client1.trasnferWithCBU(account1, balance, CBU);
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, testClient.getDNI());
@@ -357,6 +375,33 @@ public class AccountSteps {
     public void verifyCantRemoveBranchWithAccounts() {
         assertNotNull(this.iae);
     }
+
+    @Then("The first account balance should be {double} and the second account balance should be {double}")
+    public void verifyExpectedBalances(double expectedBalance1, double expectedBalance2) {
+        assertEquals(expectedBalance1, account1.getBalance(), 0.01);
+        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
+    }
+
+    @Then("The operation should be denied due to inexistent cbu")
+    public void verifyInexistentCBU() {
+        if(!operationResult) {
+            System.out.println(" inexistent cbu");
+        }
+        assertFalse(operationResult);
+    }
+
+    @Then("The first account balance should remain {double} and the second account balance should remain {double}")
+    public void VerifyAccountsBalance(double expectedBalance, double expectedBalance2) {
+        assertEquals(expectedBalance, account1.getBalance(), 0.01);
+        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
+    }
+
+    /*@Then("The first account balance should remain {double} and the second account balance should remain {double}")
+    public void VerifyAccountsBalanceRemain(double expectedBalance, double expectedBalance2) {
+        assertEquals(expectedBalance, account1.getBalance(), 0.01);
+        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
+    }*/
+
 
 
     /*SI @Given("I create an account with CBU {long} and alias {string}")
