@@ -233,7 +233,17 @@ public class AccountSteps {
 
     @When("I try to transfer {double} to the CBU {long}")
     public void tryToTransferWithCBU(double balance, long CBU) {
-        client1.trasnferWithCBU(account1, balance, CBU);
+        operationResult = client1.trasnferWithCBU(account1, balance, CBU);
+    }
+
+    @When("I transfer {double} to the alias {string}")
+    public void transferWithAlias(double balance, String alias) {
+        client1.trasnferWithAlias(account1, balance, alias);
+    }
+
+    @When("I try to transfer {double} to the alias {string}")
+    public void tryToTransferWithAlias(double balance, String alias) {
+        operationResult = client1.trasnferWithAlias(account1, balance, alias);
     }
 
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
@@ -386,6 +396,14 @@ public class AccountSteps {
     public void verifyInexistentCBU() {
         if(!operationResult) {
             System.out.println(" inexistent cbu");
+        }
+        assertFalse(operationResult);
+    }
+
+    @Then("The operation should be denied due to inexistent alias")
+    public void verifyInexistentAlias() {
+        if(!operationResult) {
+            System.out.println("inexistent alias");
         }
         assertFalse(operationResult);
     }
