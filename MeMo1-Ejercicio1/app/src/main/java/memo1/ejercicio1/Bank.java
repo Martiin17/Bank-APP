@@ -77,6 +77,10 @@ public class Bank {
         return this.branches;
     }
 
+    public List<Register> getRegisters(){
+        return this.registers;
+    }
+
     public Branch getBranch(int branchNumber){
         for(Branch branch : this.branches) {
             if(branch.getBranchNumber() == branchNumber){
@@ -159,6 +163,32 @@ public class Bank {
            }
         }
         return false;
+    }
+
+    public boolean deposit(Account accountSender, double amount){
+        if(!this.checkValidAmount(amount, accountSender.getBalance())){
+            return false;
+        }
+        accountSender.setBalance(accountSender.getBalance() + amount);
+        List<Account> registerAccounts = new ArrayList<Account>();
+        registerAccounts.add(accountSender);
+        Register register = new Register(this.lastCorrelativeNumber, this.todayDate, this.nowHour, "deposit", amount, registerAccounts);
+        this.registers.add(register);
+        this.incrementateLastCorrelativeNumber();
+        return true;
+    }
+
+    public boolean withdraw(Account accountSender, double amount){
+        if(!this.checkValidAmount(amount, accountSender.getBalance())){
+            return false;
+        }
+        accountSender.setBalance(accountSender.getBalance() - amount);
+        List<Account> registerAccounts = new ArrayList<Account>();
+        registerAccounts.add(accountSender);
+        Register register = new Register(this.lastCorrelativeNumber, this.todayDate, this.nowHour, "withdraw", amount, registerAccounts);
+        this.registers.add(register);
+        this.incrementateLastCorrelativeNumber();
+        return true;
     }
 
     public boolean checkRepeatCBU(long newCBU){

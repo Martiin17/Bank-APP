@@ -86,19 +86,11 @@ public class Account {
     }
 
     public boolean withdraw(double amount) {
-        if (amount <= 0 || amount > balance) {
-            return false;
-        }
-        balance -= amount;
-        return true;
+        return this.bank.withdraw(this, amount);
     }
 
     public boolean deposit(double amount) {
-        if (amount < 0) {
-            return false;
-        }
-        balance += amount;
-        return true;
+        return this.bank.deposit(this, amount);
     }
 
     public boolean transferWithCBU(double amount, long cbu){

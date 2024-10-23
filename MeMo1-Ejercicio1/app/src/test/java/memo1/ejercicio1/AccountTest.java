@@ -224,4 +224,10 @@ class AccountTest {
         assertThrows(IllegalArgumentException.class, () -> bank.removeBranch(branch1));
     }
 
+    @Test
+    void veifyCreationOfRegister() {
+       client1.deposit(account1, 100.0);
+       assertEquals(1,bank.getRegisters().size());
+    }
+
 }
