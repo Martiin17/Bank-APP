@@ -164,7 +164,6 @@ public class Client {
         return false;
     }
 
-
     public boolean trasnferWithCBU(Account accountSender, double amount, long cbu){
         if(this.checkAccountOwner(accountSender) == false){
             return false;

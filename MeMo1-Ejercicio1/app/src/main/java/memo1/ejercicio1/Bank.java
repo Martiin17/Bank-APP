@@ -38,23 +38,6 @@ public class Bank {
         return null;
     }
 
-    /*public Account getAccountByBranchesAndCBU(Branch branch, long cbu){
-        for(Account account : branch.getAccounts()){
-            if(cbu == account.getCbu()){
-                return account;
-            }
-        }
-        return null;
-    }
-
-    public Account getAccountByBranchesAndAlias(Branch branch, String alias){
-        for(Account account : branch.getAccounts()){
-            if(alias.equals(account.getAlias())){
-                return account;
-            }
-        }
-        return null;
-    }*/
 
     public Client createClient(long DNI,String name,String surname,String direction, long bornDate){
         if(this.checkRepeatDNI(DNI)){
@@ -85,10 +68,6 @@ public class Bank {
 
     public void setHour(int hour){
         this.nowHour = hour;
-    }
-
-    public Bank(List<Branch> branches){
-        this.branches = branches;
     }
 
     public List<Branch> getBranches(){
@@ -272,7 +251,7 @@ public class Bank {
         throw new IllegalArgumentException("Dont exist this cbu");
     }
 
-    public long searchMarrigeDate(long DNI){ //Devuelve 0 si no se caso
+    public long searchMarrigeDate(long DNI){ //Devuelve 0 si no esta casado
         Client client  = this.getClient(DNI);
         if(client == null){
             throw new IllegalArgumentException("Dont exist this DNI");

@@ -19,4 +19,28 @@ public class Register {
         this.amount = amount;
         this.accounts = accounts;
     }
+
+    public long getCorrelativeNumber(){
+        return this.correlativeNumber;
+    }
+
+    public long getDate(){
+        return this.date;
+    }
+
+    public int getHour(){
+        return this.hour;
+    }
+
+    public String getTypeOfTransaction(){
+        return this.typeOfTransaction;
+    }
+
+    public double getAmount(){
+        return this.amount;
+    }
+
+    public List<Account> getAccounts(){
+        return this.accounts;
+    }
 }
