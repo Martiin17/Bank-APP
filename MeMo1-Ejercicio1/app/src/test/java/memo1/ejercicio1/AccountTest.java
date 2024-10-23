@@ -24,15 +24,15 @@ class AccountTest {
         branch1 = bank.getBranch(1);
         client1 = bank.getClient(12345);
         client2 = bank.getClient(56789);
-        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
-        client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
+        client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
+        client2.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
         account1 = bank.getAccountByCBU(123456789);
         account2 = bank.getAccountByCBU(987654321L);
     }
 
     @Test
     void defaultConstructorShouldInitializeBalanceToZero() {
-        client1.createAccountAsTitular(bank, branch1, 12345l, "test1");
+        client1.createAccountAsOwner(bank, branch1, 12345l, "test1");
         Account account = bank.getAccountByCBU(12345);
         assertEquals(0.0, account.getBalance());
     }
@@ -45,17 +45,17 @@ class AccountTest {
 
     @Test
     void constructorShouldThrowExceptionIfBalanceIsNegative() {
-        assertThrows(IllegalArgumentException.class, () -> client1.createAccountAsTitular(bank, branch1, 12345l, -100.0, "test2"));
+        assertThrows(IllegalArgumentException.class, () -> client1.createAccountAsOwner(bank, branch1, 12345l, -100.0, "test2"));
     }
 
     @Test
     void constructorShouldThrowExceptionIfDontHaveBranch() {
-        assertThrows(NullPointerException.class, () ->  client1.createAccountAsTitular(bank, null, 12345l, 1000.0, "test2"));
+        assertThrows(NullPointerException.class, () ->  client1.createAccountAsOwner(bank, null, 12345l, 1000.0, "test2"));
     }
 
     @Test
     void constructorShouldThrowExceptionIfDontHaveBank() {
-        assertThrows(NullPointerException.class, () -> client1.createAccountAsTitular(null, branch1, 12345l, 1000.0, "test2"));
+        assertThrows(NullPointerException.class, () -> client1.createAccountAsOwner(null, branch1, 12345l, 1000.0, "test2"));
     }
 
     @Test
@@ -79,12 +79,12 @@ class AccountTest {
 
     @Test
     void createAccountWithRepeatCBUShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> client1.createAccountAsTitular(bank, branch1, 123456789L, "goodmorning14"));
+        assertThrows(IllegalArgumentException.class, () -> client1.createAccountAsOwner(bank, branch1, 123456789L, "goodmorning14"));
     }
 
     @Test
     void createAccountWithRepeatAliasShoulThrowException() {
-        assertThrows(IllegalArgumentException.class, () ->client1.createAccountAsTitular(bank, branch1, 999999999L, "hellow12"));
+        assertThrows(IllegalArgumentException.class, () ->client1.createAccountAsOwner(bank, branch1, 999999999L, "hellow12"));
     }
 
     @Test
@@ -232,7 +232,7 @@ class AccountTest {
 
     @Test
     void correctlyAddAccountAsCoOwner() {
-       client2.joinAsCoTitular(account1);
+       client2.joinAsCoOwner(account1);
        assertEquals(1,client2.getCoOwnerAccounts().size());
     }
 

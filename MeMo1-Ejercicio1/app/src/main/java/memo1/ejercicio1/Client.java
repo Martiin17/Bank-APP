@@ -71,7 +71,7 @@ public class Client {
         this.marrigeDate = marrigeDate;
     }
 
-    public boolean createAccountAsTitular(Bank bank, Branch sucursal, Long cbu, double balance, String alias){
+    public boolean createAccountAsOwner(Bank bank, Branch sucursal, Long cbu, double balance, String alias){
         if(bank.checkRepeatAlias(alias)){
             throw new IllegalArgumentException("Alias can not be repeat");
         }
@@ -83,7 +83,7 @@ public class Client {
         return sucursal.addAccount(newAccount);
     }
 
-    public boolean createAccountAsTitular(Bank bank, Branch branch, Long cbu, String alias){
+    public boolean createAccountAsOwner(Bank bank, Branch branch, Long cbu, String alias){
         if(branch == null){
             throw new NullPointerException("branch cannot be null");
         }
@@ -98,7 +98,7 @@ public class Client {
         return branch.addAccount(newAccount);
     }
 
-    public boolean joinAsCoTitular(Account account){
+    public boolean joinAsCoOwner(Account account){
         return this.coOwnerAccounts.add(account);
     }
 

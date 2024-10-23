@@ -10,8 +10,8 @@ public class Main {
         Branch branch1 = bank.getBranch(1);
         Client client1 = bank.getClient(12345);
         Client client2 = bank.getClient(56789);
-        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
-        client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
+        client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
+        client2.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
         Account account1 = bank.getAccountByCBU(123456789);
         Account account2 = bank.getAccountByCBU(987654321L);
 
@@ -26,7 +26,7 @@ public class Main {
         System.out.println("Account2 balance: " + account2.getBalance());
 
         System.out.println("client1 join as co-owner of account2:");
-        client1.joinAsCoTitular(account2);
+        client1.joinAsCoOwner(account2);
         System.out.println("CoOwnerAccount list size: " + client1.getCoOwnerAccounts().size());
         
     }

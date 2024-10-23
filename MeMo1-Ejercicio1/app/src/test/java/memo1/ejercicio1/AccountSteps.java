@@ -50,21 +50,21 @@ public class AccountSteps {
 
     @Given("An account with CBU {long} and alias {string}")
     public void createAccountWithDefaultBalance(long CBU, String alias) {
-        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, alias);
+        client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), CBU, alias);
         account1 = bank.getAccountByCBU(CBU);
     }
 
     @Given("A client with an account with CBU {long}, alias {string} and a balance of {double} and a second client with an account CBU {long}, alias {string} and balance of {double}")
     public void createTwoAccountsWithBalance(long CBU1, String alias1, double balance1, long CBU2, String alias2, double balance2) {
-        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU1, balance1, alias1);
+        client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), CBU1, balance1, alias1);
         account1 = bank.getAccountByCBU(CBU1);
-        client2.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU2, balance2, alias2);
+        client2.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), CBU2, balance2, alias2);
         account2 = bank.getAccountByCBU(CBU2);
     }
 
     @Given("An account with CBU {long}, alias {string} and a balance of {double}")
     public void createAccountWithtBalance(long CBU, String alias, double balance) {
-        client1.createAccountAsTitular(bank, bank.getBranch(branch1.getBranchNumber()), CBU, balance, alias);
+        client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), CBU, balance, alias);
         account1 = bank.getAccountByCBU(CBU);
     }
 
@@ -76,7 +76,7 @@ public class AccountSteps {
     @Given("An account with CBU {long}, alias {string} radicated on the branch with name branchNumber: {int}, name: {string} and direction: {string}")
     public void createBranchAndAccount(long CBU, String alias, int branchNumber, String name, String direction) {
         branchTest = bank.createBranch(branchNumber, direction, name);
-        client1.createAccountAsTitular(bank,  bank.getBranch(branchTest.getBranchNumber()), CBU, alias);
+        client1.createAccountAsOwner(bank,  bank.getBranch(branchTest.getBranchNumber()), CBU, alias);
         account1 = bank.getAccountByCBU(CBU);
     }
 
@@ -92,7 +92,7 @@ public class AccountSteps {
     @When("I try to create another account with the same CBU {long}, diferent alias {string} and a balance of {double}")
     public void iTryToCreateAnotherAccountWithTheSameCBU(long repeatCBU, String alias, double balance) {
         try{
-            client1.createAccountAsTitular(bank, branch1, repeatCBU, balance, alias);
+            client1.createAccountAsOwner(bank, branch1, repeatCBU, balance, alias);
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
@@ -101,7 +101,7 @@ public class AccountSteps {
     @When("I try to create another account with the same alias {string}, diferent CBU {long} and a balance of {double}")
     public void iTryToCreateAnotherAccountWithTheSameAlias(String repeatAlias, long CBU, double balance) {
         try{
-            client1.createAccountAsTitular(bank, branch1, CBU, balance, repeatAlias);
+            client1.createAccountAsOwner(bank, branch1, CBU, balance, repeatAlias);
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
@@ -167,7 +167,7 @@ public class AccountSteps {
 
     @When("I try to deposit {double} into no owner or co-owner account")
     public void tryTodepositInNotOwnerOrCoOwnerAccount(double amount) {
-        client2.createAccountAsTitular(bank, branch1, 50685046045L, "noOwnerAccount15");
+        client2.createAccountAsOwner(bank, branch1, 50685046045L, "noOwnerAccount15");
         Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
         operationResult = client1.deposit(noOWnerAccount, amount);
     }
@@ -184,7 +184,7 @@ public class AccountSteps {
 
     @When("I try to withdraw {double} from not owner or co-owner account")
     public void TryToWithdrawMoneyFromNotOwnerOrCoOwnerAccount(double amount) {
-        client2.createAccountAsTitular(bank, branch1, 50685046045L, "noOwnerAccount15");
+        client2.createAccountAsOwner(bank, branch1, 50685046045L, "noOwnerAccount15");
         Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
         operationResult = client1.withdraw(noOWnerAccount, amount);
     }
@@ -220,7 +220,7 @@ public class AccountSteps {
 
     @When("I try to remove the branch with accounts")
     public void tryToRemoveBranchWithAccounts() {
-        client1.createAccountAsTitular(bank, branchTest, 6464646848328L, "extraAccount129");
+        client1.createAccountAsOwner(bank, branchTest, 6464646848328L, "extraAccount129");
         try{
             bank.removeBranch(branchTest);
         }catch(IllegalArgumentException iae){
