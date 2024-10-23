@@ -99,6 +99,9 @@ public class Client {
     }
 
     public boolean joinAsCoOwner(Account account){
+        if(this.getOwnerAccountWithCBU(account.getCbu()) != null){
+            throw new IllegalArgumentException("Cant join as co owner because the account is your own account");
+        }
         return this.coOwnerAccounts.add(account);
     }
 

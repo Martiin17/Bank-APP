@@ -267,6 +267,20 @@ public class AccountSteps {
         }
     }
 
+    @When("I join to the account as co-owner")
+    public void joinToAccountAsCoOwner() {
+        operationResult = client2.joinAsCoOwner(account1);
+    }
+
+    @When("I try to join as co-owner for my own account")
+    public void tryToJoinAccountAsCoOwner() {
+        try{
+            operationResult = client1.joinAsCoOwner(account1);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, testClient.getDNI());
@@ -440,5 +454,15 @@ public class AccountSteps {
         assertEquals(branchNumber, branchFound.getBranchNumber());
         assertEquals(name, branchFound.getName());
         assertEquals(direction, branchFound.getDirection());
+    }
+
+    @Then("The account should be on my co-owner list")
+    public void verifyCoOwnerAccount() {
+        assertEquals(account1, client2.getCoOwnerAccountWithCBU(account1.getCbu()));
+    }
+
+    @Then("The operation should be denied due to ilegal argument")
+    public void verifyIlegalArgument() {
+        assertNotNull(this.iae);
     }
 } 
