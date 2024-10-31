@@ -1,0 +1,137 @@
+package memo1.ejercicio1;
+
+import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import io.cucumber.java.Before;
+import io.cucumber.java.en.*;
+
+// Pruebas funcionales basadas en los escenarios Gherkin
+
+public class ClientSteps {
+    private Account account1;
+    //private Account account2;
+    //private boolean operationResult;
+    private Branch branch1;
+    private Bank bank;
+    private Client client1;
+    private Client client2;
+    private Client testClient;
+    //private Branch branchTest;
+    //private Branch branchFound;
+    private IllegalArgumentException iae;
+
+    @Before
+    public void setUp() {
+        bank = new Bank();
+        bank.createBranch(1, "Street 15", "branch1");
+        bank.createClient(19999, "Math", "Johnson",  "Street 14", 19900413);
+        bank.createClient(20000, "Kamala", "Harrison", "Street 14", 19911013);
+        branch1 = bank.getBranch(1);
+        client1 = bank.getClient(19999);
+        client2 = bank.getClient(20000);
+    }
+
+    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
+    public void createClient(long DNI,String name, String surname, String direction, long bornDate) {
+        bank.createClient(DNI, name, surname,  direction, bornDate);
+        testClient = bank.getClient(DNI);
+    }
+
+    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} and his wife who is client too with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}. They have marrige on {long}")
+    public void createClientsMarrige(long DNI1, String name1, String surname1, String direction1, long bornDate1, long DNI2, String name2, String surname2, String direction2, long bornDate2, long marrigeDate){
+        client1 = bank.createClient(DNI1, name1, surname1, direction1, bornDate1);
+        client2 = bank.createClient(DNI2, name2, surname2, direction2, bornDate2);
+        client1.addMarrige(client2, marrigeDate);
+        client2.addMarrige(client1, marrigeDate);
+    }
+
+    @When("I try to create another client with DNI {long}")
+    public void tryToCreateAccountWithRepeatDNI(long repeatDNI) {
+        try{
+            bank.createClient(repeatDNI, "Harry", "Simmons",  "Street 21", 19930524);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I modificate direction to {string}")
+    public void modificateDirection(String newDirection) {
+        client1.setDirection(newDirection);
+    }
+
+    @When("I modificate name to {string}")
+    public void modificateName(String newName) {
+        client1.setName(newName);
+    }
+
+    @When("I modificate surname to {string}")
+    public void modificateSurname(String surname) {
+        client1.setSurname(surname);
+    }
+
+    @When("I remove the client with DNI {long}")
+    public void removeClientFromBankClientsList(long DNI) {
+        bank.removeClient(DNI);
+    }
+
+    @When("I try to remove inexistent client with DNI {long}")
+    public void tryRemoveInexistentClientFromBankClientsList(long DNI) {
+        try{
+            bank.removeClient(DNI);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I look for the fist account marriage")
+    public void searchForTheMarrigeDate() {
+        client1.getMarrigeDate();
+    }
+
+    @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
+    public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
+        assertEquals(DNI, testClient.getDNI());
+        assertEquals(name, testClient.getName());
+        assertEquals(surname, testClient.getSurname());
+        assertEquals(direction, testClient.getDirection());
+        assertEquals(bornDate, testClient.getBornDate());
+    }
+
+    @Then("The operation should be denied due to repeat DNI")
+    public void verifyRepeatDNI() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to inexistent client")
+    public void verifyInexistentClient() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The client with DNI {long} should be dont exist")
+    public void verifyRemoveClient(long DNI) {
+        assertEquals(null, bank.getClient(DNI));
+    }
+
+    @Then("The direction should be {string}")
+    public void verifyNewDirection(String newDirection) {
+        assertEquals(newDirection, client1.getDirection());
+    }
+
+    @Then("The name should be {string}")
+    public void verifyNewName(String newName) {
+        assertEquals(newName, client1.getName());
+    }
+
+    @Then("The surname should be {string}")
+    public void verifyNewSurname(String newSurname) {
+        assertEquals(newSurname, client1.getSurname());
+    }
+
+    @Then("I get the wedding date {long}")
+    public void veifyMarrigeDateIsANumber(long marrigeDate) {
+        assertEquals(marrigeDate, client1.getMarrigeDate());
+    }
+
+}
