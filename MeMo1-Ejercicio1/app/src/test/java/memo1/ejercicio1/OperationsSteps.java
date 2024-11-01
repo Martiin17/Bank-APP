@@ -20,7 +20,7 @@ public class OperationsSteps {
     //private Client testClient;
     //private Branch branchTest;
     //private Branch branchFound;
-    //private IllegalArgumentException iae;
+    private IllegalArgumentException iae;
 
     @Before
     public void setUp() {
@@ -54,14 +54,22 @@ public class OperationsSteps {
 
     @When("I try to deposit {double} into the account")
     public void tryTodepositNegativeAmountIntoAccount(double amount) {
-        client1.deposit(account1, amount);
+        try{
+            client1.deposit(account1, amount);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @When("I try to deposit {double} into no owner or co-owner account")
     public void tryTodepositInNotOwnerOrCoOwnerAccount(double amount) {
         client2.createAccountAsOwner(bank, branch1, 50685046045L, "noOwnerAccount15");
         Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
-        operationResult = client1.deposit(noOWnerAccount, amount);
+        try{
+            client1.deposit(noOWnerAccount, amount);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @When("I withdraw {double} from the account")
@@ -71,14 +79,22 @@ public class OperationsSteps {
 
     @When("I try to withdraw {double} from the account")
     public void tryToWithdrawMoreMoneyThanAvaibableFromAnAccount(double amount) {
-        operationResult = client1.withdraw(account1, amount);
+        try{
+            client1.withdraw(account1, amount);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @When("I try to withdraw {double} from not owner or co-owner account")
     public void tryToWithdrawMoneyFromNotOwnerOrCoOwnerAccount(double amount) {
         client2.createAccountAsOwner(bank, branch1, 50685046045L, "noOwnerAccount15");
         Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
-        operationResult = client1.withdraw(noOWnerAccount, amount);
+        try{
+            client1.withdraw(noOWnerAccount, amount);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @When("I transfer {double} to the CBU {long}")
@@ -88,7 +104,11 @@ public class OperationsSteps {
 
     @When("I try to transfer {double} to the CBU {long}")
     public void tryToTransferWithCBU(double balance, long CBU) {
-        operationResult = client1.trasnferWithCBU(account1, balance, CBU);
+        try{
+            client1.trasnferWithCBU(account1, balance, CBU);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @When("I transfer {double} to the alias {string}")
@@ -98,7 +118,11 @@ public class OperationsSteps {
 
     @When("I try to transfer {double} to the alias {string}")
     public void tryToTransferWithAlias(double balance, String alias) {
-        operationResult = client1.trasnferWithAlias(account1, balance, alias);
+        try{
+            client1.trasnferWithAlias(account1, balance, alias);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @Then("The account balance should be {double}")
@@ -113,26 +137,17 @@ public class OperationsSteps {
 
     @Then("The operation should be denied due to negative amount")
     public void verifyOperationDenied() {
-        if(!operationResult) {
-            System.out.println("negative amount");
-        }
-        assertFalse(operationResult);
+        assertNotNull(this.iae);
     }
 
     @Then("The operation should be denied due to inexistent cbu")
     public void verifyInexistentCBU() {
-        if(!operationResult) {
-            System.out.println(" inexistent cbu");
-        }
-        assertFalse(operationResult);
+        assertNotNull(this.iae);
     }
 
     @Then("The operation should be denied due to inexistent alias")
     public void verifyInexistentAlias() {
-        if(!operationResult) {
-            System.out.println("inexistent alias");
-        }
-        assertFalse(operationResult);
+        assertNotNull(this.iae);
     }
 
     @Then("The first account balance should remain {double} and the second account balance should remain {double}")
@@ -143,18 +158,12 @@ public class OperationsSteps {
 
     @Then("The operation should be denied due to not owner or co-owner account")
     public void verifyOperationDeniedBecauseNotOwnerOrCoOwnerAccount() {
-        if(!operationResult) {
-            System.out.println("no owner or co-owner account");
-        }
-        assertFalse(operationResult);
+        assertNotNull(this.iae);
     }
 
     @Then("The operation should be denied due to insufficient founds")
     public void verifyInsufficientFounds() {
-         if(!operationResult) {
-            System.out.println("insufficient founds");
-        }
-        assertFalse(operationResult);
+        assertNotNull(this.iae);
     }
 
     @Then("The first account balance should be {double} and the second account balance should be {double}")

@@ -80,7 +80,7 @@ public class Account {
 
     public void setBalance(double balance) {
         if (balance < 0) {
-            throw new IllegalArgumentException("Balance cannot be negative.");
+            throw new IllegalArgumentException("Balance cannot be negative");
         }
         this.balance = balance;
     }

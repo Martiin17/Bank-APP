@@ -173,4 +173,14 @@ public class AccountSteps {
     public void verifyIlegalArgument() {
         assertNotNull(this.iae);
     }
+
+    @Then("The operation should be denied due to inexistent aliass")
+    public void verifyInexistentAlias() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to inexistent CBU")
+    public void verifyInexistentCBU() {
+        assertNotNull(this.iae);
+    }
 } 

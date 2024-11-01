@@ -139,11 +139,13 @@ public class Bank {
             return true;
            }
         }
-        return false;
+        throw new IllegalArgumentException("Cannot transfer to inexistent CBU");
+        //return false;
     }
 
     public boolean transferWithAlias(Account accountSender, double amount, String alias){
         if(!this.checkValidAmount(amount, accountSender.getBalance())){
+            //throw new IllegalArgumentException("The amount is not valid");
             return false;
         }
         for(Account account : this.getAccounts()) {
@@ -159,7 +161,8 @@ public class Bank {
             return true;
            }
         }
-        return false;
+        throw new IllegalArgumentException("Cannot transfer to inexistent alias");
+        //return false;
     }
 
     public boolean deposit(Account accountSender, double amount){
@@ -226,7 +229,8 @@ public class Bank {
 
     public boolean checkValidAmount(Double amount, double balance){
         if (amount <= 0 || amount > balance) {
-            return false;
+            throw new IllegalArgumentException("The amount is not valid");
+           // return false;
         }
         return true;
     }

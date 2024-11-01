@@ -37,8 +37,9 @@ class OperationsTest {
     }
 
     @Test
-    void depositShouldReturnFalseForNegativeAmount() {
-        assertFalse(client1.deposit(account1, -100.0));
+    void depositShouldThrowExceptionForNegativeAmount() {
+        assertThrows(IllegalArgumentException.class, () -> client1.deposit(account1, -100.0));
+        //assertFalse(client1.deposit(account1, -100.0));
     }
 
     @Test
@@ -48,13 +49,15 @@ class OperationsTest {
     }
 
     @Test
-    void withdrawShouldReturnFalseIfAmountExceedsBalance() {
-        assertFalse(client1.withdraw(account1,1500.0));
+    void withdrawShouldThrowExceptionIfAmountExceedsBalance() {
+        assertThrows(IllegalArgumentException.class, () -> client1.withdraw(account1, 1500.0));
+        //assertFalse(client1.withdraw(account1,1500.0));
     }
 
     @Test
-    void withdrawShouldReturnFalseForNegativeAmount() {
-        assertFalse(client1.withdraw(account1, -100.0));
+    void withdrawShouldThrowExceptionForNegativeAmount() {
+        assertThrows(IllegalArgumentException.class, () -> client1.withdraw(account1, -100.0));
+        //assertFalse(client1.withdraw(account1, -100.0));
     }
 
     @Test
@@ -88,53 +91,63 @@ class OperationsTest {
     }
 
     @Test
-    void transferWithCBUNegativeAmountShouldReturnFalse() {
-        assertFalse(client1.trasnferWithCBU(account1, -100.0, account2.getCbu()));
+    void transferWithCBUNegativeAmountShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithCBU(account1, -100.0, account2.getCbu()));
+        //assertFalse(client1.trasnferWithCBU(account1, -100.0, account2.getCbu()));
     }
 
     @Test
-    void transferWithCBUWithAccountWhoIAmNotTheOwnerReturnFalse() {
-        assertFalse(client1.trasnferWithCBU(account2, 100.0, account1.getCbu()));
+    void transferWithCBUWithAccountWhoIAmNotTheOwnerThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithCBU(account2, 100.0, account1.getCbu()));
+        //assertFalse(client1.trasnferWithCBU(account2, 100.0, account1.getCbu()));
     }
 
     @Test
-    void transferWithAliasWithAccountWhoIAmNotTheOwnerReturnFalse() {
-        assertFalse(client1.trasnferWithAlias(account2, 100.0, account1.getAlias()));
+    void transferWithAliasWithAccountWhoIAmNotTheOwnerThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithAlias(account2, 100.0, account1.getAlias()));
+        //assertFalse(client1.trasnferWithAlias(account2, 100.0, account1.getAlias()));
     }
 
     @Test
-    void transferWithCBUShouldReturnFalseIfAmountExceedsBalance() {
-        assertFalse(client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
+    void transferWithCBUShouldThrowExceptionIfAmountExceedsBalance() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
+        //assertFalse(client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
     }
 
     @Test
-    void transferWithAliasNegativeAmountShouldReturnFalse() {
-        assertFalse(client1.trasnferWithAlias(account1, -100.0, account2.getAlias()));
+    void transferWithAliasNegativeAmountShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithAlias(account1, -100.0, account2.getAlias()));
+        //assertFalse(client1.trasnferWithAlias(account1, -100.0, account2.getAlias()));
     }
 
     @Test
-    void transferWithAliasShouldReturnFalseIfAmountExceedsBalance() {
-        assertFalse(client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
+    void transferWithAliasShouldThrowExceptionIfAmountExceedsBalance() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
+        //assertFalse(client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
     }
 
     @Test
-    void transferWithCBUShouldReturnFalseIfAccountDontExist() {
-        assertFalse(client1.trasnferWithCBU(account1, 200.0, 9999));
+    void transferWithCBUShouldThrowExceptionIfAccountDontExist() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithCBU(account1, 200.0, 9999));
+        //assertFalse(client1.trasnferWithCBU(account1, 200.0, 9999));
     }
 
     @Test
-    void transferWithAliasShouldReturnFalseIfAccountDontExist() {
-        assertFalse(client1.trasnferWithAlias(account1, 200.0, "noExist999"));
+    void transferWithAliasShouldThrowExceptionIfAccountDontExist() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithAlias(account1, 200.0, "noExist999"));
+        //assertFalse(client1.trasnferWithAlias(account1, 200.0, "noExist999"));
     }
 
     @Test
     void cannotDepositIntoNoOwnerOrCoOwnerAccount() {
-        assertFalse(client1.deposit(account2, 200.0));
+        assertThrows(IllegalArgumentException.class, () -> client1.deposit(account2, 200.0));
+        //assertFalse(client1.deposit(account2, 200.0));
     }
 
     @Test
     void cannoWithdrawIntoNoOwnerOrCoOwnerAccount() {
-        assertFalse(client1.withdraw(account2, 200.0));
+        assertThrows(IllegalArgumentException.class, () -> client1.withdraw(account2, 200.0));
+        //assertFalse(client1.withdraw(account2, 200.0));
     }
 
     @Test

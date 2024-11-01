@@ -164,7 +164,8 @@ public class Client {
                 return true;
             }
         }
-        return false;
+        //return false;
+        throw new IllegalArgumentException("Cannot transfer to your own account");
     }
 
     public boolean trasnferWithCBU(Account accountSender, double amount, long cbu){
