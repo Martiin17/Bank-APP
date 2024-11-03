@@ -4,6 +4,7 @@ Feature: Transfer money with alias
     Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0
     When I transfer 200.0 to the alias "bye14"
     Then The first account balance should be 800.0 and the second account balance should be 1200.0
+    And A register should be created
 
   Scenario: Cannot transfer a negative amount
     Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0

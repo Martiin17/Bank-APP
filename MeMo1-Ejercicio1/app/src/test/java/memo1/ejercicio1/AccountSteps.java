@@ -12,6 +12,7 @@ import io.cucumber.java.en.*;
 public class AccountSteps {
     private Account account1;
     private Account account2;
+    private Account failAccount;
     private boolean operationResult;
     private Branch branch1;
     private Bank bank;
@@ -33,19 +34,6 @@ public class AccountSteps {
         client2 = bank.getClient(20000);
     }
 
-    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
-    public void createClient(long DNI,String name, String surname, String direction, long bornDate) {
-        bank.createClient(DNI, name, surname,  direction, bornDate);
-        testClient = bank.getClient(DNI);
-    }
-
-    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} and his wife who is client too with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}. They have marrige on {long}")
-    public void createClientsMarrige(long DNI1, String name1, String surname1, String direction1, long bornDate1, long DNI2, String name2, String surname2, String direction2, long bornDate2, long marrigeDate){
-        client1 = bank.createClient(DNI1, name1, surname1, direction1, bornDate1);
-        client2 = bank.createClient(DNI2, name2, surname2, direction2, bornDate2);
-        client1.addMarrige(client2, marrigeDate);
-        client2.addMarrige(client1, marrigeDate);
-    }
 
     @Given("An account with CBU {long} and alias {string}")
     public void createAccountWithDefaultBalance(long CBU, String alias) {
@@ -53,13 +41,6 @@ public class AccountSteps {
         account1 = bank.getAccountByCBU(CBU);
     }
 
-    @Given("A client with an account with CBU {long}, alias {string} and a balance of {double} and a second client with an account CBU {long}, alias {string} and balance of {double}")
-    public void createTwoAccountsWithBalance(long CBU1, String alias1, double balance1, long CBU2, String alias2, double balance2) {
-        client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), CBU1, balance1, alias1);
-        account1 = bank.getAccountByCBU(CBU1);
-        client2.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), CBU2, balance2, alias2);
-        account2 = bank.getAccountByCBU(CBU2);
-    }
 
     @Given("An account with CBU {long}, alias {string} and a balance of {double}")
     public void createAccountWithtBalance(long CBU, String alias, double balance) {
@@ -67,10 +48,6 @@ public class AccountSteps {
         account1 = bank.getAccountByCBU(CBU);
     }
 
-    @Given("I create a branch with branchNumber: {int}, name: {string}, direction: {string}")
-    public void createBranch(int branchNumber, String name, String direction) {
-        branchTest = bank.createBranch(branchNumber, direction, name);
-    }
 
     @Given("An account with CBU {long}, alias {string} radicated on the branch with name branchNumber: {int}, name: {string} and direction: {string}")
     public void createBranchAndAccount(long CBU, String alias, int branchNumber, String name, String direction) {
@@ -79,14 +56,6 @@ public class AccountSteps {
         account1 = bank.getAccountByCBU(CBU);
     }
 
-    @When("I try to create another client with DNI {long}")
-    public void tryToCreateAccountWithRepeatDNI(long repeatDNI) {
-        try{
-            bank.createClient(repeatDNI, "Harry", "Simmons",  "Street 21", 19930524);
-        }catch(IllegalArgumentException iae){
-            this.iae = iae;
-        }
-    }
 
     @When("I try to create another account with the same CBU {long}, diferent alias {string} and a balance of {double}")
     public void tryToCreateAnotherAccountWithTheSameCBU(long repeatCBU, String alias, double balance) {
@@ -125,128 +94,6 @@ public class AccountSteps {
         }
     }
 
-    @When("I modificate direction to {string}")
-    public void modificateDirection(String newDirection) {
-        client1.setDirection(newDirection);
-    }
-
-    @When("I modificate name to {string}")
-    public void modificateName(String newName) {
-        client1.setName(newName);
-    }
-
-    @When("I modificate surname to {string}")
-    public void modificateSurname(String surname) {
-        client1.setSurname(surname);
-    }
-
-    @When("I remove the client with DNI {long}")
-    public void removeClientFromBankClientsList(long DNI) {
-        bank.removeClient(DNI);
-    }
-
-    @When("I try to remove inexistent client with DNI {long}")
-    public void tryRemoveInexistentClientFromBankClientsList(long DNI) {
-        try{
-            bank.removeClient(DNI);
-        }catch(IllegalArgumentException iae){
-            this.iae = iae;
-        }
-    }
-
-    @When("I deposit {double} into the account")
-    public void depositIntoAccount(double amount) {
-        client1.deposit(account1, amount);
-    }
-
-    @When("I try to deposit {double} into the account")
-    public void tryTodepositNegativeAmountIntoAccount(double amount) {
-        client1.deposit(account1, amount);
-    }
-
-    @When("I try to deposit {double} into no owner or co-owner account")
-    public void tryTodepositInNotOwnerOrCoOwnerAccount(double amount) {
-        client2.createAccountAsOwner(bank, branch1, 50685046045L, "noOwnerAccount15");
-        Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
-        operationResult = client1.deposit(noOWnerAccount, amount);
-    }
-
-    @When("I withdraw {double} from the account")
-    public void withdrawMoneyFromAnAccount(double amount) {
-        client1.withdraw(account1, amount);
-    }
-
-    @When("I try to withdraw {double} from the account")
-    public void tryToWithdrawMoreMoneyThanAvaibableFromAnAccount(double amount) {
-        operationResult = client1.withdraw(account1, amount);
-    }
-
-    @When("I try to withdraw {double} from not owner or co-owner account")
-    public void tryToWithdrawMoneyFromNotOwnerOrCoOwnerAccount(double amount) {
-        client2.createAccountAsOwner(bank, branch1, 50685046045L, "noOwnerAccount15");
-        Account noOWnerAccount = bank.getAccountByCBU(50685046045L);
-        operationResult = client1.withdraw(noOWnerAccount, amount);
-    }
-
-    @When("I look for the fist account marriage")
-    public void searchForTheMarrigeDate() {
-        client1.getMarrigeDate();
-    }
-
-    @When("I try to create another branch with branchNumber: {int}, name: {string}, direction: {string}")
-    public void tryToCreateRepeatBranchNumber(int repeatBranchNumber, String name, String direction) {
-        try{
-            bank.createBranch(repeatBranchNumber, name, direction);
-        }catch(IllegalArgumentException iae){
-            this.iae = iae;
-        }
-    }
-
-    @When("I modificate branch name to {string}")
-    public void modifcateBranchName(String newBranchName) {
-        branchTest.setName(newBranchName);
-    }
-
-    @When("I modificate branch direction to {string}")
-    public void modifcateBranchDirection(String newBranchDirection) {
-        branchTest.setDirection(newBranchDirection);
-    }
-
-    @When("I remove the branch with out accounts")
-    public void removeBranchWithOutAccounts() {
-        bank.removeBranch(branchTest);
-    }
-
-    @When("I try to remove the branch with accounts")
-    public void tryToRemoveBranchWithAccounts() {
-        client1.createAccountAsOwner(bank, branchTest, 6464646848328L, "extraAccount129");
-        try{
-            bank.removeBranch(branchTest);
-        }catch(IllegalArgumentException iae){
-            this.iae = iae;
-        }
-    }
-
-    @When("I transfer {double} to the CBU {long}")
-    public void transferWithCBU(double balance, long CBU) {
-        client1.trasnferWithCBU(account1, balance, CBU);
-    }
-
-    @When("I try to transfer {double} to the CBU {long}")
-    public void tryToTransferWithCBU(double balance, long CBU) {
-        operationResult = client1.trasnferWithCBU(account1, balance, CBU);
-    }
-
-    @When("I transfer {double} to the alias {string}")
-    public void transferWithAlias(double balance, String alias) {
-        client1.trasnferWithAlias(account1, balance, alias);
-    }
-
-    @When("I try to transfer {double} to the alias {string}")
-    public void tryToTransferWithAlias(double balance, String alias) {
-        operationResult = client1.trasnferWithAlias(account1, balance, alias);
-    }
-
     @When("I look for the account branch with CBU {long}")
     public void tryLookAccountBranchWithCBU(long CBU) {
         try{
@@ -267,32 +114,31 @@ public class AccountSteps {
         }
     }
 
-    @When("I join to the account as co-owner")
-    public void joinToAccountAsCoOwner() {
-        operationResult = client2.joinAsCoOwner(account1);
-    }
-
-    @When("I try to join as co-owner for my own account")
-    public void tryToJoinAccountAsCoOwner() {
+    @When("I try to create an account without a branch")
+    public void tryToCreateAnAccountWithoutBranch() {
         try{
-            operationResult = client1.joinAsCoOwner(account1);
+            client1.createAccountAsOwner(bank, null, 786955345L, "Fail15");
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
     }
 
-    @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
-    public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
-        assertEquals(DNI, testClient.getDNI());
-        assertEquals(name, testClient.getName());
-        assertEquals(surname, testClient.getSurname());
-        assertEquals(direction, testClient.getDirection());
-        assertEquals(bornDate, testClient.getBornDate());
+    @When("I try to create an account without an owner")
+    public void tryToCreateAnAccountWithoutAnOwner() {
+        try{
+            failAccount = new Account(bank, null, 786955345L, "Fail15");
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
-    @Then("The operation should be denied due to repeat DNI")
-    public void verifyRepeatDNI() {
-        assertNotNull(this.iae);
+    @When("I try to remove an account with CBU {long}")
+    public void tryToRemoveAccountWithFounds(long CBU) {
+        try{
+            branch1.removeAccountByCBU(client1, CBU);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
     @Then("The operation should be denied due to repeat CBU")
@@ -307,11 +153,6 @@ public class AccountSteps {
 
     @Then("The operation should be denied due to inexistent account")
     public void verifyInexistentAccount() {
-        assertNotNull(this.iae);
-    }
-
-    @Then("The operation should be denied due to inexistent client")
-    public void verifyInexistentClient() {
         assertNotNull(this.iae);
     }
 
@@ -330,125 +171,6 @@ public class AccountSteps {
         assertEquals(null, bank.getAccountByCBU(CBU));
     }
 
-    @Then("The client with DNI {long} should be dont exist")
-    public void verifyRemoveClient(long DNI) {
-        assertEquals(null, bank.getClient(DNI));
-    }
-
-    @Then("The operation should be denied due to repeat branchNumber")
-    public void verifyCantCreateTwoBranchesWithTheSameBranchNumber() {
-        assertNotNull(this.iae);
-    }
-
-    @Then("The direction should be {string}")
-    public void verifyNewDirection(String newDirection) {
-        assertEquals(newDirection, client1.getDirection());
-    }
-
-    @Then("The name should be {string}")
-    public void verifyNewName(String newName) {
-        assertEquals(newName, client1.getName());
-    }
-
-    @Then("The surname should be {string}")
-    public void verifyNewSurname(String newSurname) {
-        assertEquals(newSurname, client1.getSurname());
-    }
-
-    @Then("The account balance should be {double}")
-    public void verifyAccountBalance(double expectedBalance) {
-        assertEquals(expectedBalance, account1.getBalance(), 0.01);
-    }
-
-    @Then("The operation should be denied due to negative amount")
-    public void verifyOperationDenied() {
-        if(!operationResult) {
-            System.out.println("negative amount");
-        }
-        assertFalse(operationResult);
-    }
-
-    @Then("The operation should be denied due to not owner or co-owner account")
-    public void verifyOperationDeniedBecauseNotOwnerOrCoOwnerAccount() {
-        if(!operationResult) {
-            System.out.println("no owner or co-owner account");
-        }
-        assertFalse(operationResult);
-    }
-
-    @Then("The account balance should remain {double}")
-    public void verifyBalanceRemains(double expectedBalance) {
-        assertEquals(expectedBalance, account1.getBalance(), 0.01);
-    }
-
-    @Then("The operation should be denied due to insufficient founds")
-    public void verifyInsufficientFounds() {
-         if(!operationResult) {
-            System.out.println("insufficient founds");
-        }
-        assertFalse(operationResult);
-    }
-
-    @Then("I get the wedding date {long}")
-    public void veifyMarrigeDateIsANumber(long marrigeDate) {
-        assertEquals(marrigeDate, client1.getMarrigeDate());
-    }
-
-    @Then("The branchNumber should be {int}, the name should be {string} and the direction should de {string}")
-    public void verifyBranchCreation(int branchNumber, String name, String direction) {
-        assertEquals(branchNumber, branchTest.getBranchNumber());
-        assertEquals(name, branchTest.getName());
-        assertEquals(direction, branchTest.getDirection());
-    }
-
-    @Then("The branch name should be {string}")
-    public void verifyNewBranchName(String newBranchName) {
-        assertEquals(newBranchName, branchTest.getName());
-    }
-
-    @Then("The branch direction should be {string}")
-    public void verifyNewBranchDirection(String newBranchDirection) {
-        assertEquals(newBranchDirection, branchTest.getDirection());
-    }
-
-    @Then("The branch should be dont exist")
-    public void verifyBranchDontExist() {
-        assertEquals(null, bank.getBranch(branchTest.getBranchNumber()));
-    }
-
-    @Then("The operation should be denied due to this branch have accounts")
-    public void verifyCantRemoveBranchWithAccounts() {
-        assertNotNull(this.iae);
-    }
-
-    @Then("The first account balance should be {double} and the second account balance should be {double}")
-    public void verifyExpectedBalances(double expectedBalance1, double expectedBalance2) {
-        assertEquals(expectedBalance1, account1.getBalance(), 0.01);
-        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
-    }
-
-    @Then("The operation should be denied due to inexistent cbu")
-    public void verifyInexistentCBU() {
-        if(!operationResult) {
-            System.out.println(" inexistent cbu");
-        }
-        assertFalse(operationResult);
-    }
-
-    @Then("The operation should be denied due to inexistent alias")
-    public void verifyInexistentAlias() {
-        if(!operationResult) {
-            System.out.println("inexistent alias");
-        }
-        assertFalse(operationResult);
-    }
-
-    @Then("The first account balance should remain {double} and the second account balance should remain {double}")
-    public void VerifyAccountsBalance(double expectedBalance, double expectedBalance2) {
-        assertEquals(expectedBalance, account1.getBalance(), 0.01);
-        assertEquals(expectedBalance2, account2.getBalance(), 0.01);
-    }
-
     @Then("I get the branchNumber: {int}, name: {string}, direction: {string}")
     public void verifyFoundBranch(int branchNumber, String name, String direction) {
         assertEquals(branchNumber, branchFound.getBranchNumber());
@@ -456,13 +178,34 @@ public class AccountSteps {
         assertEquals(direction, branchFound.getDirection());
     }
 
-    @Then("The account should be on my co-owner list")
-    public void verifyCoOwnerAccount() {
-        assertEquals(account1, client2.getCoOwnerAccountWithCBU(account1.getCbu()));
+
+    /*@Then("The operation should be denied due to ilegal argument")
+    public void verifyIlegalArgument() {
+        assertNotNull(this.iae);
+    }*/
+
+    @Then("The operation should be denied due to inexistent aliass")
+    public void verifyInexistentAlias() {
+        assertNotNull(this.iae);
     }
 
-    @Then("The operation should be denied due to ilegal argument")
-    public void verifyIlegalArgument() {
+    @Then("The operation should be denied due to inexistent CBU")
+    public void verifyInexistentCBU() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to branch can not be null")
+    public void verifyCantCreateAccountWithoutBranch() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to owner can not be null")
+    public void verifyCantCreateAccountWithoutAnOwner() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to cant remove an account with founds")
+    public void verifyCantRemoveAnAccountWithFounds() {
         assertNotNull(this.iae);
     }
 } 

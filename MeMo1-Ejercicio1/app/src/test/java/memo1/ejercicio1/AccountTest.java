@@ -9,25 +9,20 @@ import org.junit.jupiter.api.BeforeEach;
 
 class AccountTest {
     private Client client1;
-    private Client client2;
     private Branch branch1;
     private Bank bank;
     private Account account1;
-    private Account account2;
+    private Account testAccount;
 
     @BeforeEach
     void setUp() {
         bank = new Bank();
         bank.createBranch(1, "Street 15", "branch1");
         bank.createClient(12345, "Math", "Johnson",  "Street 14", 19900413);
-        bank.createClient(56789, "Kamala", "Harrison", "Street 14", 19911013);
         branch1 = bank.getBranch(1);
         client1 = bank.getClient(12345);
-        client2 = bank.getClient(56789);
         client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), 123456789L, 1000.0, "hellow12");
-        client2.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), 987654321L, 1000.0, "bye14");
         account1 = bank.getAccountByCBU(123456789);
-        account2 = bank.getAccountByCBU(987654321L);
     }
 
     @Test
@@ -78,130 +73,16 @@ class AccountTest {
     }
 
     @Test
-    void createAccountWithRepeatCBUShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> client1.createAccountAsOwner(bank, branch1, 123456789L, "goodmorning14"));
+    void removeShouldThrowExcepcionIfTryToRemoveAnAccountWithFounds() {
+        assertThrows(IllegalArgumentException.class, () -> branch1.removeAccountByCBU(client1, 123456789));
     }
 
     @Test
-    void createAccountWithRepeatAliasShoulThrowException() {
-        assertThrows(IllegalArgumentException.class, () ->client1.createAccountAsOwner(bank, branch1, 999999999L, "hellow12"));
-    }
-
-    @Test
-    void depositShouldIncreaseBalance() {
-        client1.deposit(account1, 500.0);
-        assertEquals(1500.0, account1.getBalance());
-    }
-
-    @Test
-    void depositShouldReturnFalseForNegativeAmount() {
-        assertFalse(client1.deposit(account1, -100.0));
-    }
-
-    @Test
-    void withdrawShouldDecreaseBalance() {
-        assertTrue(client1.withdraw(account1, 500.0));
-        assertEquals(500.0, account1.getBalance());
-    }
-
-    @Test
-    void withdrawShouldReturnFalseIfAmountExceedsBalance() {
-        assertFalse(client1.withdraw(account1,1500.0));
-    }
-
-    @Test
-    void withdrawShouldReturnFalseForNegativeAmount() {
-        assertFalse(client1.withdraw(account1, -100.0));
-    }
-
-    @Test
-    void withdrawShouldAllowExactAmount() {
-        assertTrue(client1.withdraw(account1, 1000.0));
-        assertEquals(0.0, account1.getBalance());
-    }
-
-    @Test
-    void transferWithCBUCorrectAmountDecreseBalanceOfSenderAccount(){
-        client1.trasnferWithCBU(account1, 200.0, account2.getCbu());
-        assertEquals(800.0, account1.getBalance());
-    }
-
-    @Test
-    void transferWithCBUtCorrectAmountIncreaseBalanceOfRecieverAccount(){
-        client1.trasnferWithCBU(account1, 200.0, account2.getCbu());
-        assertEquals(1200.0, account2.getBalance());
-    }
-
-    @Test
-    void transferWithAliasCorrectAmountDecreseBalanceOfDepositAccount(){ 
-        client1.trasnferWithAlias(account1, 200.0, account2.getAlias());
-        assertEquals(800.0, account1.getBalance());
-    }
-
-    @Test
-    void transferWithAliastCorrectAmountIncreaseBalanceOfRecieverAccount(){
-        client1.trasnferWithAlias(account1, 200.0, account2.getAlias());
-        assertEquals(1200.0, account2.getBalance());
-    }
-
-    @Test
-    void transferWithCBUNegativeAmountShouldReturnFalse() {
-        assertFalse(client1.trasnferWithCBU(account1, -100.0, account2.getCbu()));
-    }
-
-    @Test
-    void transferWithCBUWithAccountWhoIAmNotTheOwnerReturnFalse() {
-        assertFalse(client1.trasnferWithCBU(account2, 100.0, account1.getCbu()));
-    }
-
-    @Test
-    void transferWithAliasWithAccountWhoIAmNotTheOwnerReturnFalse() {
-        assertFalse(client1.trasnferWithAlias(account2, 100.0, account1.getAlias()));
-    }
-
-    @Test
-    void transferWithCBUShouldReturnFalseIfAmountExceedsBalance() {
-        assertFalse(client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
-    }
-
-    @Test
-    void transferWithAliasNegativeAmountShouldReturnFalse() {
-        assertFalse(client1.trasnferWithAlias(account1, -100.0, account2.getAlias()));
-    }
-
-    @Test
-    void transferWithAliasShouldReturnFalseIfAmountExceedsBalance() {
-        assertFalse(client1.trasnferWithCBU(account1, 1001.0, account2.getCbu()));
-    }
-
-    @Test
-    void transferWithCBUShouldReturnFalseIfAccountDontExist() {
-        assertFalse(client1.trasnferWithCBU(account1, 200.0, 9999));
-    }
-
-    @Test
-    void transferWithAliasShouldReturnFalseIfAccountDontExist() {
-        assertFalse(client1.trasnferWithAlias(account1, 200.0, "noExist999"));
-    }
-
-    @Test
-    void cannotDepositIntoNoOwnerOrCoOwnerAccount() {
-        assertFalse(client1.deposit(account2, 200.0));
-    }
-
-    @Test
-    void cannoWithdrawIntoNoOwnerOrCoOwnerAccount() {
-        assertFalse(client1.withdraw(account2, 200.0));
-    }
-
-    @Test
-    void searchForMarriageDateWithInexistentDNIShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> bank.searchMarrigeDate(9999));
-    }
-
-    @Test
-    void searchForMarriageDateWithASinglePersonShouldReturnZero() {
-        assertEquals(0, bank.searchMarrigeDate(client1.getDNI()));
+    void removeAccountWithNoFounds() {
+        client1.createAccountAsOwner(bank,branch1,4934983284L,"goodafternoon125");
+        testAccount = bank.getAccountByCBU(4934983284L);
+        branch1.removeAccountByCBU(client1, 4934983284L);
+        assertEquals(null, bank.getAccountByCBU(4934983284L));
     }
 
     @Test
@@ -213,28 +94,4 @@ class AccountTest {
     void searchForBranchWithAliasInexistentAccountThrowExceptionIfAccounDontExist() {
         assertThrows(IllegalArgumentException.class, () -> bank.searchAccountBranchWithAlias("dontExist9999"));
     }
-
-    @Test
-    void createBranchWithRepeatBranchNumberShoulThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> bank.createBranch(branch1.getBranchNumber(), "Street 15", "branch2"));
-    }
-
-    @Test
-    void RemoveBranchWithClientsShouldReturnFalse() {
-        assertThrows(IllegalArgumentException.class, () -> bank.removeBranch(branch1));
-    }
-
-    @Test
-    void veifyCreationOfRegister() {
-       client1.deposit(account1, 100.0);
-       assertEquals(1,bank.getRegisters().size());
-    }
-
-    @Test
-    void correctlyAddAccountAsCoOwner() {
-       client2.joinAsCoOwner(account1);
-       assertEquals(1,client2.getCoOwnerAccounts().size());
-    }
-
-
 }

@@ -7,7 +7,7 @@ public class Account {
     private String alias;
     private Bank bank;
 
-    public Account(Bank bank, Client titular, Long cbu, String alias) {
+    public Account(Bank bank, Client owner, Long cbu, String alias) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
@@ -17,8 +17,8 @@ public class Account {
         if(bank.checkRepeatAlias(alias)){
             throw new IllegalArgumentException("The alias is repeat");
         }
-        if(titular == null){
-            throw new IllegalArgumentException("titular can not be null");
+        if(owner == null){
+            throw new IllegalArgumentException("Owner can not be null");
         }
         if(bank == null){
             throw new IllegalArgumentException("bank can not be null");
@@ -29,7 +29,7 @@ public class Account {
         this.bank = bank;
     }
 
-    public Account(Bank bank, Client titular, Long cbu, double balance, String alias) {
+    public Account(Bank bank, Client owner, Long cbu, double balance, String alias) {
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
@@ -39,8 +39,8 @@ public class Account {
         if(bank.checkRepeatAlias(alias)){
             throw new IllegalArgumentException("The alias is repeat");
         }
-        if(titular == null){
-            throw new NullPointerException("titular can not be null");
+        if(owner == null){
+            throw new NullPointerException("Owner can not be null");
         }
         if(bank == null){
             throw new NullPointerException("bank can not be null");
@@ -80,7 +80,7 @@ public class Account {
 
     public void setBalance(double balance) {
         if (balance < 0) {
-            throw new IllegalArgumentException("Balance cannot be negative.");
+            throw new IllegalArgumentException("Balance cannot be negative");
         }
         this.balance = balance;
     }
