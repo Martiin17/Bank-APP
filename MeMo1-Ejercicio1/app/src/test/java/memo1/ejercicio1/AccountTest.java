@@ -12,6 +12,7 @@ class AccountTest {
     private Branch branch1;
     private Bank bank;
     private Account account1;
+    private Account testAccount;
 
     @BeforeEach
     void setUp() {
@@ -70,5 +71,20 @@ class AccountTest {
     void setBalanceShouldThrowExceptionIfBalanceIsNegative() {
         assertThrows(IllegalArgumentException.class, () -> account1.setBalance(-100.0));
     }
+
+    @Test
+    void removeShouldThrowExcepcionIfTryToRemoveAnAccountWithFounds() {
+        assertThrows(IllegalArgumentException.class, () -> branch1.removeAccountByCBU(client1, 123456789));
+    }
+
+    @Test
+    void removeAccountWithNoFounds() {
+        client1.createAccountAsOwner(bank,branch1,4934983284L,"goodafternoon125");
+        testAccount = bank.getAccountByCBU(4934983284L);
+        branch1.removeAccountByCBU(client1, 4934983284L);
+        assertEquals(null, bank.getAccountByCBU(4934983284L));
+    }
+
+
 
 }
