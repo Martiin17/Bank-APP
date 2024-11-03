@@ -172,4 +172,10 @@ public class OperationsSteps {
         assertEquals(expectedBalance2, account2.getBalance(), 0.01);
     }
 
+    @Then("A register should be created")
+    public void verifyOperationsCreateARegister() {
+        //assertEquals(1, bank.getRegisters().size());
+        assertTrue(bank.getRegisters().size() != 0);
+    }
+
 }

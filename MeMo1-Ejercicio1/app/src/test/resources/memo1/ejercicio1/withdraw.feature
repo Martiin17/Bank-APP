@@ -4,6 +4,7 @@ Feature: Withdrawing money
     Given A new account with CBU 123456789, alias "hellow12" and a balance of 1000.0
     When I withdraw 300.0 from the account
     Then The account balance should be 700.0
+    And A register should be created
 
   Scenario: Cannot withdraw more money than available balance
     Given A new account with CBU 123456789, alias "hellow12" and a balance of 1000.0
