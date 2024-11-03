@@ -11,6 +11,7 @@ class BranchTest {
     private Client client1;
     //private Client client2;
     private Branch branch1;
+    private Branch testBranch;
     private Bank bank;
     private Account account1;
     //private Account account2;
@@ -31,13 +32,11 @@ class BranchTest {
     }
 
     @Test
-    void searchForBranchWithCBUInexistentAccountShouldThrowExceptionIfAccounDontExist() {
-        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountBranchWithCbu(9999));
-    }
-
-    @Test
-    void searchForBranchWithAliasInexistentAccountThrowExceptionIfAccounDontExist() {
-        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountBranchWithAlias("dontExist9999"));
+    void createBranch() {
+        bank.createBranch(458, "La Rioja 500", "new branch");
+        testBranch = bank.getBranch(458);
+        assertEquals("La Rioja 500", testBranch.getDirection());
+        assertEquals("new branch", testBranch.getName());
     }
 
     @Test
@@ -46,7 +45,14 @@ class BranchTest {
     }
 
     @Test
-    void RemoveBranchWithAccountsShouldReturnFalse() {
+    void RemoveBranchWithAccountsShouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> bank.removeBranch(branch1));
+    }
+
+    @Test
+    void RemoveBranchWithoutAccountsShouldReturnTrue() {
+        client1.withdraw(account1, 1000.0); //Dejamos la cuenta en 0 para poder eliminarla
+        branch1.removeAccountByCBU(client1, 123456789);
+        assertTrue(bank.removeBranch(branch1));
     }
 }

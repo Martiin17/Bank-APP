@@ -85,6 +85,13 @@ class AccountTest {
         assertEquals(null, bank.getAccountByCBU(4934983284L));
     }
 
+    @Test
+    void searchForBranchWithCBUInexistentAccountShouldThrowExceptionIfAccounDontExist() {
+        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountBranchWithCbu(9999));
+    }
 
-
+    @Test
+    void searchForBranchWithAliasInexistentAccountThrowExceptionIfAccounDontExist() {
+        assertThrows(IllegalArgumentException.class, () -> bank.searchAccountBranchWithAlias("dontExist9999"));
+    }
 }
