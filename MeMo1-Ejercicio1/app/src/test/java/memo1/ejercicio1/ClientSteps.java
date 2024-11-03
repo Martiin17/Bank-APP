@@ -51,6 +51,11 @@ public class ClientSteps {
         bank.setMarriageDate(client1, client2, marriageDate);
     }
 
+    @Given("Another client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
+    public void createSecondClient(long DNI2, String name2, String surname2, String direction2, long bornDate2){
+        client2 = bank.createClient(DNI2, name2, surname2, direction2, bornDate2);
+    }
+
     @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} with an account")
     public void createClientWithAnAccount(long DNI,String name, String surname, String direction, long bornDate) {
         bank.createClient(DNI, name, surname,  direction, bornDate);
@@ -128,6 +133,29 @@ public class ClientSteps {
         }
     }
 
+    @When("I set the marriage date between them on {long}")
+    public void setMarriageDate(long marriageDate) {
+        bank.setMarriageDate(client1, client2, marriageDate);
+    }
+
+    @When("I try to set the marriage date between nobody and nobody on {long}")
+    public void tryToSetMarriageDateBetweenNobody(long marriageDate) {
+        try{
+            bank.setMarriageDate(null, null, marriageDate);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I try to set the marriage date between the client and nobody on {long}")
+    public void tryToSetMarriageDateWithNobody(long marriageDate) {
+        try{
+            bank.setMarriageDate(client1, null, marriageDate);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, testClient.getDNI());
@@ -184,6 +212,21 @@ public class ClientSteps {
 
     @Then("The operation should be denied due to the client is not marriage")
     public void verifyClientIsNotMarriage() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The marrige date for this clients should be {long}")
+    public void verifyMarriageDate(long marriageDate) {
+        assertEquals(marriageDate, bank.getMarriageDate(client1.getDNI()));
+    }
+
+    @Then("The operation should be denied to cannot set marrige date for nobody")
+    public void verifyCantSetMarriageDateBetweenNobodyAndNobody() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied to cannot set marrige date for a person with nobody")
+    public void verifyCantSetMarriageDateBetweenAClientAndNobody() {
         assertNotNull(this.iae);
     }
 
