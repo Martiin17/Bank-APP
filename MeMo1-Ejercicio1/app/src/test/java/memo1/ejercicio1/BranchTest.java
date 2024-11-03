@@ -55,4 +55,20 @@ class BranchTest {
         branch1.removeAccountByCBU(client1, 123456789);
         assertTrue(bank.removeBranch(branch1));
     }
+
+    @Test
+    void modificateBranchDirection() {
+        bank.createBranch(458, "La Rioja 500", "new branch");
+        testBranch = bank.getBranch(458);
+        testBranch.setDirection("new direction 152");
+        assertEquals("new direction 152", testBranch.getDirection());
+    }
+
+    @Test
+    void modificateBranchName() {
+        bank.createBranch(458, "La Rioja 500", "new branch");
+        testBranch = bank.getBranch(458);
+        testBranch.setName("old branch");
+        assertEquals("old branch", testBranch.getName());
+    }
 }
