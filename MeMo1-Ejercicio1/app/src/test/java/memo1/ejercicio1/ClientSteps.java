@@ -33,8 +33,8 @@ public class ClientSteps {
         client2 = bank.getClient(20000);
     }
 
-    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
-    public void createClient(long DNI,String name, String surname, String direction, long bornDate) {
+    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} without accounts")
+    public void createClientWithoutAccounts(long DNI,String name, String surname, String direction, long bornDate) {
         bank.createClient(DNI, name, surname,  direction, bornDate);
         testClient = bank.getClient(DNI);
     }
@@ -45,6 +45,13 @@ public class ClientSteps {
         client2 = bank.createClient(DNI2, name2, surname2, direction2, bornDate2);
         client1.addMarrige(client2, marrigeDate);
         client2.addMarrige(client1, marrigeDate);
+    }
+
+    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} with an account")
+    public void createClientWithAnAccount(long DNI,String name, String surname, String direction, long bornDate) {
+        bank.createClient(DNI, name, surname,  direction, bornDate);
+        testClient = bank.getClient(DNI);
+        testClient.createAccountAsOwner(bank, branch1, 0246504045L, "goodEvening152");
     }
 
     @When("I try to create another client with DNI {long}")
@@ -90,6 +97,15 @@ public class ClientSteps {
         client1.getMarrigeDate();
     }
 
+    @When("I try to remove the client with DNI {long}")
+    public void tryToRemoveClientWithAccounts(long DNI) {
+        try{
+            bank.removeClient(DNI);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
     @Then("The client should be create with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
     public void verifyAccountDates(long DNI,String name, String surname, String direction, long bornDate) {
         assertEquals(DNI, testClient.getDNI());
@@ -132,6 +148,11 @@ public class ClientSteps {
     @Then("I get the wedding date {long}")
     public void veifyMarrigeDateIsANumber(long marrigeDate) {
         assertEquals(marrigeDate, client1.getMarrigeDate());
+    }
+
+    @Then("The operation should be denied due to the client have accounts")
+    public void veirfyDontRemoveAClietWithAccounts() {
+        assertNotNull(this.iae);
     }
 
 }

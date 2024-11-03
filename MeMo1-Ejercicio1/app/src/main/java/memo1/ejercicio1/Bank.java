@@ -51,8 +51,11 @@ public class Bank {
     public boolean removeClient(long DNI){
         for(Client client : this.clients){
             if(client.getDNI() == DNI){
-                this.clients.remove(client);
-                return true;
+                if(client.getOwnerAccounts().size() == 0){
+                    this.clients.remove(client);
+                    return true;
+                }
+                throw new IllegalArgumentException("Cannot remove a client with accounts");
             }
         }
         throw new IllegalArgumentException("Cannot found this Client");
