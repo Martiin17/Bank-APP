@@ -33,9 +33,15 @@ public class BranchSteps {
         client2 = bank.getClient(20000);
     }
 
-    @Given("I create a branch with branchNumber: {int}, name: {string}, direction: {string}")
+    @Given("A branch with branchNumber: {int}, name: {string}, direction: {string}")
     public void createBranch(int branchNumber, String name, String direction) {
         branchTest = bank.createBranch(branchNumber, direction, name);
+    }
+
+    @Given("A branch with branchNumber: {int}, name: {string}, direction: {string} and an account")
+    public void createBranchWithAccounts(int branchNumber, String name, String direction) {
+        branchTest = bank.createBranch(branchNumber, direction, name);
+        client1.createAccountAsOwner(bank, branchTest, 6464646848328L, "extraAccount129");
     }
 
     @When("I try to create another branch with branchNumber: {int}, name: {string}, direction: {string}")
@@ -57,14 +63,13 @@ public class BranchSteps {
         branchTest.setDirection(newBranchDirection);
     }
 
-    @When("I remove the branch with out accounts")
+    @When("I remove the branch")
     public void removeBranchWithOutAccounts() {
         bank.removeBranch(branchTest);
     }
 
-    @When("I try to remove the branch with accounts")
+    @When("I try to remove the branch")
     public void tryToRemoveBranchWithAccounts() {
-        client1.createAccountAsOwner(bank, branchTest, 6464646848328L, "extraAccount129");
         try{
             bank.removeBranch(branchTest);
         }catch(IllegalArgumentException iae){
