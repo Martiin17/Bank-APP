@@ -10,9 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 class ClientTest {
     private Client client1;
     private Client client2;
+    private Client testClient;
     private Branch branch1;
     private Bank bank;
     private Account account1;
+
     //private Account account2;
 
     @BeforeEach
@@ -34,6 +36,51 @@ class ClientTest {
     void createAccountWithRepeatCBUShouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> client1.createAccountAsOwner(bank, branch1, 123456789L, "goodmorning14"));
     }
+
+    @Test
+    void createClient() {
+        bank.createClient(146816, "John", "Duran", "3 Avenue", 10051098);
+        testClient = bank.getClient(146816);
+        assertEquals(146816, testClient.getDNI());
+        assertEquals("John", testClient.getName());
+        assertEquals("Duran", testClient.getSurname());
+        assertEquals("3 Avenue", testClient.getDirection());
+        assertEquals(10051098, testClient.getBornDate());
+    }
+
+    @Test
+    void removeClient() {
+        bank.createClient(146816, "John", "Duran", "3 Avenue", 10051098);
+        bank.removeClient(146816);
+        assertEquals(null, bank.getClient(146816));
+    }
+
+    @Test
+    void cantRemoveClientWithAccountsShouldThrowException() {
+        bank.createClient(146816, "John", "Duran", "3 Avenue", 10051098);
+        testClient = bank.getClient(146816);
+        testClient.createAccountAsOwner(bank, branch1, 5641065460546L, "Try190");
+        assertThrows(IllegalArgumentException.class, () -> bank.removeClient(146816));
+    }
+
+    @Test
+    void modificateClientDirection() {
+        client1.setDirection("New avenue 15");
+        assertEquals("New avenue 15", client1.getDirection());
+    }
+
+    @Test
+    void modificateClientName() {
+        client1.setName("Williams");
+        assertEquals("Williams", client1.getName());
+    }
+
+    @Test
+    void modificateClientSurname() {
+        client1.setSurname("Albon");
+        assertEquals("Albon", client1.getSurname());
+    }
+
 
     @Test
     void createAccountWithRepeatAliasShoulThrowException() {
