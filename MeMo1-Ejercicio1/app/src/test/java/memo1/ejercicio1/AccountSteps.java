@@ -12,6 +12,7 @@ import io.cucumber.java.en.*;
 public class AccountSteps {
     private Account account1;
     private Account account2;
+    private Account failAccount;
     private boolean operationResult;
     private Branch branch1;
     private Bank bank;
@@ -125,7 +126,16 @@ public class AccountSteps {
     @When("I try to create an account without an owner")
     public void tryToCreateAnAccountWithoutAnOwner() {
         try{
-            account2 = new Account(bank, null, 786955345L, "Fail15");
+            failAccount = new Account(bank, null, 786955345L, "Fail15");
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I try to remove an account with CBU {long}")
+    public void tryToRemoveAccountWithFounds(long CBU) {
+        try{
+            branch1.removeAccountByCBU(client1, CBU);
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
@@ -191,6 +201,11 @@ public class AccountSteps {
 
     @Then("The operation should be denied due to owner can not be null")
     public void verifyCantCreateAccountWithoutAnOwner() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to cant remove an account with founds")
+    public void verifyCantRemoveAnAccountWithFounds() {
         assertNotNull(this.iae);
     }
 } 

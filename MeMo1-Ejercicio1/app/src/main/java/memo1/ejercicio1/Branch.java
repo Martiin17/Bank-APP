@@ -34,8 +34,12 @@ public class Branch{
         if(account == null){
             throw new IllegalArgumentException("cant remove inexistent account"); 
         }
-        client.removeAccount(account);
-        return this.accounts.remove(account);
+        if(account.getBalance() != 0){
+            throw new IllegalArgumentException("cant remove an account with founds"); 
+        }else{
+            client.removeAccount(account);
+            return this.accounts.remove(account);
+        }
     }
 
     public List<Account> getAccounts(){
