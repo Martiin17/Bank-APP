@@ -113,15 +113,19 @@ public class AccountSteps {
         }
     }
 
-    @When("I join to the account as co-owner")
-    public void joinToAccountAsCoOwner() {
-     operationResult = client2.joinAsCoOwner(account1);
+    @When("I try to create an account without a branch")
+    public void tryToCreateAnAccountWithoutBranch() {
+        try{
+            client1.createAccountAsOwner(bank, null, 786955345L, "Fail15");
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
     }
 
-    @When("I try to join as co-owner for my own account")
-    public void tryToJoinAccountAsCoOwner() {
+    @When("I try to create an account without an owner")
+    public void tryToCreateAnAccountWithoutAnOwner() {
         try{
-            operationResult = client1.joinAsCoOwner(account1);
+            account2 = new Account(bank, null, 786955345L, "Fail15");
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
@@ -164,15 +168,11 @@ public class AccountSteps {
         assertEquals(direction, branchFound.getDirection());
     }
 
-    @Then("The account should be on my co-owner list")
-    public void verifyCoOwnerAccount() {
-        assertEquals(account1, client2.getCoOwnerAccountWithCBU(account1.getCbu()));
-    }
 
-    @Then("The operation should be denied due to ilegal argument")
+    /*@Then("The operation should be denied due to ilegal argument")
     public void verifyIlegalArgument() {
         assertNotNull(this.iae);
-    }
+    }*/
 
     @Then("The operation should be denied due to inexistent aliass")
     public void verifyInexistentAlias() {
@@ -181,6 +181,16 @@ public class AccountSteps {
 
     @Then("The operation should be denied due to inexistent CBU")
     public void verifyInexistentCBU() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to branch can not be null")
+    public void verifyCantCreateAccountWithoutBranch() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to owner can not be null")
+    public void verifyCantCreateAccountWithoutAnOwner() {
         assertNotNull(this.iae);
     }
 } 

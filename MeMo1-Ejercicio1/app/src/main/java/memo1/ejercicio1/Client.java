@@ -85,7 +85,7 @@ public class Client {
 
     public boolean createAccountAsOwner(Bank bank, Branch branch, Long cbu, String alias){
         if(branch == null){
-            throw new NullPointerException("branch cannot be null");
+            throw new IllegalArgumentException("branch cannot be null");
         }
         if(bank.checkRepeatAlias(alias)){
             throw new IllegalArgumentException("Alias can not be repeat");
