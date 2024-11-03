@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="48" time="1.534">
-    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.077">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="48" time="1.32">
+    <testcase classname="Account creation" name="Successfully create an account with default balance" time="0.051">
         <system-out>
             <![CDATA[Given An account with CBU 123456789 and alias "hellow12"....................passed
 Then The account with CBU 123456789 should be have a balance of 0.0.........passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.006">
+    <testcase classname="Account creation" name="Successfully create an account with an initial balance" time="0.008">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 Then The account with CBU 123456789 should be have a balance of 1000.0......passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Cant create an account with a repeat CBU" time="0.009">
+    <testcase classname="Account creation" name="Cant create an account with a repeat CBU" time="0.008">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to create another account with the same CBU 123456789, diferent alias "goodevening15" and a balance of 1000.0.passed
@@ -22,7 +22,7 @@ Then The operation should be denied due to repeat CBU.......................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Cant create an account with a repeat alias" time="0.006">
+    <testcase classname="Account creation" name="Cant create an account with a repeat alias" time="0.009">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to create another account with the same alias "hellow12", diferent CBU 55555555 and a balance of 1000.0.passed
@@ -30,14 +30,14 @@ Then The operation should be denied due to repeat alias.....................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Cant create an account without a branch" time="0.006">
+    <testcase classname="Account creation" name="Cant create an account without a branch" time="0.004">
         <system-out>
             <![CDATA[When I try to create an account without a branch............................passed
 Then The operation should be denied due to branch can not be null...........passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Account creation" name="Cant create an account without an owner" time="0.003">
+    <testcase classname="Account creation" name="Cant create an account without an owner" time="0.004">
         <system-out>
             <![CDATA[When I try to create an account without an owner............................passed
 Then The operation should be denied due to owner can not be null............passed
@@ -52,7 +52,7 @@ Then The alias account should be "bye14"....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove account" name="Successfully remove account" time="0.007">
+    <testcase classname="Remove account" name="Successfully remove account" time="0.009">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 0....passed
 When I remove the account with CBU 123456789................................passed
@@ -60,14 +60,14 @@ Then The account with CBU 123456789 should be dont exist....................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove account" name="Cant remove a inexistent account" time="0.005">
+    <testcase classname="Remove account" name="Cant remove a inexistent account" time="0.004">
         <system-out>
             <![CDATA[When I try to remove inexistent account with CBU 111111.....................passed
 Then The operation should be denied due to inexistent account...............passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove account" name="Cant remove an account with balance diferent of 0" time="0.007">
+    <testcase classname="Remove account" name="Cant remove an account with balance diferent of 0" time="0.003">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to remove an account with CBU 123456789..........................passed
@@ -75,14 +75,14 @@ Then The operation should be denied due to cant remove an account with founds.pa
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Branch creation" name="Successfully create a branch" time="0.014">
+    <testcase classname="Branch creation" name="Successfully create a branch" time="0.003">
         <system-out>
             <![CDATA[Given A branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
 Then The branchNumber should be 120, the name should be "branch120" and the direction should de "Street 16".passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Branch creation" name="Cant create a branch with repeat branchNumber" time="0.007">
+    <testcase classname="Branch creation" name="Cant create a branch with repeat branchNumber" time="0.004">
         <system-out>
             <![CDATA[Given A branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
 When I try to create another branch with branchNumber: 120, name: "branch222", direction: "Street 21".passed
@@ -90,7 +90,7 @@ Then The operation should be denied due to repeat branchNumber..............pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Sucursal dates modification" name="Successfully branch name modification" time="0.008">
+    <testcase classname="Sucursal dates modification" name="Successfully branch name modification" time="0.005">
         <system-out>
             <![CDATA[Given A branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
 When I modificate branch name to "branch2"..................................passed
@@ -98,7 +98,7 @@ Then The branch name should be "branch2"....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Sucursal dates modification" name="Successfully branch direction modification" time="0.004">
+    <testcase classname="Sucursal dates modification" name="Successfully branch direction modification" time="0.005">
         <system-out>
             <![CDATA[Given A branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
 When I modificate branch direction to "Street 21"...........................passed
@@ -106,7 +106,7 @@ Then The branch direction should be "Street 21".............................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove branch" name="Successfully remove branch" time="0.016">
+    <testcase classname="Remove branch" name="Successfully remove branch" time="0.005">
         <system-out>
             <![CDATA[Given A branch with branchNumber: 120, name: "branch120", direction: "Street 16".passed
 When I remove the branch....................................................passed
@@ -122,7 +122,7 @@ Then The operation should be denied due to this branch have accounts........pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully client direction modification" time="0.01">
+    <testcase classname="Client dates modification" name="Successfully client direction modification" time="0.005">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413 without accounts.passed
 When I modificate direction to "Street 15"..................................passed
@@ -130,7 +130,7 @@ Then The direction should be "Street 15"....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully client name modification" time="0.006">
+    <testcase classname="Client dates modification" name="Successfully client name modification" time="0.009">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413 without accounts.passed
 When I modificate name to "Josh"............................................passed
@@ -138,7 +138,7 @@ Then The name should be "Josh"..............................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client dates modification" name="Successfully client surname modification" time="0.004">
+    <testcase classname="Client dates modification" name="Successfully client surname modification" time="0.01">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413 without accounts.passed
 When I modificate surname to "Garcia".......................................passed
@@ -146,7 +146,7 @@ Then The surname should be "Garcia".........................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove client" name="Successfully remove client" time="0.005">
+    <testcase classname="Remove client" name="Successfully remove client" time="0.006">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413 without accounts.passed
 When I remove the client with DNI 12345.....................................passed
@@ -154,7 +154,7 @@ Then The client with DNI 12345 should be dont exist.........................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Remove client" name="Cant remove a inexistent client" time="0.003">
+    <testcase classname="Remove client" name="Cant remove a inexistent client" time="0.012">
         <system-out>
             <![CDATA[When I try to remove inexistent client with DNI 99999.......................passed
 Then The operation should be denied due to inexistent client................passed
@@ -176,7 +176,7 @@ Then The client should be create with DNI: 12345, name: "Math", surname: "Johnso
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Client creation" name="Cant create a client with repeat DNI" time="0.004">
+    <testcase classname="Client creation" name="Cant create a client with repeat DNI" time="0.005">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413 without accounts.passed
 When I try to create another client with DNI 12345..........................passed
@@ -184,7 +184,7 @@ Then The operation should be denied due to repeat DNI.......................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.006">
+    <testcase classname="Depositing money" name="Successfully deposit money into an account" time="0.008">
         <system-out>
             <![CDATA[Given A new account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I deposit 200.0 into the account.......................................passed
@@ -193,7 +193,7 @@ And A register should be created............................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.004">
+    <testcase classname="Depositing money" name="Cannot deposit a negative amount" time="0.007">
         <system-out>
             <![CDATA[Given A new account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to deposit -100.0 into the account...............................passed
@@ -210,7 +210,7 @@ Then The operation should be denied due to not owner or co-owner account....pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search where an account is located in a branch" name="Successfully find the branch with CBU" time="0.012">
+    <testcase classname="Search where an account is located in a branch" name="Successfully find the branch with CBU" time="0.007">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" radicated on the branch with name branchNumber: 120, name: "branchTest" and direction: "Street 15".passed
 When I look for the account branch with CBU 123456789.......................passed
@@ -218,7 +218,7 @@ Then I get the branchNumber: 120, name: "branchTest", direction: "Street 15".pas
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search where an account is located in a branch" name="Successfully find the branch with alias" time="0.004">
+    <testcase classname="Search where an account is located in a branch" name="Successfully find the branch with alias" time="0.006">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" radicated on the branch with name branchNumber: 120, name: "branchTest" and direction: "Street 15".passed
 When I look for the account branch with alias "hellow12"....................passed
@@ -226,7 +226,7 @@ Then I get the branchNumber: 120, name: "branchTest", direction: "Street 15".pas
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search where an account is located in a branch" name="Cant find the branch for inexistent CBU" time="0.003">
+    <testcase classname="Search where an account is located in a branch" name="Cant find the branch for inexistent CBU" time="0.004">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" radicated on the branch with name branchNumber: 120, name: "branchTest" and direction: "Street 15".passed
 When I look for the account branch with CBU 19029393920.....................passed
@@ -234,7 +234,7 @@ Then The operation should be denied due to inexistent CBU...................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search where an account is located in a branch" name="Cant find the branch for inexistent alias" time="0.006">
+    <testcase classname="Search where an account is located in a branch" name="Cant find the branch for inexistent alias" time="0.005">
         <system-out>
             <![CDATA[Given An account with CBU 123456789, alias "hellow12" radicated on the branch with name branchNumber: 120, name: "branchTest" and direction: "Street 15".passed
 When I look for the account branch with alias "dontExist199"................passed
@@ -242,7 +242,7 @@ Then The operation should be denied due to inexistent aliass................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search if the cliente is married" name="Successfully found the client is married" time="0.006">
+    <testcase classname="Search if the cliente is married" name="Successfully found the client is married" time="0.005">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 And His wife who is client too with DNI: 56789, name: "Kamala", surname: "Harrison", direction: "Street 14" and born date: 19911013. They have marrige on 20241022.passed
@@ -251,14 +251,14 @@ Then I get the marriage date on 20241022....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search if the cliente is married" name="Cant found the marriage date for inexistent DNI" time="0.002">
+    <testcase classname="Search if the cliente is married" name="Cant found the marriage date for inexistent DNI" time="0.005">
         <system-out>
             <![CDATA[When I try to search the marriage date for inexistent DNI 6468646...........passed
 Then The operation should be denied due to DNI is not exist.................passed
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Search if the cliente is married" name="Cant found the marriage date for a client who is not marriage" time="0.002">
+    <testcase classname="Search if the cliente is married" name="Cant found the marriage date for a client who is not marriage" time="0.003">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I try to search the marriage date......................................passed
@@ -282,7 +282,7 @@ Then The operation should be denied to cannot set marrige date for nobody...pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Set marriage date" name="Cant set a marriage date for one client" time="0.007">
+    <testcase classname="Set marriage date" name="Cant set a marriage date for one client" time="0.009">
         <system-out>
             <![CDATA[Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413.passed
 When I try to set the marriage date between the client and nobody on 03112024.passed
@@ -290,7 +290,7 @@ Then The operation should be denied to cannot set marrige date for a person with
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Successfully transfer money" time="0.011">
+    <testcase classname="Transfer money with alias" name="Successfully transfer money" time="0.004">
         <system-out>
             <![CDATA[Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0.passed
 When I transfer 200.0 to the alias "bye14"..................................passed
@@ -299,7 +299,7 @@ And A register should be created............................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer a negative amount" time="0.007">
+    <testcase classname="Transfer money with alias" name="Cannot transfer a negative amount" time="0.003">
         <system-out>
             <![CDATA[Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0.passed
 When I try to transfer -100.0 to the alias "bye14"..........................passed
@@ -308,7 +308,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer more money than available balance" time="0.007">
+    <testcase classname="Transfer money with alias" name="Cannot transfer more money than available balance" time="0.009">
         <system-out>
             <![CDATA[Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0.passed
 When I try to transfer 1100.0 to the alias "bye14"..........................passed
@@ -317,7 +317,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Transfer money with alias" name="Cannot transfer to inexistent alias" time="0.004">
+    <testcase classname="Transfer money with alias" name="Cannot transfer to inexistent alias" time="0.005">
         <system-out>
             <![CDATA[Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0.passed
 When I try to transfer 200.0 to the alias "fail15"..........................passed
@@ -326,7 +326,7 @@ And The account balance should remain 1000.0................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Successfully transfer money with CBU" time="0.009">
+    <testcase classname="Transfer money with CBU" name="Successfully transfer money with CBU" time="0.011">
         <system-out>
             <![CDATA[Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0.passed
 When I transfer 200.0 to the CBU 5678.......................................passed
@@ -335,7 +335,7 @@ And A register should be created............................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer a negative amount with CBU" time="0.008">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer a negative amount with CBU" time="0.009">
         <system-out>
             <![CDATA[Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0.passed
 When I try to transfer -100.0 to the CBU 5678...............................passed
@@ -344,7 +344,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Transfer money with CBU" name="Cannot transfer more money than available balance with CBU" time="0.005">
+    <testcase classname="Transfer money with CBU" name="Cannot transfer more money than available balance with CBU" time="0.006">
         <system-out>
             <![CDATA[Given A client with an account with CBU 1234, alias "hellow12" and a balance of 1000.0 and a second client with an account CBU 5678, alias "bye14" and balance of 1000.0.passed
 When I try to transfer 1100.0 to the CBU 5678...............................passed
@@ -362,7 +362,7 @@ And The first account balance should remain 1000.0 and the second account balanc
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.003">
+    <testcase classname="Withdrawing money" name="Successfully withdraw money when the balance is sufficient" time="0.004">
         <system-out>
             <![CDATA[Given A new account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I withdraw 300.0 from the account......................................passed
@@ -380,7 +380,7 @@ And The account balance should remain 1000.0................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="Withdrawing money" name="Cannot withdraw money to a not owner or co-owner account" time="0.004">
+    <testcase classname="Withdrawing money" name="Cannot withdraw money to a not owner or co-owner account" time="0.003">
         <system-out>
             <![CDATA[Given A new account with CBU 123456789, alias "hellow12" and a balance of 1000.0.passed
 When I try to withdraw 100.0 from not owner or co-owner account.............passed
