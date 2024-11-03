@@ -7,6 +7,7 @@ public class Bank {
     private List<Branch> branches;
     private List<Client> clients; 
     private List<Register> registers;
+    private List<MarriageRegister> marriageRegisters;
     private long todayDate;
     private int lastCorrelativeNumber;
     private int nowHour;
@@ -15,6 +16,7 @@ public class Bank {
         this.branches = new ArrayList<Branch>();
         this.clients = new ArrayList<Client>();
         this.registers = new ArrayList<Register>();
+        this.marriageRegisters = new ArrayList<MarriageRegister>();
         this.todayDate = 20241018;
         this.lastCorrelativeNumber = 0;
         this.nowHour = 1301;
@@ -258,11 +260,28 @@ public class Bank {
         throw new IllegalArgumentException("Dont exist this cbu");
     }
 
-    public long searchMarrigeDate(long DNI){ //Devuelve 0 si no esta casado
-        Client client  = this.getClient(DNI);
-        if(client == null){
-            throw new IllegalArgumentException("Dont exist this DNI");
+    public boolean setMarriageDate(Client client1, Client client2, long marriageDate){
+        if(client1 == null){
+            throw new IllegalArgumentException("Cant set a marriage date");
         }
-        return client.getMarrigeDate();
+        if(client2 == null){
+            throw new IllegalArgumentException("Cant set a marriage date");
+        }else{
+            MarriageRegister marriageRegister = new MarriageRegister(client1, client2, marriageDate);
+            return this.marriageRegisters.add(marriageRegister);
+        }
     }
+
+    public long getMarriageDate(long DNI){
+        if(this.checkRepeatDNI(DNI)){ //Si es true existe el DNI
+            for(MarriageRegister marriageRegister : this.marriageRegisters){
+                if(marriageRegister.containsDNI(DNI)){
+                    return marriageRegister.getMarriageDate();
+                }
+            }
+            throw new IllegalArgumentException("This client is not marriage");
+        }
+        throw new IllegalArgumentException("Dont exist this DNI");
+    }
+
 }

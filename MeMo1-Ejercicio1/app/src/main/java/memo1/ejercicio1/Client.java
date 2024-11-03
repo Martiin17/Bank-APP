@@ -11,8 +11,8 @@ public class Client {
     private long bornDate;
     private List<Account> ownerAccounts;
     private List<Account> coOwnerAccounts;
-    private Client marrige;
-    private long marrigeDate;
+    //private Client marrige;
+    //private long marrigeDate;
 
     public Client(long DNI,String name,String surname,String direction, long bornDate){
         this.DNI = DNI;
@@ -22,8 +22,8 @@ public class Client {
         this.bornDate = bornDate;
         this.ownerAccounts = new ArrayList<Account>();
         this.coOwnerAccounts = new ArrayList<Account>();
-        this.marrige = null;
-        this.marrigeDate = 0;
+        //this.marrige = null;
+        //this.marrigeDate = 0;
     }
 
     public long getDNI(){
@@ -66,10 +66,10 @@ public class Client {
         return this.ownerAccounts;
     }
 
-    public void addMarrige(Client marrige, long marrigeDate){
+    /*public void addMarrige(Client marrige, long marrigeDate){
         this.marrige = marrige;
         this.marrigeDate = marrigeDate;
-    }
+    }*/
 
     public boolean createAccountAsOwner(Bank bank, Branch sucursal, Long cbu, double balance, String alias){
         if(bank.checkRepeatAlias(alias)){
@@ -110,12 +110,12 @@ public class Client {
         this.coOwnerAccounts.remove(account);
     }
 
-    public long getMarrigeDate(){
+    /*public long getMarrigeDate(){
         if(this.marrige != null){
             return this.marrigeDate;
         }
         return 0;
-    }
+    }*/
 
     public Account getOwnerAccountWithCBU(long cbu){
         for(Account account : this.ownerAccounts){

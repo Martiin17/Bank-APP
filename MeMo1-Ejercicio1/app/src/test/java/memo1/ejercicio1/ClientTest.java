@@ -93,7 +93,7 @@ class ClientTest {
        assertEquals(1,client2.getCoOwnerAccounts().size());
     }
 
-    @Test
+    /*@Test
     void searchForMarriageDateWithInexistentDNIShouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> bank.searchMarrigeDate(9999));
     }
@@ -101,5 +101,5 @@ class ClientTest {
     @Test
     void searchForMarriageDateWithASinglePersonShouldReturnZero() {
         assertEquals(0, bank.searchMarrigeDate(client1.getDNI()));
-    }
+    }*/
 }

@@ -18,6 +18,7 @@ public class ClientSteps {
     private Client client1;
     private Client client2;
     private Client testClient;
+    private MarriageRegister testMarriageRegister;
     //private Branch branchTest;
     //private Branch branchFound;
     private IllegalArgumentException iae;
@@ -39,12 +40,15 @@ public class ClientSteps {
         testClient = bank.getClient(DNI);
     }
 
-    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} and his wife who is client too with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}. They have marrige on {long}")
-    public void createClientsMarrige(long DNI1, String name1, String surname1, String direction1, long bornDate1, long DNI2, String name2, String surname2, String direction2, long bornDate2, long marrigeDate){
+    @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}")
+    public void createClientsMarrige(long DNI1, String name1, String surname1, String direction1, long bornDate1){
         client1 = bank.createClient(DNI1, name1, surname1, direction1, bornDate1);
+    }
+
+    @Given("His wife who is client too with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long}. They have marrige on {long}")
+    public void createClientsMarrige2(long DNI2, String name2, String surname2, String direction2, long bornDate2, long marriageDate){
         client2 = bank.createClient(DNI2, name2, surname2, direction2, bornDate2);
-        client1.addMarrige(client2, marrigeDate);
-        client2.addMarrige(client1, marrigeDate);
+        bank.setMarriageDate(client1, client2, marriageDate);
     }
 
     @Given("A client with DNI: {long}, name: {string}, surname: {string}, direction: {string} and born date: {long} with an account")
@@ -92,15 +96,33 @@ public class ClientSteps {
         }
     }
 
-    @When("I look for the fist account marriage")
+    @When("I search the marriage date")
     public void searchForTheMarrigeDate() {
-        client1.getMarrigeDate();
+        bank.getMarriageDate(client1.getDNI());
     }
 
     @When("I try to remove the client with DNI {long}")
     public void tryToRemoveClientWithAccounts(long DNI) {
         try{
             bank.removeClient(DNI);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I try to search the marriage date for inexistent DNI {long}")
+    public void tryToSearchMarriageDateForInexistentDNI(long DNI) {
+        try{
+            bank.getMarriageDate(DNI);
+        }catch(IllegalArgumentException iae){
+            this.iae = iae;
+        }
+    }
+
+    @When("I try to search the marriage date")
+    public void tryToSearchMarriageDateForInexistentDNI() {
+        try{
+            bank.getMarriageDate(client1.getDNI());
         }catch(IllegalArgumentException iae){
             this.iae = iae;
         }
@@ -145,13 +167,23 @@ public class ClientSteps {
         assertEquals(newSurname, client1.getSurname());
     }
 
-    @Then("I get the wedding date {long}")
+    @Then("I get the marriage date on {long}")
     public void veifyMarrigeDateIsANumber(long marrigeDate) {
-        assertEquals(marrigeDate, client1.getMarrigeDate());
+        assertEquals(marrigeDate, bank.getMarriageDate(client1.getDNI()));
     }
 
     @Then("The operation should be denied due to the client have accounts")
     public void veirfyDontRemoveAClietWithAccounts() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to DNI is not exist")
+    public void verifyInexistentDNI() {
+        assertNotNull(this.iae);
+    }
+
+    @Then("The operation should be denied due to the client is not marriage")
+    public void verifyClientIsNotMarriage() {
         assertNotNull(this.iae);
     }
 
