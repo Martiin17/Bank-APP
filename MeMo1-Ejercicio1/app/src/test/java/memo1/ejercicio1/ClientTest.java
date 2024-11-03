@@ -93,13 +93,19 @@ class ClientTest {
        assertEquals(1,client2.getCoOwnerAccounts().size());
     }
 
-    /*@Test
-    void searchForMarriageDateWithInexistentDNIShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> bank.searchMarrigeDate(9999));
+    @Test
+    void searchMarriageDateReturnTheMarriageDate() {
+        bank.setMarriageDate(client1,client2,02112024);
+        assertEquals(02112024,  bank.getMarriageDate(client1.getDNI()));
     }
 
     @Test
-    void searchForMarriageDateWithASinglePersonShouldReturnZero() {
-        assertEquals(0, bank.searchMarrigeDate(client1.getDNI()));
-    }*/
+    void searchMarriageDateWithInexistentDNIShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> bank.getMarriageDate(9999L));
+    }
+
+    @Test
+    void searchMarriageDateWithASinglePersonShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> bank.getMarriageDate(client1.getDNI()));
+    }
 }
