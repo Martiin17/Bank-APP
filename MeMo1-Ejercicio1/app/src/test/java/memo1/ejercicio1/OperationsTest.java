@@ -151,8 +151,36 @@ class OperationsTest {
     }
 
     @Test
-    void veifyCreationOfRegister() {
+    void transferWithCBUToMyOwnAccountOrCoOwnerAccountShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithCBU(account2, 200.0, 123456789L));
+    }
+
+    @Test
+    void transferWithAliasToMyOwnAccountOrCoOwnerAccountShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> client1.trasnferWithAlias(account2, 200.0, "hellow12"));
+    }
+
+    @Test
+    void veifyCreationOfRegisterDeposit() {
        client1.deposit(account1, 100.0);
+       assertEquals(1,bank.getRegisters().size());
+    }
+
+    @Test
+    void veifyCreationOfRegisterWithdraw() {
+       client1.withdraw(account1, 100.0);
+       assertEquals(1,bank.getRegisters().size());
+    }
+
+    @Test
+    void veifyCreationOfRegisterTransferWithCBU() {
+       client1.trasnferWithCBU(account1, 100.0, 987654321L);
+       assertEquals(1,bank.getRegisters().size());
+    }
+
+    @Test
+    void veifyCreationOfRegisterTransferWithAlias() {
+       client1.trasnferWithAlias(account1, 100.0, "bye14");
        assertEquals(1,bank.getRegisters().size());
     }
 }
