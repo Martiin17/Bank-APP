@@ -108,4 +108,21 @@ class ClientTest {
     void searchMarriageDateWithASinglePersonShouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> bank.getMarriageDate(client1.getDNI()));
     }
+
+    @Test
+    void setMarriageDateBetweenTwoClients() {
+        bank.setMarriageDate(client1, client2, 19112021);
+        bank.getMarriageDate(client2.getDNI());
+    }
+
+    @Test
+    void setMarriageDateBetweenAClientAndNobodyThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> bank.setMarriageDate(client1, null, 19112021));
+    }
+
+    @Test
+    void setMarriageDateBetweenNobodyAndNobodyThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> bank.setMarriageDate(null, null, 19112021));
+    }
+
 }
