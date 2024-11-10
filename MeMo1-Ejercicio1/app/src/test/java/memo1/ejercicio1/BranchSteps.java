@@ -38,6 +38,11 @@ public class BranchSteps {
         branchTest = bank.createBranch(branchNumber, direction, name);
     }
 
+    @Given("A branch with branchNumber: {int}, name: {string}, direction: {string} without accounts")
+    public void createBranchWithoutAccounts(int branchNumber, String name, String direction) {
+        branchTest = bank.createBranch(branchNumber, direction, name);
+    }
+
     @Given("A branch with branchNumber: {int}, name: {string}, direction: {string} and an account")
     public void createBranchWithAccounts(int branchNumber, String name, String direction) {
         branchTest = bank.createBranch(branchNumber, direction, name);

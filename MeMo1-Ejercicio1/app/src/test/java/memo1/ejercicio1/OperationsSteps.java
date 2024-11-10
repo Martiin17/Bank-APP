@@ -33,7 +33,7 @@ public class OperationsSteps {
         client2 = bank.getClient(20000);
     }
 
-    @Given("A new account with CBU {long}, alias {string} and a balance of {double}")
+    @Given("Account with CBU {long}, alias {string} and a balance of {double}")
     public void createAccountWithtBalance(long CBU, String alias, double balance) {
         client1.createAccountAsOwner(bank, bank.getBranch(branch1.getBranchNumber()), CBU, balance, alias);
         account1 = bank.getAccountByCBU(CBU);
