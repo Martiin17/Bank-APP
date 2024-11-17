@@ -6,6 +6,7 @@ Feature: Set marriage date
     Then The marrige date for this clients should be 03112024
 
   Scenario: Cant set a marriage date for nobody
+    Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413
     When I try to set the marriage date between nobody and nobody on 03112024
     Then The operation should be denied to cannot set marrige date for nobody
 

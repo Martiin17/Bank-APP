@@ -18,9 +18,11 @@ Feature: Account creation
     Then The operation should be denied due to repeat alias
 
   Scenario: Cant create an account without a branch
+    Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0
     When I try to create an account without a branch
     Then The operation should be denied due to branch can not be null
 
   Scenario: Cant create an account without an owner
+    Given An account with CBU 123456789, alias "hellow12" and a balance of 1000.0
     When I try to create an account without an owner
     Then The operation should be denied due to owner can not be null

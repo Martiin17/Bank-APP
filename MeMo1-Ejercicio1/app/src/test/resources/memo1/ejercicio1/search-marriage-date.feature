@@ -7,6 +7,7 @@ Feature: Search if the cliente is married
     Then I get the marriage date on 20241022
 
   Scenario: Cant found the marriage date for inexistent DNI
+    Given A client with DNI: 12345, name: "Math", surname: "Johnson", direction: "Street 14" and born date: 19900413
     When I try to search the marriage date for inexistent DNI 6468646
     Then The operation should be denied due to DNI is not exist
 
